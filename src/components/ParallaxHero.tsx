@@ -1,0 +1,182 @@
+"use client";
+
+import { useEffect, useRef } from "react";
+import gsap from "gsap";
+import { Button } from "./Button";
+import { ParticleField } from "./ParticleField";
+
+export function ParallaxHero() {
+  const rootRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const root = rootRef.current;
+    if (!root) return;
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    const start = () => {
+      const ctx = gsap.context(() => {
+        if (reduced) {
+          gsap.set(".hero-anim", { opacity: 1, y: 0, filter: "none" });
+          return;
+        }
+
+        gsap.set(".hero-anim", { opacity: 0, y: 40, filter: "blur(10px)" });
+
+        const tl = gsap.timeline();
+        tl.to(".hero-eyebrow", {
+          opacity: 1,
+          y: 0,
+          filter: "blur(0px)",
+          duration: 0.8,
+          ease: "power3.out",
+        })
+          .to(
+            ".hero-line-1",
+            {
+              opacity: 1,
+              y: 0,
+              filter: "blur(0px)",
+              duration: 0.95,
+              ease: "power4.out",
+            },
+            "-=0.45",
+          )
+          .to(
+            ".hero-line-2",
+            {
+              opacity: 1,
+              y: 0,
+              filter: "blur(0px)",
+              duration: 0.95,
+              ease: "power4.out",
+            },
+            "-=0.7",
+          )
+          .to(
+            ".hero-lead",
+            {
+              opacity: 1,
+              y: 0,
+              filter: "blur(0px)",
+              duration: 0.8,
+              ease: "power3.out",
+            },
+            "-=0.5",
+          )
+          .to(
+            ".hero-cta",
+            {
+              opacity: 1,
+              y: 0,
+              filter: "blur(0px)",
+              duration: 0.7,
+              ease: "power3.out",
+            },
+            "-=0.45",
+          )
+          .to(
+            ".hero-scroll-hint",
+            { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.6 },
+            "-=0.3",
+          );
+
+        gsap.to(".hero-parallax-slow", {
+          yPercent: 18,
+          ease: "none",
+          scrollTrigger: {
+            trigger: root,
+            start: "top top",
+            end: "bottom top",
+            scrub: true,
+          },
+        });
+
+        gsap.to(".hero-parallax-fast", {
+          yPercent: -12,
+          ease: "none",
+          scrollTrigger: {
+            trigger: root,
+            start: "top top",
+            end: "bottom top",
+            scrub: true,
+          },
+        });
+      }, root);
+
+      return () => ctx.revert();
+    };
+
+    let cleanup: (() => void) | undefined;
+    const onReady = () => {
+      cleanup = start();
+    };
+
+    window.addEventListener("metablify:ready", onReady, { once: true });
+    // Fallback if event already fired
+    const fallback = window.setTimeout(() => {
+      if (!cleanup) cleanup = start();
+    }, 3200);
+
+    return () => {
+      window.clearTimeout(fallback);
+      window.removeEventListener("metablify:ready", onReady);
+      cleanup?.();
+    };
+  }, []);
+
+  return (
+    <section ref={rootRef} className="hero-vireo relative min-h-[100svh] overflow-hidden">
+      <div className="hero-parallax-slow pointer-events-none absolute inset-0 bg-white" aria-hidden="true" />
+
+      <div className="relative z-10 mx-auto grid min-h-[100svh] max-w-[90rem] items-center gap-8 px-5 py-28 md:px-10 lg:grid-cols-12 lg:gap-4 lg:px-16 lg:py-20">
+        <div className="hero-parallax-fast lg:col-span-6">
+          <p className="eyebrow mb-6 hero-anim hero-eyebrow">
+            LC/MS platform · First principles of physics
+          </p>
+          <h1 className="display hero-headline">
+            <span className="block hero-anim hero-line-1">See more in your</span>
+            <span className="block hero-anim hero-line-2 text-ink">
+              LC/MS data.
+            </span>
+          </h1>
+          <p className="lead mt-8 !max-w-lg !text-lg hero-anim hero-lead">
+            Metablify organizes the chaos of large, noisy datasets to extract
+            the signal from the noise and identify mass features other workflows
+            miss.
+          </p>
+          <div className="mt-12 flex flex-wrap gap-4 hero-anim hero-cta">
+            <Button href="/platform">Explore Metablify</Button>
+            <Button href="/discuss" variant="secondary">
+              Discuss a Project
+            </Button>
+          </div>
+        </div>
+
+        <div className="relative lg:col-span-6">
+          <div className="hero-canvas-frame relative aspect-[5/4] w-full overflow-hidden md:aspect-[4/3]">
+            <ParticleField
+              className="absolute inset-0"
+              interactive
+              showOrbits
+              tone="green"
+              flares
+            />
+            <div className="pointer-events-none absolute left-4 top-4 font-mono text-[0.62rem] uppercase tracking-[0.16em] text-faint">
+              Metabolome · m/z
+            </div>
+            <div className="pointer-events-none absolute bottom-4 right-4 font-mono text-[0.62rem] uppercase tracking-[0.16em] text-faint">
+              Move to explore
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="hero-scroll-hint hero-anim">
+        <span>Scroll</span>
+        <span className="hero-scroll-arrow" aria-hidden="true">
+          ↓
+        </span>
+      </div>
+    </section>
+  );
+}

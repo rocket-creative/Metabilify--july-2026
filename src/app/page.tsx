@@ -1,65 +1,182 @@
-import Image from "next/image";
+import { ApplicationsCarousel } from "@/components/ApplicationsCarousel";
+import { Button } from "@/components/Button";
+import { CapabilitiesBand } from "@/components/CapabilitiesBand";
+import { FullBleedImage } from "@/components/FullBleedImage";
+import { MetabolomeExplainer } from "@/components/MetabolomeExplainer";
+import { ParallaxHero } from "@/components/ParallaxHero";
+import { Reveal } from "@/components/Reveal";
+import Link from "next/link";
 
-export default function Home() {
+export default function HomePage() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+    <>
+      <ParallaxHero />
+
+      {/* Problem — Vireo-style narrative */}
+      <section className="section-wide section-grey py-[clamp(4.5rem,10vw,7.5rem)]">
+        <div className="mx-auto max-w-3xl px-5 md:px-10">
+          <Reveal>
+            <p className="eyebrow mb-6">The problem</p>
+            <h2 className="display display-lg mb-8">
+              Large LC/MS datasets are noisy, complex, and difficult to align.
+            </h2>
+            <div className="space-y-6 text-lg leading-relaxed text-muted">
+              <p>
+                Real mass features can be missed, split, or buried in background
+                signal. Legacy workflows may recover only a subset of what is
+                detectable.
+              </p>
+              <p className="text-ink font-medium">
+                It is time for a clearer way to extract signal from noise.
+              </p>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* Platform capabilities — forest-green band with line icons */}
+      <CapabilitiesBand />
+
+      <MetabolomeExplainer />
+
+      {/* Applications — 2-col split cards */}
+      <ApplicationsCarousel />
+
+      {/* Work with us */}
+      <section className="section-wide section-grey py-[clamp(4.5rem,10vw,7.5rem)]">
+        <div className="mx-auto max-w-[80rem] px-5 md:px-10">
+          <Reveal>
+            <p className="eyebrow mb-4">Work with us</p>
+            <h2 className="display display-lg mb-12 max-w-2xl">
+              Analytical services, platform development, or collaboration.
+            </h2>
+          </Reveal>
+
+          <div className="grid gap-5 md:grid-cols-3">
+            {[
+              {
+                href: "/work-with-us/services",
+                title: "Analytical Services",
+                body: "Turn complex LC/MS datasets into cleaner, aligned, quantified results.",
+              },
+              {
+                href: "/work-with-us/platform-development",
+                title: "Platform Development",
+                body: "Extend Metablify for new applications, datasets, and partner needs.",
+              },
+              {
+                href: "/work-with-us/collaborations",
+                title: "Strategic Collaborations",
+                body: "Apply the platform to high value scientific and commercial opportunities.",
+              },
+            ].map((item, i) => (
+              <Reveal key={item.href} delay={i * 80}>
+                <Link href={item.href} className="card card-link group flex h-full flex-col">
+                  <h3
+                    className="mb-3 text-xl text-ink"
+                    style={{ fontFamily: "var(--font-display)" }}
+                  >
+                    {item.title}
+                  </h3>
+                  <p className="mb-8 text-sm leading-relaxed text-muted">
+                    {item.body}
+                  </p>
+                  <span className="arrow-link mt-auto">
+                    Read more <span className="arrow-ne">↗</span>
+                  </span>
+                </Link>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Full-width lifestyle image */}
+      <FullBleedImage
+        src="/images/team-workspace.png"
+        alt="The Metablify team collaborating in the lab and workspace"
+      />
+
+      {/* Origin */}
+      <section className="section">
+        <Reveal>
+          <p className="eyebrow mb-4">Origin</p>
+          <h2 className="display display-lg mb-6 max-w-3xl">
+            Developed at the Donald Danforth Plant Science Center
+          </h2>
+          <p className="lead mb-10">
+            Metablify was built to solve large scale LC/MS challenges beyond the
+            reach of conventional workflows.
           </p>
+          <Button href="/about" variant="secondary">
+            About Metablify
+          </Button>
+        </Reveal>
+      </section>
+
+      {/* Getting started */}
+      <section className="section-wide border-t border-stone py-[clamp(4.5rem,10vw,7.5rem)]">
+        <div className="mx-auto max-w-[80rem] px-5 md:px-10">
+          <Reveal>
+            <p className="eyebrow mb-4">Getting started</p>
+            <h2 className="display display-lg mb-12 max-w-2xl">
+              Four steps from conversation to results
+            </h2>
+          </Reveal>
+          <ol className="grid list-none gap-5 md:grid-cols-2 lg:grid-cols-4">
+            {[
+              {
+                n: "01",
+                title: "Discuss your project",
+                body: "Scientific objective, samples, data, and desired outputs.",
+              },
+              {
+                n: "02",
+                title: "Choose the approach",
+                body: "Services, platform development, or strategic collaboration.",
+              },
+              {
+                n: "03",
+                title: "Put Metablify to work",
+                body: "Process and analyze LC/MS data for cleaner mass feature results.",
+              },
+              {
+                n: "04",
+                title: "Review results",
+                body: "Understand outputs, prioritize next steps, plan further analysis.",
+              },
+            ].map((step, i) => (
+              <Reveal key={step.n} delay={i * 80}>
+                <li className="card flex h-full list-none flex-col">
+                  <p className="eyebrow mb-4">{step.n}</p>
+                  <h3
+                    className="mb-3 text-xl text-ink"
+                    style={{ fontFamily: "var(--font-display)" }}
+                  >
+                    {step.title}
+                  </h3>
+                  <p className="text-sm leading-relaxed text-muted">{step.body}</p>
+                </li>
+              </Reveal>
+            ))}
+          </ol>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+      </section>
+
+      {/* Final CTA */}
+      <section className="section-forest section-wide py-[clamp(4.5rem,10vw,7.5rem)] text-center">
+        <Reveal>
+          <h2 className="display display-lg mx-auto mb-5 max-w-3xl text-white">
+            Ready to see more in your LC/MS data?
+          </h2>
+          <p className="lead mx-auto mb-10 !text-white/75">
+            Bring us your samples, LC/MS data, or workflow challenge.
+          </p>
+          <Button href="/discuss" variant="on-green">
+            Discuss Your Project
+          </Button>
+        </Reveal>
+      </section>
+    </>
   );
 }
