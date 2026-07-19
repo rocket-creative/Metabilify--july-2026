@@ -18,7 +18,7 @@ export function Logo({ className = "", priority = false }: LogoProps) {
         alt=""
         width={40}
         height={40}
-        className="h-9 w-9 md:h-10 md:w-10"
+        className="no-round h-9 w-9 md:h-10 md:w-10"
         priority={priority}
       />
       <span

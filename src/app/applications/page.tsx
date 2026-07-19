@@ -4,6 +4,8 @@ import { Button } from "@/components/Button";
 import { BreadcrumbJsonLd } from "@/components/JsonLd";
 import { PageHero, SectionHeading } from "@/components/PageHero";
 import { Reveal } from "@/components/Reveal";
+import { byFamily } from "@/content/registry";
+import { pageHref } from "@/types/content";
 
 export const metadata: Metadata = {
   title: "Applications",
@@ -34,6 +36,45 @@ const applications = [
     ],
   },
 ];
+
+function MoreApplications() {
+  const pages = byFamily("application").filter((p) => p.status !== "draft");
+  if (pages.length === 0) return null;
+  return (
+    <section className="section">
+      <Reveal>
+        <SectionHeading
+          eyebrow="More application areas"
+          title="Where the platform is expanding"
+          lead="The same feature layer approach extends to fields where recovery and alignment at cohort scale are the bottleneck."
+        />
+      </Reveal>
+      <div className="grid gap-5 md:grid-cols-3">
+        {pages.map((page, i) => (
+          <Reveal key={page.slug} delay={i * 70}>
+            <Link
+              href={pageHref(page)}
+              className="card card-link group flex h-full flex-col"
+            >
+              <h3
+                className="mb-3 text-lg text-ink"
+                style={{ fontFamily: "var(--font-display)" }}
+              >
+                {page.title}
+              </h3>
+              <p className="mb-6 text-sm leading-relaxed text-muted">
+                {page.metaDescription}
+              </p>
+              <span className="arrow-link mt-auto">
+                Explore <span className="arrow-ne">↗</span>
+              </span>
+            </Link>
+          </Reveal>
+        ))}
+      </div>
+    </section>
+  );
+}
 
 export default function ApplicationsPage() {
   return (
@@ -138,6 +179,9 @@ export default function ApplicationsPage() {
           ))}
         </div>
       </section>
+
+      {/* Emerging application areas from the content registry */}
+      <MoreApplications />
 
       {/* Final CTA */}
       <section className="section-forest section-wide py-[clamp(4.5rem,10vw,7.5rem)] text-center">

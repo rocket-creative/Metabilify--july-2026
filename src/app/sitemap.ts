@@ -1,8 +1,16 @@
 import type { MetadataRoute } from "next";
 import { siteConfig } from "@/lib/site";
+import { liveContent } from "@/content/registry";
+import { familyRoute, pageHref } from "@/types/content";
+import type { PageFamily } from "@/types/content";
 
+/**
+ * The sitemap only lists live content, so pages self register when their status
+ * is promoted from staged to live. This is the release valve that keeps a new
+ * domain from publishing hundreds of pages at once.
+ */
 export default function sitemap(): MetadataRoute.Sitemap {
-  const routes = [
+  const staticRoutes = [
     "",
     "/platform",
     "/applications",
@@ -15,9 +23,20 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/about",
     "/news",
     "/discuss",
+    "/data-assessment",
   ];
 
-  return routes.map((route) => ({
+  const live = liveContent();
+
+  // Only surface a hub when it has at least one live child.
+  const familiesWithLive = new Set<PageFamily>(live.map((p) => p.family));
+  const hubRoutes = Array.from(familiesWithLive).map((f) => familyRoute[f]);
+
+  const contentRoutes = live.map((p) => pageHref(p));
+
+  const all = [...staticRoutes, ...hubRoutes, ...contentRoutes];
+
+  return all.map((route) => ({
     url: `${siteConfig.url}${route}`,
     lastModified: new Date(),
     changeFrequency: route === "" ? "weekly" : "monthly",

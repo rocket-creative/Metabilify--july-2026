@@ -114,6 +114,13 @@ img {
   max-width: 100%;
   height: auto;
   display: block;
+  border-radius: 0.875rem;
+}
+
+/* The brand mark keeps its designed shape. */
+img.no-round,
+.no-round img {
+  border-radius: 0;
 }
 
 :focus-visible {

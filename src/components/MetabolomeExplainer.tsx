@@ -11,13 +11,15 @@ type Stage = 0 | 1 | 2 | 3;
 
 export function MetabolomeExplainer() {
   const sectionRef = useRef<HTMLElement>(null);
+  const pinRef = useRef<HTMLDivElement>(null);
   const progressRef = useRef(0);
   const [stage, setStage] = useState<Stage>(0);
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
     const section = sectionRef.current;
-    if (!section) return;
+    const pinEl = pinRef.current;
+    if (!section || !pinEl) return;
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     const isDesktop = window.matchMedia("(min-width: 810px)").matches;
@@ -32,11 +34,15 @@ export function MetabolomeExplainer() {
         return;
       }
 
+      // Pin an inner element rather than the section itself. The section is a
+      // direct child of <main>, so if GSAP wrapped it in a pin-spacer, React
+      // would fail to remove it on route change ("removeChild ... not a child").
+      // Keeping the pin-spacer inside the section avoids that crash.
       ScrollTrigger.create({
         trigger: section,
         start: "top top",
         end: "+=220%",
-        pin: true,
+        pin: pinEl,
         scrub: 0.65,
         anticipatePin: 1,
         onUpdate: (self) => {
@@ -60,16 +66,17 @@ export function MetabolomeExplainer() {
       className="metabolome-section relative overflow-hidden"
       aria-label="How Metablify recovers more real mass features"
     >
-      <div className="metabolome-progress" aria-hidden="true">
-        {[0, 1, 2, 3].map((i) => (
-          <span
-            key={i}
-            className={`metabolome-dot ${stage >= i ? "is-active" : ""}`}
-          />
-        ))}
-      </div>
+      <div ref={pinRef} className="relative">
+        <div className="metabolome-progress" aria-hidden="true">
+          {[0, 1, 2, 3].map((i) => (
+            <span
+              key={i}
+              className={`metabolome-dot ${stage >= i ? "is-active" : ""}`}
+            />
+          ))}
+        </div>
 
-      <div className="relative mx-auto flex min-h-[100svh] max-w-[90rem] flex-col justify-center px-5 py-16 md:px-10 lg:px-14">
+        <div className="relative mx-auto flex min-h-[100svh] max-w-[90rem] flex-col justify-center px-5 py-16 md:px-10 lg:px-14">
         <div className="grid items-center gap-8 lg:grid-cols-12 lg:gap-8">
           <div className="lg:col-span-5">
             <p className="eyebrow mb-4">Why Metablify</p>
@@ -135,6 +142,7 @@ export function MetabolomeExplainer() {
               </div>
             </div>
           </div>
+        </div>
         </div>
       </div>
     </section>

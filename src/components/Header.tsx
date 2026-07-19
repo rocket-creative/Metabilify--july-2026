@@ -24,10 +24,13 @@ export function Header() {
         scrolled ? "is-scrolled border-stone/60" : "bg-transparent"
       }`}
     >
-      <div className="flex items-center justify-between gap-4 px-5 py-4 md:px-10 lg:px-14">
+      <div className="flex items-center justify-between gap-4 px-5 py-4 md:px-10 lg:px-8 xl:px-14">
         <Logo priority />
 
-        <nav className="hidden items-center gap-8 lg:flex" aria-label="Primary">
+        <nav
+          className="hidden items-center gap-5 lg:flex xl:gap-7"
+          aria-label="Primary"
+        >
           {navLinks.map((link) => {
             const active =
               link.href === "/"
