@@ -7,22 +7,22 @@ import { ChromatogramVisual } from "./ChromatogramVisual";
 type Item = {
   href: string;
   eyebrow: string;
-  title: string;
   body: string;
+  link: string;
 };
 
 const ITEMS: Item[] = [
   {
     href: "/applications/metabolomics",
     eyebrow: "Metabolomics",
-    title: "Turn untargeted LC/MS into cleaner, aligned mass feature results",
-    body: "Stronger foundations for downstream discovery with less manual review, across large and complex sample sets.",
+    body: "Turn complex untargeted LC/MS datasets into cleaner, aligned, and quantified mass-feature results.",
+    link: "Explore Metabolomics",
   },
   {
     href: "/applications/proteomics",
     eyebrow: "Proteomics",
-    title: "Reveal and quantify peptide mass features at scale",
-    body: "A workflow built for alignment, signal clarity, and complex datasets that conventional tools struggle to resolve.",
+    body: "Reveal and quantify peptide mass features across complex LC/MS datasets with a workflow built for scale, alignment, and signal clarity.",
+    link: "Explore Proteomics",
   },
 ];
 
@@ -41,9 +41,20 @@ export function ApplicationsCarousel() {
         <div className="mb-10 flex items-end justify-between gap-6">
           <div>
             <p className="eyebrow mb-4">Applications</p>
-            <h2 className="display display-lg max-w-2xl">
-              One platform. Multiple omics.
+            <h2 className="display display-lg mb-6 max-w-2xl">
+              One Metablify Platform. Multiple Omics.
             </h2>
+            <div className="lead max-w-2xl space-y-4">
+              <p>
+                Turn complex untargeted LC/MS datasets into cleaner, aligned,
+                and quantified mass-feature results.
+              </p>
+              <p>
+                Metablify analyzes the mass-feature layer shared across LC/MS
+                workflows, with leading applications in metabolomics and
+                proteomics.
+              </p>
+            </div>
           </div>
           <div className="section-nav hidden md:inline-flex">
             <button
@@ -70,15 +81,14 @@ export function ApplicationsCarousel() {
             <Link key={item.href} href={item.href} className="card card-link card-split group">
               <div className="card-split-body">
                 <p className="eyebrow mb-4">{item.eyebrow}</p>
-                <h3
-                  className="mb-3 text-2xl text-ink md:text-[1.7rem]"
+                <p
+                  className="mb-8 max-w-md text-xl leading-relaxed text-ink md:text-2xl"
                   style={{ fontFamily: "var(--font-display)" }}
                 >
-                  {item.title}
-                </h3>
-                <p className="mb-8 max-w-md text-muted">{item.body}</p>
+                  {item.body}
+                </p>
                 <span className="arrow-link mt-auto">
-                  Read more <span className="arrow-ne">↗</span>
+                  {item.link} <span className="arrow-ne">↗</span>
                 </span>
               </div>
               <div className="card-split-media">

@@ -6,6 +6,7 @@ import { PageHero, SectionHeading } from "@/components/PageHero";
 import { Reveal } from "@/components/Reveal";
 import { ChromatogramVisual } from "@/components/ChromatogramVisual";
 import { FeatureCompare } from "@/components/FeatureCompare";
+import { MarqueeRibbon } from "@/components/MarqueeRibbon";
 
 export const metadata: Metadata = {
   title: "The Metablify Platform",
@@ -113,6 +114,9 @@ export default function PlatformPage() {
           </div>
         </div>
       </section>
+
+      {/* Scale ribbon — law of large numbers accent */}
+      <MarqueeRibbon />
 
       {/* How it works — forest band with numbered principles */}
       <section className="section-forest section-wide py-[clamp(4.5rem,10vw,7.5rem)]">

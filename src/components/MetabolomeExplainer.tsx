@@ -12,6 +12,7 @@ type Stage = 0 | 1 | 2 | 3;
 export function MetabolomeExplainer() {
   const sectionRef = useRef<HTMLElement>(null);
   const pinRef = useRef<HTMLDivElement>(null);
+  const orbitsRef = useRef<HTMLDivElement>(null);
   const progressRef = useRef(0);
   const [stage, setStage] = useState<Stage>(0);
   const [ready, setReady] = useState(false);
@@ -56,6 +57,43 @@ export function MetabolomeExplainer() {
         onEnterBack: () => setReady(true),
       });
     }, section);
+
+    return () => ctx.revert();
+  }, []);
+
+  // Ambient 3D depth: slowly rotate the orbital shells that frame the point
+  // cloud so the visual reads as a dimensional sphere rather than a flat disc.
+  // GSAP owns the transforms; reduced motion / mobile leave the shells static
+  // but still visible (no opacity/visibility set here or in CSS).
+  useEffect(() => {
+    const group = orbitsRef.current?.querySelector<HTMLElement>(
+      ".metabolome-orbit-group",
+    );
+    if (!group) return;
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const isDesktop = window.matchMedia("(min-width: 810px)").matches;
+    if (reduced || !isDesktop) return;
+
+    // Only the group is animated. The rings keep their CSS 3D tilt (rotateX /
+    // rotateY); rotating the group in 3D orbits those tilted shells so the
+    // cloud reads dimensional. Animating the rings directly would let GSAP
+    // overwrite their tilt transform, so we intentionally leave them to CSS.
+    const ctx = gsap.context(() => {
+      gsap.set(group, { transformPerspective: 1000 });
+      gsap.to(group, {
+        rotationY: 360,
+        duration: 44,
+        ease: "none",
+        repeat: -1,
+      });
+      gsap.to(group, {
+        rotationX: "+=6",
+        duration: 9,
+        ease: "sine.inOut",
+        yoyo: true,
+        repeat: -1,
+      });
+    }, group);
 
     return () => ctx.revert();
   }, []);
@@ -125,7 +163,21 @@ export function MetabolomeExplainer() {
                 reveal={stage >= 1 ? 1 : 0}
               />
 
+              <div
+                ref={orbitsRef}
+                className="metabolome-orbits"
+                aria-hidden="true"
+              >
+                <div className="metabolome-orbit-group">
+                  <span className="metabolome-ring metabolome-ring-1" />
+                  <span className="metabolome-ring metabolome-ring-2" />
+                  <span className="metabolome-ring metabolome-ring-3" />
+                </div>
+              </div>
+
               <div className={`callout callout-main ${stage >= 3 ? "is-on" : ""}`}>
+                <span className="callout-line" aria-hidden="true" />
+                <span className="callout-node" aria-hidden="true" />
                 <p>
                   Metablify reveals a{" "}
                   <strong>broader set of real mass features</strong> across
@@ -133,9 +185,13 @@ export function MetabolomeExplainer() {
                 </p>
               </div>
               <div className={`callout callout-sample ${stage >= 1 ? "is-on" : ""}`}>
+                <span className="callout-line" aria-hidden="true" />
+                <span className="callout-node" aria-hidden="true" />
                 <p>Real mass features present in your sample</p>
               </div>
               <div className={`callout callout-legacy ${stage >= 2 ? "is-on" : ""}`}>
+                <span className="callout-line" aria-hidden="true" />
+                <span className="callout-node" aria-hidden="true" />
                 <p>
                   Legacy recovers only the <em>overlap</em>
                 </p>

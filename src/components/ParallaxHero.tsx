@@ -140,9 +140,8 @@ export function ParallaxHero() {
             </span>
           </h1>
           <p className="lead mt-8 !max-w-lg !text-lg hero-anim hero-lead">
-            Metablify organizes the chaos of large, noisy datasets to extract
-            the signal from the noise and identify mass features other workflows
-            miss.
+            Metablify is an LC/MS platform built on the first principles of
+            physics.
           </p>
           <div className="mt-12 flex flex-wrap gap-4 hero-anim hero-cta">
             <Button href="/platform">Explore Metablify</Button>

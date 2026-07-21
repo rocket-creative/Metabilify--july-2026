@@ -153,7 +153,7 @@ export function ParticleField({
     const geometry = () => {
       const cx = w * 0.5;
       const cy = h * 0.5;
-      const R = Math.min(w, h) * (showLabels ? 0.26 : 0.3);
+      const R = Math.min(w, h) * (showLabelsRef.current ? 0.26 : 0.3);
       return { cx, cy, R };
     };
 
@@ -375,7 +375,7 @@ export function ParticleField({
     };
 
     const layoutLabels = (o: ReturnType<typeof computeOrbits>) => {
-      if (!showLabels) return;
+      if (!showLabelsRef.current) return;
       const { cx, cy, R } = geometry();
       const rise = (1 - labelAlpha) * 16;
 

@@ -603,6 +603,7 @@ img.no-round,
   background: #ffffff;
   border: 1px solid var(--color-stone);
   padding: 0.55rem 0.65rem;
+  z-index: 3;
 }
 
 .callout strong {
@@ -640,10 +641,125 @@ img.no-round,
   max-width: 13rem;
 }
 
+/* Annotation callouts read as labelled points on the 3D sphere:
+   a node dot on the sphere-facing corner + a thin leader line. */
+.callout-node {
+  position: absolute;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--color-white);
+  border: 1.5px solid var(--color-forest);
+  box-shadow: 0 0 0 3px rgba(18, 50, 39, 0.08);
+}
+
+.callout-line {
+  position: absolute;
+  width: 2.7rem;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    rgba(18, 50, 39, 0.55),
+    rgba(18, 50, 39, 0.05)
+  );
+}
+
+.callout-main .callout-node {
+  border-color: var(--color-forest);
+  background: var(--color-lime);
+}
+
+.callout-main .callout-line {
+  top: -0.1rem;
+  right: 0;
+  transform-origin: right center;
+  transform: rotate(-45deg);
+}
+
+.callout-main .callout-node {
+  top: -1.9rem;
+  right: -1.9rem;
+}
+
+.callout-sample .callout-line {
+  bottom: -0.1rem;
+  left: 0;
+  transform-origin: left center;
+  transform: rotate(135deg);
+}
+
+.callout-sample .callout-node {
+  bottom: -1.9rem;
+  left: -1.9rem;
+}
+
+.callout-legacy .callout-line {
+  top: -0.1rem;
+  left: 0;
+  transform-origin: left center;
+  transform: rotate(-135deg);
+}
+
+.callout-legacy .callout-node {
+  top: -1.9rem;
+  left: -1.9rem;
+}
+
+/* Orbital shells that frame the point cloud so it reads dimensional.
+   GSAP rotates the group/rings; these rules only set position + tilt. */
+.metabolome-orbits {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+  perspective: 1000px;
+  z-index: 2;
+}
+
+.metabolome-orbit-group {
+  position: relative;
+  width: min(64%, 24rem);
+  aspect-ratio: 1;
+  transform-style: preserve-3d;
+}
+
+.metabolome-ring {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  border-radius: 50%;
+  border: 1px solid rgba(18, 50, 39, 0.16);
+}
+
+.metabolome-ring-1 {
+  transform: rotateX(74deg);
+}
+
+.metabolome-ring-2 {
+  width: 80%;
+  height: 80%;
+  border-color: rgba(18, 50, 39, 0.12);
+  transform: rotateX(72deg) rotateY(62deg);
+}
+
+.metabolome-ring-3 {
+  width: 92%;
+  height: 92%;
+  border-color: rgba(196, 232, 107, 0.42);
+  transform: rotateX(60deg) rotateY(-40deg);
+}
+
 @media (max-width: 809px) {
   .callout-sample,
   .callout-legacy,
-  .metabolome-progress {
+  .metabolome-progress,
+  .metabolome-orbits {
+    display: none;
+  }
+
+  .callout-node,
+  .callout-line {
     display: none;
   }
 
@@ -719,6 +835,209 @@ img.no-round,
 
 .story-row:last-child {
   border-bottom: 1px solid var(--color-stone);
+}
+
+/* Process flow (Getting Started) — horizontal 3D/particle connective motion */
+.process-flow {
+  background: var(--color-white);
+  border-top: 1px solid var(--color-stone);
+  border-bottom: 1px solid var(--color-stone);
+}
+
+.process-flow-head {
+  max-width: 46rem;
+  margin-bottom: clamp(3rem, 6vw, 4.5rem);
+}
+
+.process-flow-track-wrap {
+  position: relative;
+}
+
+.process-flow-track {
+  position: relative;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+@media (min-width: 810px) {
+  .process-flow-track {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: clamp(1.5rem, 3vw, 2.75rem);
+  }
+}
+
+.process-flow-step {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 1.1rem;
+}
+
+@media (min-width: 810px) {
+  .process-flow-step {
+    display: block;
+    text-align: center;
+  }
+}
+
+.process-flow-marker {
+  position: relative;
+  flex: none;
+}
+
+@media (min-width: 810px) {
+  .process-flow-marker {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+  }
+}
+
+.process-flow-node {
+  position: relative;
+  width: 3rem;
+  height: 3rem;
+  display: grid;
+  place-items: center;
+  z-index: 1;
+}
+
+/* White disc so the connecting rail visually terminates at each node. */
+.process-flow-node::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: var(--color-white);
+  z-index: -1;
+}
+
+.process-flow-node-core {
+  width: 0.9rem;
+  height: 0.9rem;
+  border-radius: 50%;
+  background: var(--color-forest);
+  box-shadow: 0 0 0 6px rgba(18, 50, 39, 0.08);
+}
+
+.process-flow-orbit {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 1px solid rgba(18, 50, 39, 0.28);
+}
+
+.process-flow-orbit::after {
+  content: "";
+  position: absolute;
+  top: -3px;
+  left: 50%;
+  width: 5px;
+  height: 5px;
+  margin-left: -2.5px;
+  border-radius: 50%;
+  background: var(--color-lime);
+  box-shadow: 0 0 8px rgba(196, 232, 107, 0.9);
+}
+
+/* Vertical connector between stacked steps (mobile), from this node down to
+   the next one regardless of copy height. */
+.process-flow-step:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  top: 3rem;
+  bottom: -2.5rem;
+  left: 1.5rem;
+  width: 1px;
+  background: linear-gradient(
+    180deg,
+    rgba(18, 50, 39, 0.22),
+    rgba(18, 50, 39, 0.05)
+  );
+}
+
+@media (min-width: 810px) {
+  .process-flow-step:not(:last-child)::after {
+    display: none;
+  }
+}
+
+.process-flow-num {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  color: var(--color-faint);
+  margin: 0 0 0.4rem;
+}
+
+.process-flow-step-title {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  line-height: 1.2;
+  color: var(--color-ink);
+  margin: 0 0 0.6rem;
+}
+
+.process-flow-step-body {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--color-muted);
+  margin: 0;
+}
+
+@media (min-width: 810px) {
+  .process-flow-step-title {
+    font-size: 1.3rem;
+  }
+
+  .process-flow-step-body {
+    font-size: 0.95rem;
+  }
+}
+
+/* Horizontal rail connecting the node centres (desktop only). */
+.process-flow-rail {
+  display: none;
+}
+
+@media (min-width: 810px) {
+  .process-flow-rail {
+    display: block;
+    position: absolute;
+    top: calc(1.5rem - 1px);
+    left: 12.5%;
+    right: 12.5%;
+    height: 2px;
+    transform-origin: left center;
+    background: linear-gradient(
+      90deg,
+      rgba(18, 50, 39, 0.14),
+      rgba(18, 50, 39, 0.28),
+      rgba(18, 50, 39, 0.14)
+    );
+    z-index: 0;
+  }
+}
+
+.process-flow-spark {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 10px;
+  height: 10px;
+  margin: -5px 0 0 -5px;
+  border-radius: 50%;
+  background: var(--color-lime);
+  box-shadow: 0 0 10px 2px rgba(196, 232, 107, 0.85);
+}
+
+.process-flow-cta {
+  margin-top: clamp(3rem, 6vw, 4.5rem);
 }
 
 @keyframes chromatogram-draw {
@@ -836,5 +1155,124 @@ html.lenis body {
 
   .btn .arrow {
     transition: none;
+  }
+}
+
+/* ============================================================
+   Scale ribbon — "We make scale possible"
+   White band, black text, funky display face for the anchor.
+   ============================================================ */
+.mr-ribbon {
+  position: relative;
+  width: 100%;
+  max-width: none;
+  overflow: hidden;
+  background: var(--color-forest);
+  /* Room for waves both above and below the centered ticker bar. */
+  padding-block: clamp(2rem, 5vw, 3.75rem);
+}
+
+/* Full-height green wave field, behind the marquee bar (3D depth). */
+.mr-waves {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.mr-waves-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* White ticker bar — hard clipped edges, no fade, floating over the waves. */
+.mr-ticker {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  background: var(--color-white);
+  color: var(--color-ink);
+  padding-block: clamp(0.7rem, 1.6vw, 1.15rem);
+  overflow: hidden;
+  box-shadow: 0 14px 34px -16px rgba(0, 0, 0, 0.55);
+}
+
+/* Static fallback line — shown only under reduced motion / no JS. */
+.mr-reduced {
+  display: none;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  text-align: center;
+  padding-inline: 1.5rem;
+}
+
+.mr-viewport {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.mr-scroller {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  width: max-content;
+  will-change: transform;
+}
+
+.mr-track {
+  display: flex;
+  flex: 0 0 auto;
+  flex-wrap: nowrap;
+  align-items: center;
+}
+
+.mr-item {
+  display: inline-flex;
+  align-items: center;
+  gap: clamp(1.25rem, 3vw, 2.5rem);
+  white-space: nowrap;
+  padding-right: clamp(1.25rem, 3vw, 2.5rem);
+  line-height: 1;
+}
+
+.mr-anchor {
+  font-family: var(--font-syne), var(--font-display), system-ui, sans-serif;
+  font-weight: 800;
+  font-size: clamp(1.05rem, 2vw, 1.7rem);
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  line-height: 1;
+  color: var(--color-ink);
+}
+
+.mr-support {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-weight: 400;
+  font-size: clamp(0.85rem, 1.3vw, 1.05rem);
+  text-transform: lowercase;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  color: var(--color-muted);
+}
+
+.mr-dot {
+  display: inline-flex;
+  align-items: center;
+  color: var(--color-forest);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mr-viewport {
+    display: none;
+  }
+  .mr-reduced {
+    display: flex;
   }
 }

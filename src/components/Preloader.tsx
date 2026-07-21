@@ -7,19 +7,20 @@ export function Preloader() {
   const [done, setDone] = useState(false);
 
   useEffect(() => {
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduced) {
+    const finish = () => {
       setDone(true);
       window.dispatchEvent(new Event("metablify:ready"));
-      return;
+    };
+
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduced) {
+      // Skip the intro, but defer to a frame so state is not set synchronously
+      // inside the effect body.
+      const raf = requestAnimationFrame(finish);
+      return () => cancelAnimationFrame(raf);
     }
 
-    const tl = gsap.timeline({
-      onComplete: () => {
-        setDone(true);
-        window.dispatchEvent(new Event("metablify:ready"));
-      },
-    });
+    const tl = gsap.timeline({ onComplete: finish });
 
     tl.fromTo(
       ".preloader-mark",

@@ -39,18 +39,18 @@ const IdentifyIcon = (
 
 const CAPABILITIES: Capability[] = [
   {
-    title: "Detect",
-    body: "Surface real mass features buried in noisy LC/MS data that legacy workflows leave behind.",
+    title: "Real Mass Features Get Lost in the Noise",
+    body: "Large LC/MS datasets are noisy, complex, and difficult to align across samples. Real mass features can be missed, split, or buried in background signal. Metablify organizes the chaos of large, noisy datasets to extract the signal from the noise and identify mass features other workflows miss.",
     icon: DetectIcon,
   },
   {
-    title: "Amplify",
-    body: "Put the law of large numbers to work, strengthening consistent signal and suppressing noise.",
+    title: "Metablify Amplifies What is Real",
+    body: "Cleaner, higher-confidence mass-feature data reduces manual review and provides a stronger foundation for downstream metabolomics, proteomics, and discovery.",
     icon: AmplifyIcon,
   },
   {
-    title: "Identify",
-    body: "Resolve and align mass features across large sample sets for cleaner, quantifiable results.",
+    title: "Get More From Every Experiment",
+    body: "Don’t leave real mass features in the noise. Legacy workflows may recover only a subset of detectable mass features. Metablify reveals a broader set of real mass features across LC/MS datasets.",
     icon: IdentifyIcon,
   },
 ];
@@ -61,13 +61,9 @@ export function CapabilitiesBand() {
       <div className="mx-auto max-w-[80rem] px-5 md:px-10">
         <Reveal>
           <p className="eyebrow mb-4">The platform</p>
-          <h2 className="display display-lg mb-4 max-w-2xl">
-            Built on the first principles of physics
+          <h2 className="display display-lg mb-14 max-w-2xl">
+            Discovery starts with the right mass features.
           </h2>
-          <p className="lead mb-14">
-            Metablify organizes the chaos of large, noisy datasets to extract
-            signal from noise and reveal mass features other workflows miss.
-          </p>
         </Reveal>
 
         <div className="grid gap-x-10 gap-y-12 md:grid-cols-3">
