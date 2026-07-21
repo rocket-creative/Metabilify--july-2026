@@ -28,7 +28,7 @@ export function Header() {
         <Logo priority />
 
         <nav
-          className="hidden items-center gap-5 lg:flex xl:gap-7"
+          className="hidden flex-nowrap items-center gap-4 lg:flex xl:gap-7"
           aria-label="Primary"
         >
           {navLinks.map((link) => {
@@ -41,7 +41,7 @@ export function Header() {
               <Link
                 key={link.href}
                 href={link.href}
-                className={`text-[0.9rem] tracking-wide transition-colors ${
+                className={`whitespace-nowrap text-[0.82rem] tracking-wide transition-colors xl:text-[0.9rem] ${
                   active
                     ? "font-semibold text-ink"
                     : "text-muted hover:text-ink"
@@ -53,7 +53,7 @@ export function Header() {
           })}
           <Link
             href="/discuss"
-            className="btn btn-primary !px-4 !py-2.5 !text-[0.7rem]"
+            className="btn btn-primary whitespace-nowrap !px-4 !py-2.5 !text-[0.7rem]"
           >
             <span>Discuss a Project</span>
             <span className="arrow" aria-hidden="true">

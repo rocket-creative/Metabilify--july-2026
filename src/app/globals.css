@@ -546,6 +546,35 @@ img.no-round,
   opacity: 1;
 }
 
+/* Full-bleed sphere band: spans the viewport width, capped in height so the
+   whole visual stays within the fold. Side borders drop for the full-bleed
+   look; the top/bottom rules frame it as a band. */
+.metabolome-stage-wide {
+  height: clamp(26rem, 72vh, 56rem);
+  border-left: none;
+  border-right: none;
+}
+
+/* The framing shells + callouts sit in a centered square that tracks the band
+   height. The canvas sizes the sphere from min(w,h) = height, so a square keeps
+   the percentage-positioned callouts hugging the sphere at any viewport size. */
+.metabolome-annotations {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  height: 100%;
+  aspect-ratio: 1;
+  max-width: 100%;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+/* Stacked stage descriptions above the sphere (editorial ruled columns). */
+.metabolome-step {
+  border-top: 2px solid var(--color-stone);
+  padding-top: 0.85rem;
+}
+
 .metabolome-progress {
   position: absolute;
   right: clamp(1rem, 3vw, 2.5rem);
@@ -719,7 +748,9 @@ img.no-round,
 
 .metabolome-orbit-group {
   position: relative;
-  width: min(64%, 24rem);
+  /* Scale with the band so the rings frame the (now larger) sphere from the
+     outside instead of being swallowed inside the particle cloud. */
+  width: min(80%, 52rem);
   aspect-ratio: 1;
   transform-style: preserve-3d;
 }
