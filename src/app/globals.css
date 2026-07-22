@@ -1233,11 +1233,9 @@ html.lenis body {
   max-width: none;
   overflow: hidden;
   background: var(--color-forest);
-  /* Breathing room above and below the band so it reads as its own floating
-     ticker rather than merging with the sections around it (e.g. the forest
-     bands on the platform page). */
-  margin-block: clamp(2.5rem, 6vw, 5rem);
-  /* Room for waves both above and below the centered ticker bar. */
+  /* Room for waves both above and below the centered ticker bar. All spacing is
+     internal (green) padding — no outer margin — so the ribbon never opens a
+     white gap between the solid-green sections it sits between. */
   padding-block: clamp(2rem, 5vw, 3.75rem);
 }
 
