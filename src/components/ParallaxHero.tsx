@@ -128,7 +128,7 @@ export function ParallaxHero() {
       <div className="hero-parallax-slow pointer-events-none absolute inset-0 bg-white" aria-hidden="true" />
 
       <div className="relative z-10 mx-auto grid max-w-[90rem] items-center gap-8 px-5 py-12 md:px-10 md:py-14 lg:grid-cols-12 lg:gap-4 lg:px-16">
-        <div className="hero-parallax-fast lg:col-span-6">
+        <div className="hero-parallax-fast relative z-10 lg:col-span-6">
           <p className="eyebrow mb-6 hero-anim hero-eyebrow">
             LC/MS platform · First principles of physics
           </p>
@@ -151,19 +151,20 @@ export function ParallaxHero() {
         </div>
 
         <div className="relative lg:col-span-6">
-          <div className="hero-canvas-frame relative aspect-[5/4] w-full overflow-hidden md:aspect-[4/3]">
-            <ParticleField
-              className="absolute inset-0"
-              interactive
-              showOrbits
-              tone="green"
-              flares
-            />
+          <div className="hero-canvas-frame relative aspect-[5/4] w-full md:aspect-[4/3]">
+            <div className="absolute inset-0 z-0 lg:left-[-110%] lg:right-[-10%] lg:top-[-83%] lg:bottom-[-83%]">
+              <ParticleField
+                className="absolute inset-0"
+                interactive
+                showOrbits
+                tone="green"
+                transparent
+                radiusScale={2}
+                orbitScale={0.5}
+              />
+            </div>
             <div className="pointer-events-none absolute left-4 top-4 font-mono text-[0.62rem] uppercase tracking-[0.16em] text-faint">
               Metabolome · m/z
-            </div>
-            <div className="pointer-events-none absolute bottom-4 right-4 font-mono text-[0.62rem] uppercase tracking-[0.16em] text-faint">
-              Move to explore
             </div>
           </div>
         </div>

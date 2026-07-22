@@ -35,6 +35,9 @@ type Props = {
   tone?: "blue" | "green";
   flares?: boolean;
   reveal?: number;
+  transparent?: boolean;
+  radiusScale?: number;
+  orbitScale?: number;
 };
 
 const PI2 = Math.PI * 2;
@@ -48,6 +51,9 @@ export function ParticleField({
   tone = "blue",
   flares = false,
   reveal = 1,
+  transparent = false,
+  radiusScale = 1,
+  orbitScale = 1,
 }: Props) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
@@ -150,7 +156,8 @@ export function ParticleField({
     const geometry = () => {
       const cx = w * 0.5;
       const cy = h * 0.5;
-      const R = Math.min(w, h) * (showLabelsRef.current ? 0.26 : 0.3);
+      const R =
+        Math.min(w, h) * (showLabelsRef.current ? 0.26 : 0.3) * radiusScale;
       return { cx, cy, R };
     };
 
@@ -346,8 +353,8 @@ export function ParticleField({
       const py = cy - R * 0.02;
       const driftX = Math.cos(t * 0.11) * R * 0.05;
       const driftY = Math.sin(t * 0.09) * R * 0.04;
-      const sr = R * 0.34;
-      const lr = R * 0.3;
+      const sr = R * 0.34 * orbitScale;
+      const lr = R * 0.3 * orbitScale;
       return {
         c1x: px - R * 0.04 + driftX,
         c1y: py - R * 0.12 + driftY,
@@ -436,8 +443,10 @@ export function ParticleField({
       }
 
       ctx.clearRect(0, 0, w, h);
-      ctx.fillStyle = palette.bg;
-      ctx.fillRect(0, 0, w, h);
+      if (!transparent) {
+        ctx.fillStyle = palette.bg;
+        ctx.fillRect(0, 0, w, h);
+      }
 
       const bgGlow = ctx.createRadialGradient(cx, cy, R * 0.1, cx, cy, R * 1.3);
       bgGlow.addColorStop(0, palette.glow);
@@ -546,7 +555,7 @@ export function ParticleField({
       canvas.removeEventListener("pointermove", onMove);
       canvas.removeEventListener("pointerleave", onLeave);
     };
-  }, [interactive, density, tone, flares]);
+  }, [interactive, density, tone, flares, transparent, radiusScale, orbitScale]);
 
   const labelColor = tone === "green" ? "#1f4d2e" : "#33538f";
   const labelLine =

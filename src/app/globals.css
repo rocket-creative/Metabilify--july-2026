@@ -553,8 +553,7 @@ img.no-round,
 }
 
 .hero-canvas-frame {
-  border: 1px solid var(--color-stone);
-  background: var(--color-white);
+  background: transparent;
 }
 
 .hero-scroll-hint {
