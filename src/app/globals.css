@@ -459,6 +459,69 @@ img.no-round,
   }
 }
 
+.applications-grid {
+  display: grid;
+  gap: 1.5rem;
+}
+
+@media (min-width: 810px) {
+  .applications-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.app-card {
+  padding: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-card-media {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  background: var(--color-neutral);
+  border-bottom: 1px solid var(--color-stone);
+}
+
+.app-card-body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding: clamp(1.75rem, 3vw, 2.5rem);
+}
+
+.app-card-index {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  color: var(--color-forest);
+  margin-bottom: 0.85rem;
+}
+
+.app-card-points {
+  display: grid;
+  gap: 0.6rem;
+  margin-block: 1.35rem 1.85rem;
+}
+
+.app-card-point {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--color-muted);
+}
+
+.app-card-point .dot {
+  flex: none;
+  width: 5px;
+  height: 5px;
+  margin-top: 0.5rem;
+  background: var(--color-lime);
+}
+
 .section-sage,
 .section-grey {
   background: var(--color-neutral);
