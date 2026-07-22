@@ -163,9 +163,6 @@ export function ParallaxHero() {
                 orbitScale={0.5}
               />
             </div>
-            <div className="pointer-events-none absolute left-4 top-4 font-mono text-[0.62rem] uppercase tracking-[0.16em] text-faint">
-              Metabolome · m/z
-            </div>
           </div>
         </div>
       </div>
