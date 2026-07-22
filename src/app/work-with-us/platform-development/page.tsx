@@ -152,7 +152,7 @@ export default function PlatformDevelopmentPage() {
       </section>
 
       {}
-      <section className="section section-sage text-center">
+      <section className="section wash-botanical text-center">
         <Reveal>
           <h2 className="display display-md mx-auto mb-6 max-w-2xl">
             Have a workflow Metablify should reach?

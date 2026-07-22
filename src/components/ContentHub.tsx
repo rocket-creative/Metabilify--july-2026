@@ -29,7 +29,7 @@ export function ContentHub({
       <JsonLd data={breadcrumbSchema(crumbs)} />
       <PageHero eyebrow={eyebrow} title={title} lead={lead} />
 
-      <section className="section">
+      <section className="section section-sage">
         {pages.length === 0 ? (
           <Reveal>
             <div className="border border-dashed border-stone bg-neutral/50 p-10 text-center md:p-16">

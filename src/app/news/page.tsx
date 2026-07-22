@@ -41,9 +41,9 @@ export default function NewsPage() {
         lead="Announcements and milestones will appear here as they are published."
       />
 
-      <section className="section">
+      <section className="section section-sage">
         <Reveal>
-          <div className="border border-dashed border-stone bg-neutral/50 p-10 text-center md:p-16">
+          <div className="border border-dashed border-stone bg-white p-10 text-center md:p-16">
             <p className="eyebrow mb-4">Coming soon</p>
             <p className="mx-auto mb-8 max-w-md text-muted leading-relaxed">
               Check back for news from the Metablify team. In the meantime, reach
@@ -55,7 +55,7 @@ export default function NewsPage() {
       </section>
 
       {}
-      <section className="section section-sage">
+      <section className="section">
         <Reveal>
           <p className="eyebrow mb-4">What to expect</p>
           <h2 className="display display-md mb-8 max-w-2xl md:mb-12">

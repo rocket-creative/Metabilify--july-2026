@@ -50,7 +50,7 @@ export default function CollaborationsPage() {
       </PageHero>
 
       {}
-      <section className="section">
+      <section className="section section-sage">
         <Reveal>
           <SectionHeading
             eyebrow="Why collaborate"
@@ -70,7 +70,7 @@ export default function CollaborationsPage() {
       </section>
 
       {}
-      <section className="section section-sage">
+      <section className="section">
         <Reveal>
           <SectionHeading
             eyebrow="Who it fits"

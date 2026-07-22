@@ -64,7 +64,7 @@ export default function ServicesPage() {
       </PageHero>
 
       {}
-      <section className="section">
+      <section className="section section-sage">
         <Reveal>
           <SectionHeading
             eyebrow="How it works"
@@ -91,7 +91,7 @@ export default function ServicesPage() {
       </section>
 
       {}
-      <section className="section section-sage">
+      <section className="section">
         <Reveal>
           <SectionHeading
             eyebrow="What you get"
@@ -116,7 +116,7 @@ export default function ServicesPage() {
       </section>
 
       {}
-      <section className="section">
+      <section className="section section-sage">
         <div className="grid gap-8 md:grid-cols-2 md:gap-10 lg:grid-cols-12">
           <div className="lg:col-span-5">
             <Reveal>

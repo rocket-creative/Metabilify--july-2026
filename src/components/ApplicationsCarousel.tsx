@@ -42,7 +42,7 @@ const APPLICATIONS: Application[] = [
 
 export function ApplicationsCarousel() {
   return (
-    <section className="section-forest section-wide band-y">
+    <section className="wash-botanical section-wide band-y">
       <div className="gutter-x mx-auto max-w-[80rem]">
         <Reveal>
           <div className="mb-10 max-w-2xl md:mb-14">
@@ -60,7 +60,7 @@ export function ApplicationsCarousel() {
 
         <div className="applications-grid">
           {APPLICATIONS.map((app, i) => (
-            <Reveal key={app.href} delay={i * 120}>
+            <Reveal key={app.href} delay={i * 120} className="h-full">
               <Link href={app.href} className="card card-link app-card group">
                 <div className="app-card-media">{app.visual}</div>
                 <div className="app-card-body">

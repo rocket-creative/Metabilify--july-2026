@@ -35,9 +35,9 @@ export function MetabolomeExplainer() {
 
       ScrollTrigger.create({
         trigger: section,
-        start: "top 78%",
-        end: "bottom 22%",
-        scrub: 0.65,
+        start: "top 72%",
+        end: "bottom 40%",
+        scrub: 0.5,
         onUpdate: (self) => {
           progressRef.current = self.progress;
           if (self.progress < 0.25) setStage(0);
@@ -85,10 +85,11 @@ export function MetabolomeExplainer() {
   return (
     <section
       ref={sectionRef}
-      className="metabolome-section relative overflow-hidden"
+      className="metabolome-section relative"
       aria-label="How Metablify recovers more real mass features"
     >
       <div ref={pinRef} className="relative">
+        <div>
         <div className="metabolome-progress" aria-hidden="true">
           {[0, 1, 2, 3].map((i) => (
             <span
@@ -98,7 +99,7 @@ export function MetabolomeExplainer() {
           ))}
         </div>
 
-        <div className="relative mx-auto max-w-[90rem] px-5 py-14 md:px-10 md:py-20 lg:px-14">
+        <div className="relative mx-auto max-w-[90rem] px-5 py-12 md:px-10 md:py-16 lg:px-14">
         <div className="grid items-center gap-8 lg:grid-cols-12 lg:gap-8">
           <div className="lg:col-span-5">
             <p className="eyebrow mb-6">Why Metablify</p>
@@ -133,7 +134,7 @@ export function MetabolomeExplainer() {
 
           <div className="relative lg:col-span-7">
             <div
-              className={`metabolome-stage relative aspect-[4/3] w-full overflow-hidden md:aspect-[16/11] ${ready ? "is-ready" : ""}`}
+              className={`metabolome-stage relative aspect-[4/3] w-full overflow-hidden md:aspect-[16/10] ${ready ? "is-ready" : ""}`}
             >
               <ParticleField
                 className="absolute inset-0"
@@ -155,8 +156,9 @@ export function MetabolomeExplainer() {
                   <span className="metabolome-ring metabolome-ring-3" />
                 </div>
               </div>
-            </div>
           </div>
+        </div>
+        </div>
         </div>
         </div>
       </div>

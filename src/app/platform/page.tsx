@@ -81,7 +81,7 @@ export default function PlatformPage() {
       </PageHero>
 
       {}
-      <section className="section">
+      <section className="section section-sage">
         <div className="grid items-center gap-8 md:gap-10 lg:grid-cols-12">
           <div className="lg:col-span-6">
             <Reveal>
@@ -153,7 +153,7 @@ export default function PlatformPage() {
       </section>
 
       {}
-      <section className="section section-sage">
+      <section className="section">
         <Reveal>
           <SectionHeading
             eyebrow="The difference"
@@ -165,7 +165,7 @@ export default function PlatformPage() {
       </section>
 
       {}
-      <section className="section">
+      <section className="section section-sage">
         <Reveal>
           <SectionHeading
             eyebrow="Capabilities"
@@ -190,7 +190,7 @@ export default function PlatformPage() {
       </section>
 
       {}
-      <section className="section section-sage">
+      <section className="section">
         <Reveal>
           <SectionHeading
             eyebrow="Outcome"

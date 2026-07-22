@@ -65,7 +65,7 @@ export default function MetabolomicsPage() {
       </PageHero>
 
       {}
-      <section className="section">
+      <section className="section section-sage">
         <div className="grid items-center gap-8 md:gap-10 lg:grid-cols-12">
           <div className="lg:col-span-6">
             <Reveal>

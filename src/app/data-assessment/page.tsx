@@ -61,9 +61,9 @@ export default function DataAssessmentPage() {
       />
 
       {}
-      <section className="section">
+      <section className="section section-sage">
         <Reveal>
-          <div className="border-l-4 border-ink bg-neutral p-8 md:p-10">
+          <div className="border-l-4 border-ink bg-white p-8 md:p-10">
             <p className="eyebrow mb-3">Confidentiality</p>
             <p
               className="text-xl leading-relaxed text-ink"
@@ -79,7 +79,7 @@ export default function DataAssessmentPage() {
       </section>
 
       {}
-      <section className="section section-sage">
+      <section className="section">
         <Reveal>
           <SectionHeading eyebrow="What to send" title="Three things, nothing heavy" />
         </Reveal>
@@ -101,7 +101,7 @@ export default function DataAssessmentPage() {
       </section>
 
       {}
-      <section className="section">
+      <section className="section section-sage">
         <div className="grid gap-8 md:grid-cols-2 md:gap-10 lg:grid-cols-12 lg:items-start">
           <div className="lg:col-span-5">
             <Reveal>
@@ -138,7 +138,7 @@ export default function DataAssessmentPage() {
       </section>
 
       {}
-      <section className="section section-sage">
+      <section className="section">
         <Reveal>
           <SectionHeading
             eyebrow="What you get back"
@@ -163,7 +163,7 @@ export default function DataAssessmentPage() {
       </section>
 
       {}
-      <section className="section">
+      <section className="section section-sage">
         <div className="grid gap-8 md:gap-10 lg:grid-cols-12">
           <div className="lg:col-span-5">
             <Reveal>

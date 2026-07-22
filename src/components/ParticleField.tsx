@@ -81,6 +81,7 @@ export function ParticleField({
 
     let raf = 0;
     let running = true;
+    let visible = true;
     let w = 0;
     let h = 0;
     let t = 0;
@@ -169,7 +170,7 @@ export function ParticleField({
     const seed = () => {
       const perf = perfFactor();
       const count = Math.floor(
-        Math.min(22000, Math.max(2500, (w * h) / 22)) * density * perf,
+        Math.min(9000, Math.max(2200, (w * h) / 40)) * density * perf,
       );
       particles = [];
       for (let i = 0; i < count; i++) {
@@ -250,7 +251,7 @@ export function ParticleField({
     };
 
     const resize = () => {
-      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      dpr = Math.min(window.devicePixelRatio || 1, 1.5);
       const rect = canvas.getBoundingClientRect();
       w = rect.width;
       h = rect.height;
@@ -516,7 +517,7 @@ export function ParticleField({
     };
 
     const frame = () => {
-      if (!running) return;
+      if (!running || !visible) return;
       t += 0.016;
       drawScene();
       raf = requestAnimationFrame(frame);
@@ -541,6 +542,19 @@ export function ParticleField({
       frame();
     }
 
+    let io: IntersectionObserver | null = null;
+    if (!reduced && "IntersectionObserver" in window) {
+      io = new IntersectionObserver(
+        (entries) => {
+          const wasVisible = visible;
+          visible = entries.some((e) => e.isIntersecting);
+          if (visible && !wasVisible && running) frame();
+        },
+        { rootMargin: "160px" },
+      );
+      io.observe(canvas);
+    }
+
     window.addEventListener("resize", resize);
     const coarse = window.matchMedia("(pointer: coarse)").matches;
     if (interactive && !reduced && !coarse) {
@@ -551,6 +565,7 @@ export function ParticleField({
     return () => {
       running = false;
       cancelAnimationFrame(raf);
+      io?.disconnect();
       window.removeEventListener("resize", resize);
       canvas.removeEventListener("pointermove", onMove);
       canvas.removeEventListener("pointerleave", onLeave);

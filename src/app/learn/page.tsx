@@ -51,7 +51,7 @@ export default function LearnHub() {
         lead="Most results in untargeted LC/MS are decided at the feature layer, long before a compound has a name. These pages explain that layer in plain, technical terms."
       />
 
-      <section className="section">
+      <section className="section section-sage">
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {cards.map((card, i) => (
             <Reveal key={card.href} delay={i * 70}>

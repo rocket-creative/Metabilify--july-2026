@@ -75,7 +75,7 @@ export default function WorkWithUsPage() {
       </PageHero>
 
       {}
-      <section className="section">
+      <section className="section section-sage">
         <Reveal>
           <SectionHeading
             eyebrow="Three ways in"
@@ -109,7 +109,7 @@ export default function WorkWithUsPage() {
       </section>
 
       {}
-      <section className="section-wide section-sage band-y">
+      <section className="section-wide band-y wash-botanical">
         <div className="gutter-x mx-auto max-w-[80rem]">
           <Reveal>
             <p className="eyebrow mb-4">Getting started</p>

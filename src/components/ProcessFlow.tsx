@@ -121,7 +121,7 @@ export function ProcessFlow() {
   return (
     <section
       ref={sectionRef}
-      className="process-flow section-wide band-y"
+      className="process-flow section-wide section-grey band-y"
       aria-label="Getting started with Metablify"
     >
       <div className="gutter-x mx-auto max-w-[80rem]">

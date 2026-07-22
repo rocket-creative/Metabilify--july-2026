@@ -28,7 +28,7 @@ export default function DiscussPage() {
         lead="Bring us your samples, LC/MS data, or workflow challenge. We will help determine the right path forward."
       />
 
-      <section className="section">
+      <section className="section section-sage">
         <div className="grid gap-8 md:gap-10 lg:grid-cols-12">
           <div className="lg:col-span-5">
             <Reveal>

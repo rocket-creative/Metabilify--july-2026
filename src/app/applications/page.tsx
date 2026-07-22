@@ -41,7 +41,7 @@ function MoreApplications() {
   const pages = byFamily("application").filter((p) => p.status !== "draft");
   if (pages.length === 0) return null;
   return (
-    <section className="section">
+    <section className="section section-sage">
       <Reveal>
         <SectionHeading
           eyebrow="More application areas"
@@ -95,7 +95,7 @@ export default function ApplicationsPage() {
       </PageHero>
 
       {}
-      <section className="section">
+      <section className="section section-sage">
         <div className="grid gap-8 md:gap-10 lg:grid-cols-12 lg:items-start">
           <div className="lg:col-span-5">
             <Reveal>
@@ -142,7 +142,7 @@ export default function ApplicationsPage() {
       </section>
 
       {}
-      <section className="section section-sage">
+      <section className="section">
         <Reveal>
           <SectionHeading eyebrow="Explore" title="Leading applications" />
         </Reveal>
