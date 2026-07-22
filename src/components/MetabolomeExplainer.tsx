@@ -18,23 +18,23 @@ const STAGES: {
   {
     stage: 0,
     phase: "cloud",
-    label: "01 Noise",
+    label: "01",
     title: "Don’t leave real mass features in the noise.",
     body: "Large LC/MS datasets are noisy, complex, and difficult to align across samples. Real mass features can be missed, split, or buried in background signal.",
   },
   {
     stage: 1,
     phase: "legacy",
-    label: "02 Legacy",
-    title: "Legacy recovers only a subset",
-    body: "Legacy workflows may recover only a subset of detectable mass features.",
+    label: "02",
+    title: "Legacy workflows may recover only a subset of detectable mass features.",
+    body: "Don’t leave real mass features in the noise.",
   },
   {
     stage: 2,
     phase: "metablify",
-    label: "03 Metablify",
-    title: "Metablify reveals what is real",
-    body: "Metablify reveals a broader set of real mass features across LC/MS datasets.",
+    label: "03",
+    title: "Metablify reveals a broader set of real mass features across LC/MS datasets.",
+    body: "Metablify organizes the chaos of large, noisy datasets to extract the signal from the noise and identify mass features other workflows miss.",
   },
 ];
 

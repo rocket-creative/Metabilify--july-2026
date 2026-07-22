@@ -7,6 +7,7 @@ import { ParticleField } from "./ParticleField";
 
 export function ParallaxHero() {
   const rootRef = useRef<HTMLElement>(null);
+  const orbitsRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const root = rootRef.current;
@@ -112,6 +113,34 @@ export function ParallaxHero() {
     };
   }, []);
 
+  useEffect(() => {
+    const group = orbitsRef.current?.querySelector<HTMLElement>(
+      ".metabolome-orbit-group",
+    );
+    if (!group) return;
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduced) return;
+
+    const ctx = gsap.context(() => {
+      gsap.set(group, { transformPerspective: 1000 });
+      gsap.to(group, {
+        rotationY: 360,
+        duration: 44,
+        ease: "none",
+        repeat: -1,
+      });
+      gsap.to(group, {
+        rotationX: "+=6",
+        duration: 9,
+        ease: "sine.inOut",
+        yoyo: true,
+        repeat: -1,
+      });
+    }, group);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
     <section ref={rootRef} className="hero-vireo relative overflow-hidden">
       <div className="hero-parallax-slow pointer-events-none absolute inset-0 bg-white" aria-hidden="true" />
@@ -135,17 +164,29 @@ export function ParallaxHero() {
 
         <div className="relative lg:col-span-6">
           <div className="hero-canvas-frame relative mx-auto aspect-square w-[72%] max-w-[18rem] sm:max-w-[22rem] md:w-full md:max-w-none md:aspect-[4/3]">
-            <div className="absolute inset-0 z-0 lg:left-[-110%] lg:right-[-10%] lg:top-[-83%] lg:bottom-[-83%]">
+            <div className="hero-particle-stage absolute inset-0 z-0 lg:left-[-110%] lg:right-[-10%] lg:top-[-83%] lg:bottom-[-83%]">
               <ParticleField
                 className="absolute inset-0"
                 interactive
-                showOrbits
+                showOrbits={false}
                 tone="green"
                 transparent
                 radiusScale={2}
                 orbitScale={0.5}
                 fieldOffsetX={0.14}
               />
+
+              <div
+                ref={orbitsRef}
+                className="metabolome-orbits hero-artistic-orbits"
+                aria-hidden="true"
+              >
+                <div className="metabolome-orbit-group">
+                  <span className="metabolome-ring metabolome-ring-1" />
+                  <span className="metabolome-ring metabolome-ring-2" />
+                  <span className="metabolome-ring metabolome-ring-3" />
+                </div>
+              </div>
             </div>
           </div>
         </div>

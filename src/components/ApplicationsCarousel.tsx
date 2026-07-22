@@ -156,7 +156,7 @@ function MetaboliteField() {
         fontSize="10"
         letterSpacing="2"
       >
-        MASS FEATURES
+        Metabolomics
       </text>
     </svg>
   );
@@ -223,7 +223,7 @@ function PeptideChain() {
         fontSize="10"
         letterSpacing="2"
       >
-        PEPTIDE FEATURES
+        Proteomics
       </text>
     </svg>
   );

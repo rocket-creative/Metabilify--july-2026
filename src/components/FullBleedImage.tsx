@@ -4,7 +4,7 @@ type Props = {
   src: string;
   alt: string;
   caption?: string;
-  variant?: "wide" | "bleed";
+  variant?: "wide" | "bleed" | "embedded";
   height?: string;
 };
 
@@ -32,6 +32,10 @@ export function FullBleedImage({
       )}
     </figure>
   );
+
+  if (variant === "embedded") {
+    return <Reveal>{figure}</Reveal>;
+  }
 
   if (variant === "bleed") {
     return (

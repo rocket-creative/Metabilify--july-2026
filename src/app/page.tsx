@@ -24,6 +24,14 @@ export default function HomePage() {
       {}
       <section className="section-wide section-grey band-y">
         <div className="gutter-x mx-auto max-w-[80rem]">
+          <div className="mb-10 md:mb-14">
+            <FullBleedImage
+              variant="embedded"
+              src="/images/team-workspace.png"
+              alt="The Metablify team collaborating in the lab and workspace"
+            />
+          </div>
+
           <Reveal>
             <p className="eyebrow mb-4">Work with us</p>
             <h2 className="display display-lg mb-6 max-w-2xl">
@@ -76,12 +84,6 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-
-      {}
-      <FullBleedImage
-        src="/images/team-workspace.png"
-        alt="The Metablify team collaborating in the lab and workspace"
-      />
 
       {}
       <section className="section">

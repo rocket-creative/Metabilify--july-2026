@@ -127,11 +127,12 @@ export function ParticleField({
       switch (phase) {
         case "cloud":
           return {
-            sampleLens: 0,
-            legacyLens: 0,
+            // Outer rings stay visible in every stage for the art direction
+            sampleLens: 1,
+            legacyLens: 0.55,
             labels: [0, 0, 0] as [number, number, number],
-            radiusMul: 0.92,
-            fieldAlpha: 0.72,
+            radiusMul: 0.96,
+            fieldAlpha: 0.78,
           };
         case "legacy":
           return {
@@ -139,14 +140,14 @@ export function ParticleField({
             legacyLens: 1,
             labels: [0, labelOn, 0] as [number, number, number],
             radiusMul: 0.98,
-            fieldAlpha: 0.8,
+            fieldAlpha: 0.85,
           };
         case "metablify":
           return {
-            sampleLens: 0.5,
-            legacyLens: 0.5,
-            labels: [0, 0, labelOn] as [number, number, number],
-            radiusMul: 1.08,
+            sampleLens: 1,
+            legacyLens: 0.85,
+            labels: [0, labelOn * 0.7, labelOn] as [number, number, number],
+            radiusMul: 1.04,
             fieldAlpha: 1,
           };
       }
@@ -363,76 +364,70 @@ export function ParticleField({
       ctx.globalAlpha = 1;
     };
 
-    const drawLens = (x: number, y: number, r: number, alpha: number) => {
+    // Outline-only red for the large Metablify capture ring (not artistic orbits)
+    const metablifyRed = "rgba(196, 78, 58, 0.95)";
+
+    /** Clean compare rings: large orb = Metablify, small circle = legacy. No magnifier. */
+    const drawCompareRing = (
+      x: number,
+      y: number,
+      r: number,
+      alpha: number,
+      weight: "large" | "small",
+    ) => {
       if (alpha <= 0.01) return;
-      const rr = r * (0.82 + 0.18 * alpha);
-      const zoom = 2;
-      const srcSize = (rr * 2) / zoom;
-
-      ctx.save();
+      const metablifyHot =
+        weight === "large" && storyPhaseRef.current === "metablify";
       ctx.globalAlpha = alpha;
-      ctx.beginPath();
-      ctx.arc(x, y, rr, 0, PI2);
-      ctx.clip();
-      ctx.drawImage(
-        canvas,
-        (x - srcSize / 2) * dpr,
-        (y - srcSize / 2) * dpr,
-        srcSize * dpr,
-        srcSize * dpr,
-        x - rr,
-        y - rr,
-        rr * 2,
-        rr * 2,
-      );
-      ctx.restore();
 
-      ctx.globalAlpha = alpha;
-      const ig = ctx.createRadialGradient(x, y, rr * 0.7, x, y, rr);
-      ig.addColorStop(0, "rgba(0,0,0,0)");
-      ig.addColorStop(1, palette.rimSoft);
-      ctx.beginPath();
-      ctx.arc(x, y, rr, 0, PI2);
-      ctx.fillStyle = ig;
-      ctx.fill();
+      if (weight === "small") {
+        ctx.beginPath();
+        ctx.arc(x, y, r, 0, PI2);
+        ctx.fillStyle =
+          tone === "green" ? "rgba(196, 205, 196, 0.55)" : "rgba(210, 218, 230, 0.55)";
+        ctx.fill();
+      }
 
       ctx.beginPath();
-      ctx.arc(x, y, rr, 0, PI2);
-      ctx.strokeStyle = palette.rim;
-      ctx.lineWidth = Math.max(1.5, rr * 0.04);
+      ctx.arc(x, y, r, 0, PI2);
+      ctx.strokeStyle = metablifyHot
+        ? metablifyRed
+        : weight === "large"
+          ? palette.rim
+          : tone === "green"
+            ? "rgba(120, 140, 120, 0.85)"
+            : "rgba(120, 140, 170, 0.85)";
+      ctx.lineWidth =
+        weight === "large"
+          ? Math.max(2.5, r * (metablifyHot ? 0.028 : 0.018))
+          : Math.max(1.5, r * 0.05);
       ctx.stroke();
-
-      ctx.beginPath();
-      ctx.ellipse(x - rr * 0.32, y - rr * 0.36, rr * 0.42, rr * 0.22, -0.6, 0, PI2);
-      ctx.fillStyle = "rgba(255,255,255,0.3)";
-      ctx.fill();
       ctx.globalAlpha = 1;
     };
 
     const computeOrbits = () => {
       const { cx, cy, R } = geometry(false);
-      const px = cx + R * 0.42;
-      const py = cy - R * 0.02;
-      const driftX = Math.cos(t * 0.11) * R * 0.05;
-      const driftY = Math.sin(t * 0.09) * R * 0.04;
-      const sr = R * 0.34 * orbitScale;
-      const lr = R * 0.3 * orbitScale;
+      const driftX = Math.cos(t * 0.11) * R * 0.02;
+      const driftY = Math.sin(t * 0.09) * R * 0.015;
+      const legacyR = R * 0.32 * orbitScale;
       return {
-        c1x: px + (-R * 0.04 + driftX) * orbitScale,
-        c1y: py + (-R * 0.12 + driftY) * orbitScale,
-        sr,
-        c2x: px + (R * 0.06 + Math.cos(t * 0.1 + 1.2) * R * 0.035) * orbitScale,
-        c2y: py + (R * 0.14 + Math.sin(t * 0.085 + 1.2) * R * 0.035) * orbitScale,
-        lr,
+        // Large ring around the full particle orb (Metablify)
+        c1x: cx,
+        c1y: cy,
+        sr: R * 0.98,
+        // Smaller circular section inside (legacy / rest of field)
+        c2x: cx + R * 0.18 + driftX,
+        c2y: cy + R * 0.08 + driftY,
+        lr: legacyR,
       };
     };
 
     const drawOrbits = (o: ReturnType<typeof computeOrbits>) => {
       if (sampleLensAlpha > 0.01) {
-        drawLens(o.c1x, o.c1y, o.sr, sampleLensAlpha);
+        drawCompareRing(o.c1x, o.c1y, o.sr, sampleLensAlpha, "large");
       }
       if (legacyLensAlpha > 0.01) {
-        drawLens(o.c2x, o.c2y, o.lr, legacyLensAlpha);
+        drawCompareRing(o.c2x, o.c2y, o.lr, legacyLensAlpha, "small");
       }
     };
 
@@ -447,13 +442,14 @@ export function ParticleField({
         return [dx / m, dy / m] as const;
       };
 
+      // Index 0 unused (kept for alpha array shape). 1 = legacy, 2 = Metablify.
       const defs = [
         {
-          ox: o.c1x,
-          oy: o.c1y,
-          rr: o.sr,
-          ex: cx + R * 1.35,
-          ey: cy - R * 0.85,
+          ox: cx,
+          oy: cy,
+          rr: R * 0.5,
+          ex: cx,
+          ey: cy,
           align: "left" as const,
           ph: 0,
         },
@@ -461,17 +457,17 @@ export function ParticleField({
           ox: o.c2x,
           oy: o.c2y,
           rr: o.lr,
-          ex: cx + R * 1.35,
-          ey: cy + R * 0.68,
+          ex: cx + R * 1.28,
+          ey: cy + R * 0.55,
           align: "left" as const,
           ph: 2,
         },
         {
-          ox: cx,
-          oy: cy,
-          rr: R * 0.98,
-          ex: cx - R * 1.3,
-          ey: cy + R * 1.02,
+          ox: o.c1x,
+          oy: o.c1y,
+          rr: o.sr,
+          ex: cx - R * 1.22,
+          ey: cy - R * 0.15,
           align: "right" as const,
           ph: 4,
         },
@@ -504,7 +500,7 @@ export function ParticleField({
         }
         const box = boxRefs.current[i];
         if (box) {
-          box.style.width = `${R * 1.25}px`;
+          box.style.width = `${R * 1.35}px`;
           box.style.left = `${ex}px`;
           box.style.top = `${ey}px`;
           box.style.textAlign = d.align;
@@ -673,14 +669,17 @@ export function ParticleField({
     fieldOffsetX,
   ]);
 
-  const labelColor = tone === "green" ? "#1f4d2e" : "#33538f";
-  const labelLine =
+  const legacyLabelColor = tone === "green" ? "#1f4d2e" : "#33538f";
+  const legacyLine =
     tone === "green" ? "rgba(26,78,48,0.55)" : "rgba(51,83,143,0.55)";
-  const labelDotStroke =
+  const legacyDotStroke =
     tone === "green" ? "rgba(26,78,48,0.8)" : "rgba(51,83,143,0.8)";
+  const metablifyLabelColor = "#c44e3a";
+  const metablifyLine = "rgba(196,78,58,0.65)";
+  const metablifyDotStroke = "rgba(196,78,58,0.9)";
 
   const labels = [
-    <>Don’t leave real mass features in the noise.</>,
+    null,
     <>
       Legacy workflows may recover only a subset of detectable mass features.
     </>,
@@ -705,26 +704,29 @@ export function ParticleField({
             className="pointer-events-none absolute inset-0 h-full w-full"
             aria-hidden="true"
           >
-            {[0, 1, 2].map((i) => (
-              <g key={i}>
-                <line
-                  ref={(el) => {
-                    lineRefs.current[i] = el;
-                  }}
-                  stroke={labelLine}
-                  strokeWidth="1"
-                />
-                <circle
-                  ref={(el) => {
-                    dotRefs.current[i] = el;
-                  }}
-                  r="3.5"
-                  fill="#ffffff"
-                  stroke={labelDotStroke}
-                  strokeWidth="1.25"
-                />
-              </g>
-            ))}
+            {[0, 1, 2].map((i) => {
+              const isMetablify = i === 2;
+              return (
+                <g key={i}>
+                  <line
+                    ref={(el) => {
+                      lineRefs.current[i] = el;
+                    }}
+                    stroke={isMetablify ? metablifyLine : legacyLine}
+                    strokeWidth="1"
+                  />
+                  <circle
+                    ref={(el) => {
+                      dotRefs.current[i] = el;
+                    }}
+                    r="3.5"
+                    fill="#ffffff"
+                    stroke={isMetablify ? metablifyDotStroke : legacyDotStroke}
+                    strokeWidth="1.25"
+                  />
+                </g>
+              );
+            })}
           </svg>
           {labels.map((content, i) => (
             <div
@@ -733,7 +735,11 @@ export function ParticleField({
                 boxRefs.current[i] = el;
               }}
               className="pointer-events-none absolute left-0 top-0 text-[0.72rem] leading-snug md:text-[0.8rem]"
-              style={{ color: labelColor, fontFamily: "var(--font-body)" }}
+              style={{
+                color: i === 2 ? metablifyLabelColor : legacyLabelColor,
+                fontFamily: "var(--font-body)",
+                fontWeight: i === 2 ? 600 : 400,
+              }}
             >
               {content}
             </div>

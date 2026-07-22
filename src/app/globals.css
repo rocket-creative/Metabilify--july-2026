@@ -558,6 +558,39 @@ img.no-round,
   background: transparent;
 }
 
+.hero-particle-stage {
+  container-type: size;
+  container-name: hero-particle;
+}
+
+.hero-artistic-orbits {
+  display: grid;
+  place-items: unset;
+  opacity: 0.8;
+}
+
+/* Match ParticleField geometry: cx = 50% + 14% width, R = 0.6 * min(w,h) */
+.hero-artistic-orbits .metabolome-orbit-group {
+  position: absolute;
+  left: 64%;
+  top: 50%;
+  translate: -50% -50%;
+  /* Orb diameter ≈ 120cqmin; rings slightly larger to wrap the orb */
+  width: 128cqmin;
+  max-width: none;
+  aspect-ratio: 1;
+}
+
+@media (max-width: 809px) {
+  .hero-vireo .hero-artistic-orbits {
+    display: grid;
+  }
+
+  .hero-artistic-orbits .metabolome-orbit-group {
+    width: 118cqmin;
+  }
+}
+
 .hero-scroll-hint {
   position: absolute;
   bottom: 2rem;
@@ -783,17 +816,12 @@ img.no-round,
   pointer-events: none;
   perspective: 1000px;
   z-index: 2;
-  opacity: 0;
+  opacity: 0.85;
   transition: opacity 680ms var(--ease-out-expo);
 }
 
-.metabolome-stage[data-story-phase="sample"] .metabolome-orbits,
-.metabolome-stage[data-story-phase="legacy"] .metabolome-orbits {
-  opacity: 0.9;
-}
-
 .metabolome-stage[data-story-phase="metablify"] .metabolome-orbits {
-  opacity: 0.45;
+  opacity: 0.7;
 }
 
 .metabolome-orbit-group {
@@ -899,6 +927,22 @@ img.no-round,
 
 .story-row:last-child {
   border-bottom: 1px solid var(--color-stone);
+}
+
+.feature-compare-ring {
+  position: absolute;
+  inset: 8%;
+  border-radius: 50%;
+  border: 1px solid rgba(18, 50, 39, 0.35);
+  pointer-events: none;
+  transform-origin: center center;
+  will-change: transform, opacity;
+}
+
+.feature-compare-ink,
+.feature-compare-legacy {
+  transform-origin: center center;
+  will-change: transform, opacity;
 }
 
 .process-flow {
