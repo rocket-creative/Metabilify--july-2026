@@ -386,14 +386,10 @@ export function ParticleField({
         return [dx / m, dy / m] as const;
       };
 
-      // Even vertical distribution: the two right-side labels sit symmetrically
-      // above and below center, and the single left-side label sits at the
-      // vertical midpoint, giving equal spacing across the field.
-      const spread = R * 0.9;
       const defs = [
-        { ox: o.c1x, oy: o.c1y, rr: o.sr, ex: cx + R * 1.35, ey: cy - spread, align: "left" as const, ph: 0 },
-        { ox: o.c2x, oy: o.c2y, rr: o.lr, ex: cx + R * 1.35, ey: cy + spread, align: "left" as const, ph: 2 },
-        { ox: cx, oy: cy, rr: R * 0.98, ex: cx - R * 1.3, ey: cy, align: "right" as const, ph: 4 },
+        { ox: o.c1x, oy: o.c1y, rr: o.sr, ex: cx + R * 1.35, ey: cy - R * 0.85, align: "left" as const, ph: 0 },
+        { ox: o.c2x, oy: o.c2y, rr: o.lr, ex: cx + R * 1.35, ey: cy + R * 0.68, align: "left" as const, ph: 2 },
+        { ox: cx, oy: cy, rr: R * 0.98, ex: cx - R * 1.3, ey: cy + R * 1.02, align: "right" as const, ph: 4 },
       ];
 
       defs.forEach((d, i) => {
@@ -437,10 +433,11 @@ export function ParticleField({
     const drawScene = () => {
       const { cx, cy, R } = geometry();
 
-      // ease reveal alphas toward their targets. Visibility is gated by the
-      // parent (showLabels tracks the desktop breakpoint); this only guards
-      // against a genuinely tiny canvas where the leader lines would clip.
-      const labelsFit = w >= 360;
+      // ease reveal alphas toward their targets. Labels reach well past the
+      // sphere, so they only fit on a wide (desktop 16/11) canvas of adequate
+      // width. On the squarer mobile 4/3 canvas they would clip, so require the
+      // wide aspect as well as a minimum width.
+      const labelsFit = w >= 560 && w / h > 1.4;
       const oTarget = (showOrbitsRef.current ? 1 : 0) * revealRef.current;
       const lTarget =
         (showLabelsRef.current && labelsFit ? 1 : 0) * revealRef.current;

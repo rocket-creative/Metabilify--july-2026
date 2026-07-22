@@ -82,7 +82,7 @@ export default function WorkWithUsPage() {
             title="Choose the path that fits your work"
           />
         </Reveal>
-        <div className="grid gap-5 lg:grid-cols-3">
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {paths.map((path, i) => (
             <Reveal key={path.href} delay={i * 80}>
               <Link
@@ -109,11 +109,11 @@ export default function WorkWithUsPage() {
       </section>
 
       {/* Getting started rail */}
-      <section className="section-wide section-sage py-[clamp(4.5rem,10vw,7.5rem)]">
-        <div className="mx-auto max-w-[80rem] px-5 md:px-10">
+      <section className="section-wide section-sage band-y">
+        <div className="gutter-x mx-auto max-w-[80rem]">
           <Reveal>
             <p className="eyebrow mb-4">Getting started</p>
-            <h2 className="display display-lg mb-12 max-w-2xl">
+            <h2 className="display display-lg mb-8 max-w-2xl md:mb-12">
               Four steps from conversation to results
             </h2>
           </Reveal>
@@ -139,7 +139,7 @@ export default function WorkWithUsPage() {
       </section>
 
       {/* Final CTA */}
-      <section className="section-forest section-wide py-[clamp(4.5rem,10vw,7.5rem)] text-center">
+      <section className="section-forest section-wide band-y text-center">
         <Reveal>
           <h2 className="display display-lg mx-auto mb-5 max-w-3xl text-white">
             Let us find the right path together

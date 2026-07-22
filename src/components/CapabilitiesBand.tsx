@@ -57,16 +57,16 @@ const CAPABILITIES: Capability[] = [
 
 export function CapabilitiesBand() {
   return (
-    <section className="section-forest section-wide py-[clamp(4.5rem,10vw,7.5rem)]">
-      <div className="mx-auto max-w-[80rem] px-5 md:px-10">
+    <section className="section-forest section-wide band-y">
+      <div className="gutter-x mx-auto max-w-[80rem]">
         <Reveal>
           <p className="eyebrow mb-4">The platform</p>
-          <h2 className="display display-lg mb-14 max-w-2xl">
+          <h2 className="display display-lg mb-8 max-w-2xl md:mb-14">
             Discovery starts with the right mass features.
           </h2>
         </Reveal>
 
-        <div className="grid gap-x-10 gap-y-12 md:grid-cols-3">
+        <div className="grid gap-8 md:grid-cols-3">
           {CAPABILITIES.map((cap, i) => (
             <Reveal key={cap.title} delay={i * 90}>
               <div className="capability">

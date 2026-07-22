@@ -77,7 +77,7 @@ export default function CollaborationsPage() {
             title="Where collaboration makes sense"
           />
         </Reveal>
-        <div className="grid gap-5 md:grid-cols-3">
+        <div className="grid gap-6 md:grid-cols-3">
           {fits.map((item, i) => (
             <Reveal key={item.title} delay={i * 70}>
               <div className="card flex h-full flex-col">
@@ -95,7 +95,7 @@ export default function CollaborationsPage() {
       </section>
 
       {/* Final CTA */}
-      <section className="section-forest section-wide py-[clamp(4.5rem,10vw,7.5rem)] text-center">
+      <section className="section-forest section-wide band-y text-center">
         <Reveal>
           <h2 className="display display-lg mx-auto mb-5 max-w-3xl text-white">
             Let us explore what we could build together

@@ -26,20 +26,20 @@ export default function HomePage() {
       <ApplicationsCarousel />
 
       {/* Work with us */}
-      <section className="section-wide section-grey py-[clamp(4.5rem,10vw,7.5rem)]">
-        <div className="mx-auto max-w-[80rem] px-5 md:px-10">
+      <section className="section-wide section-grey band-y">
+        <div className="gutter-x mx-auto max-w-[80rem]">
           <Reveal>
             <p className="eyebrow mb-4">Work with us</p>
             <h2 className="display display-lg mb-6 max-w-2xl">
               Work With Metablify
             </h2>
-            <p className="lead mb-12 max-w-2xl">
+            <p className="lead mb-8 max-w-2xl md:mb-12">
               Engage with Metablify through analytical services, platform
               development, or strategic collaboration.
             </p>
           </Reveal>
 
-          <div className="grid gap-5 md:grid-cols-3">
+          <div className="grid gap-6 md:grid-cols-3">
             {[
               {
                 href: "/work-with-us/services",
@@ -109,7 +109,7 @@ export default function HomePage() {
       <ProcessFlow />
 
       {/* Final CTA */}
-      <section className="section-forest section-wide py-[clamp(4.5rem,10vw,7.5rem)] text-center">
+      <section className="section-forest section-wide band-y text-center">
         <Reveal>
           <h2 className="display display-lg mx-auto mb-5 max-w-3xl text-white">
             Ready to See More in Your LC/MS Data?

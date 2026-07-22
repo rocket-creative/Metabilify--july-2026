@@ -29,7 +29,7 @@ export default function DiscussPage() {
       />
 
       <section className="section">
-        <div className="grid gap-12 lg:grid-cols-12">
+        <div className="grid gap-8 md:gap-10 lg:grid-cols-12">
           <div className="lg:col-span-5">
             <Reveal>
               <h2

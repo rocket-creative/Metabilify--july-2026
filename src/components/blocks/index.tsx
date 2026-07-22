@@ -29,7 +29,7 @@ function ProseBlock({
         <div className="max-w-3xl">
           {eyebrow ? <p className="eyebrow mb-3">{eyebrow}</p> : null}
           <h2 className="display display-md mb-5">{title}</h2>
-          <p className="text-lg leading-relaxed text-muted">{body}</p>
+          <p className="text-base leading-relaxed text-muted md:text-lg">{body}</p>
         </div>
       </Reveal>
     </section>
@@ -110,7 +110,7 @@ export function FaqBlock({ faqs }: { faqs: Faq[] }) {
         <details key={faq.question} className="group py-5">
           <summary className="flex cursor-pointer list-none items-center justify-between gap-4">
             <span
-              className="text-lg text-ink"
+              className="text-base text-ink md:text-lg"
               style={{ fontFamily: "var(--font-display)" }}
             >
               {faq.question}
@@ -173,7 +173,7 @@ const familyLabel: Record<string, string> = {
 export function RelatedGrid({ pages }: { pages: ContentPage[] }) {
   if (pages.length === 0) return null;
   return (
-    <div className="grid gap-5 md:grid-cols-3">
+    <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
       {pages.map((page, i) => (
         <Reveal key={`${page.family}/${page.slug}`} delay={i * 70}>
           <Link

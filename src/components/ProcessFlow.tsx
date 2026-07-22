@@ -126,10 +126,10 @@ export function ProcessFlow() {
   return (
     <section
       ref={sectionRef}
-      className="process-flow section-wide py-[clamp(4.5rem,10vw,7.5rem)]"
+      className="process-flow section-wide band-y"
       aria-label="Getting started with Metablify"
     >
-      <div className="mx-auto max-w-[80rem] px-5 md:px-10">
+      <div className="gutter-x mx-auto max-w-[80rem]">
         <div className="process-flow-head">
           <p className="eyebrow mb-4">How it works</p>
           <h2 className="display display-lg mb-5">

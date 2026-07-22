@@ -58,11 +58,11 @@ export default function NewsPage() {
       <section className="section section-sage">
         <Reveal>
           <p className="eyebrow mb-4">What to expect</p>
-          <h2 className="display display-md mb-12 max-w-2xl">
+          <h2 className="display display-md mb-8 max-w-2xl md:mb-12">
             The kinds of updates we will share
           </h2>
         </Reveal>
-        <div className="grid gap-5 md:grid-cols-3">
+        <div className="grid gap-6 md:grid-cols-3">
           {topics.map((topic, i) => (
             <Reveal key={topic.title} delay={i * 70}>
               <div className="card flex h-full flex-col">

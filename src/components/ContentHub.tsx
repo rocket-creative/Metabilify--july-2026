@@ -40,7 +40,7 @@ export function ContentHub({
             </div>
           </Reveal>
         ) : (
-          <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {pages.map((page, i) => (
               <Reveal key={`${page.family}/${page.slug}`} delay={i * 60}>
                 <Link

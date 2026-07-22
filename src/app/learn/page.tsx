@@ -52,7 +52,7 @@ export default function LearnHub() {
       />
 
       <section className="section">
-        <div className="grid gap-5 md:grid-cols-3">
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {cards.map((card, i) => (
             <Reveal key={card.href} delay={i * 70}>
               <Link

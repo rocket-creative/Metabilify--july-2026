@@ -66,7 +66,7 @@ export default function ProteomicsPage() {
 
       {/* Intro + visual */}
       <section className="section">
-        <div className="grid items-center gap-12 lg:grid-cols-12">
+        <div className="grid items-center gap-8 md:gap-10 lg:grid-cols-12">
           <div className="lg:col-span-6">
             <Reveal>
               <SectionHeading
@@ -89,19 +89,19 @@ export default function ProteomicsPage() {
       </section>
 
       {/* Workflow — forest band */}
-      <section className="section-forest section-wide py-[clamp(4.5rem,10vw,7.5rem)]">
-        <div className="mx-auto max-w-[80rem] px-5 md:px-10">
+      <section className="section-forest section-wide band-y">
+        <div className="gutter-x mx-auto max-w-[80rem]">
           <Reveal>
             <p className="eyebrow mb-4">Workflow</p>
             <h2 className="display display-lg mb-4 max-w-2xl">
               From complex runs to confident quantification
             </h2>
-            <p className="lead mb-14">
+            <p className="lead mb-8 md:mb-14">
               Three stages carry your proteomics data from raw signal to results
               ready for comparison.
             </p>
           </Reveal>
-          <div className="grid gap-x-10 gap-y-12 md:grid-cols-3">
+          <div className="grid gap-8 md:grid-cols-3">
             {workflow.map((step, i) => (
               <Reveal key={step.n} delay={i * 90}>
                 <div className="capability">
@@ -133,7 +133,7 @@ export default function ProteomicsPage() {
             lead="Metablify helps proteomics teams recover more real peptide features while spending less time curating peaks, so effort shifts from cleanup to discovery."
           />
         </Reveal>
-        <div className="grid gap-8 md:grid-cols-3">
+        <div className="grid gap-6 md:grid-cols-3">
           {[
             "Scale across complex peptide datasets",
             "Align features for comparative analysis",
@@ -153,7 +153,7 @@ export default function ProteomicsPage() {
         <Reveal>
           <SectionHeading eyebrow="Where it fits" title="Built for real studies" />
         </Reveal>
-        <div className="grid gap-5 md:grid-cols-3">
+        <div className="grid gap-6 md:grid-cols-3">
           {useCases.map((item, i) => (
             <Reveal key={item.title} delay={i * 70}>
               <div className="card flex h-full flex-col">
@@ -171,7 +171,7 @@ export default function ProteomicsPage() {
       </section>
 
       {/* Final CTA */}
-      <section className="section-forest section-wide py-[clamp(4.5rem,10vw,7.5rem)] text-center">
+      <section className="section-forest section-wide band-y text-center">
         <Reveal>
           <h2 className="display display-lg mx-auto mb-5 max-w-3xl text-white">
             Ready to apply Metablify to proteomics?

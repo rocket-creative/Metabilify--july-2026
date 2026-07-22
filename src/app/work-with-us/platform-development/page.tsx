@@ -82,7 +82,7 @@ export default function PlatformDevelopmentPage() {
             title="Where development work concentrates"
           />
         </Reveal>
-        <div className="grid gap-5 md:grid-cols-3">
+        <div className="grid gap-6 md:grid-cols-3">
           {focus.map((item, i) => (
             <Reveal key={item.title} delay={i * 70}>
               <div className="card flex h-full flex-col">
@@ -100,19 +100,19 @@ export default function PlatformDevelopmentPage() {
       </section>
 
       {/* How we partner */}
-      <section className="section-forest section-wide py-[clamp(4.5rem,10vw,7.5rem)]">
-        <div className="mx-auto max-w-[80rem] px-5 md:px-10">
+      <section className="section-forest section-wide band-y">
+        <div className="gutter-x mx-auto max-w-[80rem]">
           <Reveal>
             <p className="eyebrow mb-4">How we partner</p>
             <h2 className="display display-lg mb-4 max-w-2xl">
               Grounded in the same first principles
             </h2>
-            <p className="lead mb-14">
+            <p className="lead mb-8 md:mb-14">
               Development work builds on the physics that makes Metablify reliable,
               so new workflows inherit the same signal clarity.
             </p>
           </Reveal>
-          <div className="grid gap-x-10 gap-y-12 md:grid-cols-3">
+          <div className="grid gap-8 md:grid-cols-3">
             {[
               {
                 n: "01",

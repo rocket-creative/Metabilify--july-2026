@@ -36,8 +36,8 @@ export function ApplicationsCarousel() {
   };
 
   return (
-    <section className="section-forest section-wide py-[clamp(4.5rem,10vw,7.5rem)]">
-      <div className="mx-auto max-w-[80rem] px-5 md:px-10">
+    <section className="section-forest section-wide band-y">
+      <div className="gutter-x mx-auto max-w-[80rem]">
         <div className="mb-10 flex items-end justify-between gap-6">
           <div>
             <p className="eyebrow mb-4">Applications</p>

@@ -36,7 +36,7 @@ function Prose({ eyebrow, title, body }: { eyebrow?: string; title: string; body
       <div className="max-w-3xl">
         {eyebrow ? <p className="eyebrow mb-3">{eyebrow}</p> : null}
         <h2 className="display display-md mb-5">{title}</h2>
-        <p className="text-lg leading-relaxed text-muted">{body}</p>
+        <p className="text-base leading-relaxed text-muted md:text-lg">{body}</p>
       </div>
     </Reveal>
   );
@@ -48,7 +48,7 @@ function ValueBlocks({ page }: { page: ContentPage }) {
       <Reveal>
         <SectionHeading eyebrow="What matters" title="Where this makes a difference" />
       </Reveal>
-      <div className="grid gap-5 md:grid-cols-3">
+      <div className="grid gap-6 md:grid-cols-3">
         {page.uniqueValueBlocks.map((block, i) => (
           <Reveal key={block.heading} delay={i * 70}>
             <div className="card flex h-full flex-col">
@@ -213,7 +213,7 @@ function familyBody(page: ContentPage) {
             <Reveal>
               <div className="max-w-3xl">
                 <p className="eyebrow mb-3">Definition</p>
-                <p className="text-lg leading-relaxed text-ink">{page.definition}</p>
+                <p className="text-base leading-relaxed text-ink md:text-lg">{page.definition}</p>
               </div>
             </Reveal>
           </section>
@@ -229,7 +229,7 @@ function familyBody(page: ContentPage) {
           <section className="section">
             <Reveal>
               <div className="max-w-3xl">
-                <p className="text-lg leading-relaxed text-muted">{page.body}</p>
+                <p className="text-base leading-relaxed text-muted md:text-lg">{page.body}</p>
               </div>
             </Reveal>
           </section>

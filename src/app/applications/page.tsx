@@ -49,7 +49,7 @@ function MoreApplications() {
           lead="The same feature layer approach extends to fields where recovery and alignment at cohort scale are the bottleneck."
         />
       </Reveal>
-      <div className="grid gap-5 md:grid-cols-3">
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {pages.map((page, i) => (
           <Reveal key={page.slug} delay={i * 70}>
             <Link
@@ -96,7 +96,7 @@ export default function ApplicationsPage() {
 
       {/* Shared platform explainer */}
       <section className="section">
-        <div className="grid gap-12 lg:grid-cols-12 lg:items-start">
+        <div className="grid gap-8 md:gap-10 lg:grid-cols-12 lg:items-start">
           <div className="lg:col-span-5">
             <Reveal>
               <SectionHeading
@@ -107,7 +107,7 @@ export default function ApplicationsPage() {
             </Reveal>
           </div>
           <div className="lg:col-span-7">
-            <div className="grid gap-5 sm:grid-cols-3">
+            <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3">
               {[
                 {
                   title: "Detect",
@@ -146,7 +146,7 @@ export default function ApplicationsPage() {
         <Reveal>
           <SectionHeading eyebrow="Explore" title="Leading applications" />
         </Reveal>
-        <div className="grid gap-5 md:grid-cols-2">
+        <div className="grid gap-6 md:grid-cols-2">
           {applications.map((app, i) => (
             <Reveal key={app.href} delay={i * 90}>
               <Link
@@ -154,7 +154,7 @@ export default function ApplicationsPage() {
                 className="card card-link group flex h-full flex-col"
               >
                 <h2
-                  className="mb-4 text-3xl text-ink"
+                  className="mb-4 text-2xl text-ink md:text-3xl"
                   style={{ fontFamily: "var(--font-display)" }}
                 >
                   {app.title}
@@ -184,7 +184,7 @@ export default function ApplicationsPage() {
       <MoreApplications />
 
       {/* Final CTA */}
-      <section className="section-forest section-wide py-[clamp(4.5rem,10vw,7.5rem)] text-center">
+      <section className="section-forest section-wide band-y text-center">
         <Reveal>
           <h2 className="display display-lg mx-auto mb-5 max-w-3xl text-white">
             Not sure which fits your data?

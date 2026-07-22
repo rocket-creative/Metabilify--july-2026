@@ -46,7 +46,7 @@ export default function AboutPage() {
 
       {/* Mission */}
       <section className="section">
-        <div className="grid gap-12 lg:grid-cols-12 lg:items-start">
+        <div className="grid gap-8 md:grid-cols-2 md:gap-10 lg:grid-cols-12 lg:items-start">
           <div className="lg:col-span-5">
             <Reveal>
               <SectionHeading eyebrow="Mission" title="See more in every experiment" />
@@ -54,7 +54,7 @@ export default function AboutPage() {
           </div>
           <div className="lg:col-span-7">
             <Reveal delay={80}>
-              <div className="space-y-6 text-lg leading-relaxed text-muted">
+              <div className="space-y-6 text-base leading-relaxed text-muted md:text-lg">
                 <p>
                   We build on the first principles of physics so researchers can
                   recover real mass features that other workflows miss, and move
@@ -80,7 +80,7 @@ export default function AboutPage() {
         <Reveal>
           <SectionHeading eyebrow="What we value" title="How we work" />
         </Reveal>
-        <div className="grid gap-5 md:grid-cols-3">
+        <div className="grid gap-6 md:grid-cols-3">
           {values.map((item, i) => (
             <Reveal key={item.title} delay={i * 70}>
               <div className="card flex h-full flex-col">
@@ -102,7 +102,7 @@ export default function AboutPage() {
         <Reveal>
           <SectionHeading eyebrow="Team" title="Leadership" />
         </Reveal>
-        <div className="grid gap-8 md:grid-cols-3">
+        <div className="grid gap-6 md:grid-cols-3">
           {team.map((member, i) => (
             <Reveal key={member.name} delay={i * 80}>
               <article className="border-t-2 border-ink pt-6">
@@ -144,7 +144,7 @@ export default function AboutPage() {
       </section>
 
       {/* Final CTA */}
-      <section className="section-forest section-wide py-[clamp(4.5rem,10vw,7.5rem)] text-center">
+      <section className="section-forest section-wide band-y text-center">
         <Reveal>
           <h2 className="display display-lg mx-auto mb-5 max-w-3xl text-white">
             Ready to work with Metablify?

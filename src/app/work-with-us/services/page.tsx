@@ -72,7 +72,7 @@ export default function ServicesPage() {
             lead="Tell us about your scientific objective, samples, existing data, and desired outputs. We define an analytical services project matched to your workflow challenge."
           />
         </Reveal>
-        <ol className="grid gap-8 md:grid-cols-3">
+        <ol className="grid gap-6 md:grid-cols-3">
           {steps.map((step, i) => (
             <Reveal key={step.n} delay={i * 80}>
               <li>
@@ -98,7 +98,7 @@ export default function ServicesPage() {
             title="Results you can build on"
           />
         </Reveal>
-        <div className="grid gap-5 md:grid-cols-3">
+        <div className="grid gap-6 md:grid-cols-3">
           {deliverables.map((item, i) => (
             <Reveal key={item.title} delay={i * 70}>
               <div className="card flex h-full flex-col">
@@ -117,7 +117,7 @@ export default function ServicesPage() {
 
       {/* What to include */}
       <section className="section">
-        <div className="grid gap-12 lg:grid-cols-12">
+        <div className="grid gap-8 md:grid-cols-2 md:gap-10 lg:grid-cols-12">
           <div className="lg:col-span-5">
             <Reveal>
               <SectionHeading
@@ -150,7 +150,7 @@ export default function ServicesPage() {
       </section>
 
       {/* Final CTA */}
-      <section className="section-forest section-wide py-[clamp(4.5rem,10vw,7.5rem)] text-center">
+      <section className="section-forest section-wide band-y text-center">
         <Reveal>
           <h2 className="display display-lg mx-auto mb-5 max-w-3xl text-white">
             Ready to turn your data into results?

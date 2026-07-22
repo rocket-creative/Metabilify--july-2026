@@ -42,11 +42,11 @@ type WaveLine = {
 // yMid values alternate above/below center (100). The middle ones sit behind
 // the white bar (occluded); the outer ones peek above and below it.
 const WAVE_LINES: WaveLine[] = [
-  { amp: 14, wavelength: 400, yMid: 30, opacity: 0.9, width: 2, duration: 8, startX: 0, bob: 5, bobDur: 5 },
-  { amp: 20, wavelength: 560, yMid: 170, opacity: 0.85, width: 2, duration: 13, startX: -120, bob: 6, bobDur: 7 },
-  { amp: 22, wavelength: 520, yMid: 66, opacity: 0.45, width: 1.5, duration: 11, startX: -200, bob: 7, bobDur: 8 },
-  { amp: 18, wavelength: 460, yMid: 134, opacity: 0.45, width: 1.5, duration: 9.5, startX: -300, bob: 5, bobDur: 6 },
-  { amp: 28, wavelength: 640, yMid: 100, opacity: 0.22, width: 1.25, duration: 16, startX: -60, bob: 8, bobDur: 9 },
+  { amp: 14, wavelength: 400, yMid: 30, opacity: 0.9, width: 0.75, duration: 8, startX: 0, bob: 5, bobDur: 5 },
+  { amp: 20, wavelength: 560, yMid: 170, opacity: 0.85, width: 0.75, duration: 13, startX: -120, bob: 6, bobDur: 7 },
+  { amp: 22, wavelength: 520, yMid: 66, opacity: 0.45, width: 0.6, duration: 11, startX: -200, bob: 7, bobDur: 8 },
+  { amp: 18, wavelength: 460, yMid: 134, opacity: 0.45, width: 0.6, duration: 9.5, startX: -300, bob: 5, bobDur: 6 },
+  { amp: 28, wavelength: 640, yMid: 100, opacity: 0.22, width: 0.5, duration: 16, startX: -60, bob: 8, bobDur: 9 },
 ];
 
 function wavePath(amp: number, wavelength: number, yMid: number): string {
@@ -123,16 +123,18 @@ export function MarqueeRibbon() {
     scroller.addEventListener("mouseenter", onEnter);
     scroller.addEventListener("mouseleave", onLeave);
 
-    // --- Waves: each line drifts by exactly one wavelength (periodic -> seamless)
-    // with an optional gentle vertical bob for an oceanic feel. ---
+    // --- Waves: drift RIGHT by exactly one wavelength (periodic -> seamless),
+    // counter to the leftward ticker text, with an optional gentle vertical bob
+    // for an oceanic feel. Travelling across the same [startX - wavelength,
+    // startX] range keeps the loop edge-free. ---
     const groups = gsap.utils.toArray<SVGGElement>(".mr-wave-group", root);
     groups.forEach((g, i) => {
       const cfg = WAVE_LINES[i];
       if (!cfg) return;
-      gsap.set(g, { x: cfg.startX, y: 0 });
+      gsap.set(g, { x: cfg.startX - cfg.wavelength, y: 0 });
       tweens.push(
         gsap.to(g, {
-          x: cfg.startX - cfg.wavelength,
+          x: cfg.startX,
           duration: cfg.duration,
           ease: "none",
           repeat: -1,

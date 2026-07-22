@@ -82,7 +82,7 @@ export default function PlatformPage() {
 
       {/* First principles narrative + chromatogram */}
       <section className="section">
-        <div className="grid items-center gap-12 lg:grid-cols-12">
+        <div className="grid items-center gap-8 md:gap-10 lg:grid-cols-12">
           <div className="lg:col-span-6">
             <Reveal>
               <SectionHeading
@@ -119,20 +119,20 @@ export default function PlatformPage() {
       <MarqueeRibbon />
 
       {/* How it works — forest band with numbered principles */}
-      <section className="section-forest section-wide py-[clamp(4.5rem,10vw,7.5rem)]">
-        <div className="mx-auto max-w-[80rem] px-5 md:px-10">
+      <section className="section-forest section-wide band-y">
+        <div className="gutter-x mx-auto max-w-[80rem]">
           <Reveal>
             <p className="eyebrow mb-4">How it works</p>
             <h2 className="display display-lg mb-4 max-w-2xl">
               From raw signal to results you can trust
             </h2>
-            <p className="lead mb-14">
+            <p className="lead mb-8 md:mb-14">
               Every dataset moves through four stages. Each one is grounded in the
               physics of the measurement rather than tuned to a single instrument.
             </p>
           </Reveal>
 
-          <div className="grid gap-x-10 gap-y-12 md:grid-cols-2 lg:grid-cols-4">
+          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
             {principles.map((p, i) => (
               <Reveal key={p.n} delay={i * 90}>
                 <div className="capability">
@@ -235,7 +235,7 @@ export default function PlatformPage() {
       </section>
 
       {/* Final CTA */}
-      <section className="section-forest section-wide py-[clamp(4.5rem,10vw,7.5rem)] text-center">
+      <section className="section-forest section-wide band-y text-center">
         <Reveal>
           <h2 className="display display-lg mx-auto mb-5 max-w-3xl text-white">
             Ready to see more in your LC/MS data?

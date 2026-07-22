@@ -85,7 +85,7 @@ export default function DataAssessmentPage() {
         <Reveal>
           <SectionHeading eyebrow="What to send" title="Three things, nothing heavy" />
         </Reveal>
-        <div className="grid gap-5 md:grid-cols-3">
+        <div className="grid gap-6 md:grid-cols-3">
           {whatToSend.map((item, i) => (
             <Reveal key={item.title} delay={i * 70}>
               <div className="card flex h-full flex-col">
@@ -104,7 +104,7 @@ export default function DataAssessmentPage() {
 
       {/* Formats and vendors */}
       <section className="section">
-        <div className="grid gap-12 lg:grid-cols-12 lg:items-start">
+        <div className="grid gap-8 md:grid-cols-2 md:gap-10 lg:grid-cols-12 lg:items-start">
           <div className="lg:col-span-5">
             <Reveal>
               <SectionHeading
@@ -147,7 +147,7 @@ export default function DataAssessmentPage() {
             title="A comparison on your data, not a claim"
           />
         </Reveal>
-        <div className="grid gap-5 md:grid-cols-3">
+        <div className="grid gap-6 md:grid-cols-3">
           {getBack.map((item, i) => (
             <Reveal key={item.title} delay={i * 70}>
               <div className="card flex h-full flex-col">
@@ -166,7 +166,7 @@ export default function DataAssessmentPage() {
 
       {/* Form + proof adjacency */}
       <section className="section">
-        <div className="grid gap-12 lg:grid-cols-12">
+        <div className="grid gap-8 md:gap-10 lg:grid-cols-12">
           <div className="lg:col-span-5">
             <Reveal>
               <SectionHeading eyebrow="Request" title="Start an assessment" />

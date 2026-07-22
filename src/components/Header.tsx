@@ -18,72 +18,71 @@ export function Header() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  const isActive = (href: string) =>
+    href === "/"
+      ? pathname === "/"
+      : pathname === href || pathname.startsWith(`${href}/`);
+
   return (
     <header
-      className={`site-header sticky top-0 z-50 border-b border-transparent ${
-        scrolled ? "is-scrolled border-stone/60" : "bg-transparent"
+      className={`site-header sticky top-0 z-50 ${
+        scrolled ? "is-scrolled" : "bg-transparent"
       }`}
     >
-      <div className="flex items-center justify-between gap-4 px-5 py-4 md:px-10 lg:px-8 xl:px-14">
+      {/* Tier 1 — brand + primary action */}
+      <div className="site-header-bar gutter-x flex items-center justify-between gap-4">
         <Logo priority />
 
-        <nav
-          className="hidden flex-nowrap items-center gap-4 lg:flex xl:gap-7"
-          aria-label="Primary"
-        >
-          {navLinks.map((link) => {
-            const active =
-              link.href === "/"
-                ? pathname === "/"
-                : pathname === link.href ||
-                  pathname.startsWith(`${link.href}/`);
-            return (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={`whitespace-nowrap text-[0.82rem] tracking-wide transition-colors xl:text-[0.9rem] ${
-                  active
-                    ? "font-semibold text-ink"
-                    : "text-muted hover:text-ink"
-                }`}
-              >
-                {link.label}
-              </Link>
-            );
-          })}
+        <div className="flex items-center gap-3">
           <Link
             href="/discuss"
-            className="btn btn-primary whitespace-nowrap !px-4 !py-2.5 !text-[0.7rem]"
+            className="btn btn-primary hidden lg:inline-flex !px-5 !py-3 !text-[0.7rem]"
           >
             <span>Discuss a Project</span>
             <span className="arrow" aria-hidden="true">
               →
             </span>
           </Link>
-        </nav>
 
-        <button
-          type="button"
-          className="flex h-10 w-10 items-center justify-center border border-ink/20 lg:hidden"
-          aria-expanded={open}
-          aria-controls="mobile-nav"
-          aria-label={open ? "Close menu" : "Open menu"}
-          onClick={() => setOpen((v) => !v)}
-        >
-          <span className="sr-only">Menu</span>
-          <span className="flex flex-col gap-1.5" aria-hidden="true">
-            <span
-              className={`block h-0.5 w-5 bg-ink transition ${open ? "translate-y-2 rotate-45" : ""}`}
-            />
-            <span
-              className={`block h-0.5 w-5 bg-ink transition ${open ? "opacity-0" : ""}`}
-            />
-            <span
-              className={`block h-0.5 w-5 bg-ink transition ${open ? "-translate-y-2 -rotate-45" : ""}`}
-            />
-          </span>
-        </button>
+          <button
+            type="button"
+            className="flex h-10 w-10 items-center justify-center border border-ink/20 lg:hidden"
+            aria-expanded={open}
+            aria-controls="mobile-nav"
+            aria-label={open ? "Close menu" : "Open menu"}
+            onClick={() => setOpen((v) => !v)}
+          >
+            <span className="sr-only">Menu</span>
+            <span className="flex flex-col gap-1.5" aria-hidden="true">
+              <span
+                className={`block h-0.5 w-5 bg-ink transition ${open ? "translate-y-2 rotate-45" : ""}`}
+              />
+              <span
+                className={`block h-0.5 w-5 bg-ink transition ${open ? "opacity-0" : ""}`}
+              />
+              <span
+                className={`block h-0.5 w-5 bg-ink transition ${open ? "-translate-y-2 -rotate-45" : ""}`}
+              />
+            </span>
+          </button>
+        </div>
       </div>
+
+      {/* Tier 2 — evenly spaced primary navigation (desktop) */}
+      <nav className="site-nav-row hidden lg:block" aria-label="Primary">
+        <ul className="gutter-x mx-auto flex max-w-[80rem] items-center justify-center gap-8 xl:gap-12">
+          {navLinks.map((link) => (
+            <li key={link.href}>
+              <Link
+                href={link.href}
+                className={`site-nav-link ${isActive(link.href) ? "is-active" : ""}`}
+              >
+                {link.label}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </nav>
 
       {open ? (
         <nav
@@ -91,12 +90,14 @@ export function Header() {
           className="border-t border-stone bg-white px-5 py-4 lg:hidden"
           aria-label="Mobile"
         >
-          <ul className="flex flex-col gap-3">
+          <ul className="flex flex-col gap-1">
             {navLinks.map((link) => (
               <li key={link.href}>
                 <Link
                   href={link.href}
-                  className="block py-2 text-base text-ink"
+                  className={`block py-2.5 text-base ${
+                    isActive(link.href) ? "font-semibold text-ink" : "text-muted"
+                  }`}
                   onClick={() => setOpen(false)}
                 >
                   {link.label}
@@ -106,7 +107,7 @@ export function Header() {
             <li>
               <Link
                 href="/discuss"
-                className="btn btn-primary mt-2 w-full justify-center"
+                className="btn btn-primary mt-3 w-full justify-center"
                 onClick={() => setOpen(false)}
               >
                 <span>Discuss a Project</span>
