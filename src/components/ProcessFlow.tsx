@@ -53,8 +53,6 @@ export function ProcessFlow() {
     const rail = railRef.current;
     const spark = sparkRef.current;
 
-    // Reduced motion: everything static and fully visible. GSAP still owns the
-    // state (no opacity/visibility is set in CSS on these elements).
     if (reduced) {
       gsap.set(steps, { opacity: 1, y: 0 });
       if (rail) gsap.set(rail, { scaleX: 1, opacity: 1 });
@@ -91,8 +89,6 @@ export function ProcessFlow() {
         0.1,
       );
 
-      // Sleek connective motion: a lime spark travels the rail like signal
-      // flowing between stages. Desktop only — the rail is hidden on mobile.
       if (spark && window.matchMedia("(min-width: 810px)").matches) {
         gsap.to(spark, {
           keyframes: {
@@ -109,7 +105,6 @@ export function ProcessFlow() {
         });
       }
 
-      // Tiny orbital ring on each node keeps the 3D/particle language.
       orbits.forEach((orbit, i) => {
         gsap.to(orbit, {
           rotation: i % 2 === 0 ? 360 : -360,

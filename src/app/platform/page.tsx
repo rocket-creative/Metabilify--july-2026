@@ -80,7 +80,7 @@ export default function PlatformPage() {
         </div>
       </PageHero>
 
-      {/* First principles narrative + chromatogram */}
+      {}
       <section className="section">
         <div className="grid items-center gap-8 md:gap-10 lg:grid-cols-12">
           <div className="lg:col-span-6">
@@ -115,10 +115,10 @@ export default function PlatformPage() {
         </div>
       </section>
 
-      {/* Scale ribbon — law of large numbers accent */}
+      {}
       <MarqueeRibbon />
 
-      {/* How it works — forest band with numbered principles */}
+      {}
       <section className="section-forest section-wide band-y">
         <div className="gutter-x mx-auto max-w-[80rem]">
           <Reveal>
@@ -152,7 +152,7 @@ export default function PlatformPage() {
         </div>
       </section>
 
-      {/* What Metablify recovers — comparison visual */}
+      {}
       <section className="section section-sage">
         <Reveal>
           <SectionHeading
@@ -164,7 +164,7 @@ export default function PlatformPage() {
         <FeatureCompare />
       </section>
 
-      {/* Capabilities grid */}
+      {}
       <section className="section">
         <Reveal>
           <SectionHeading
@@ -189,7 +189,7 @@ export default function PlatformPage() {
         </div>
       </section>
 
-      {/* Outcome + applications links */}
+      {}
       <section className="section section-sage">
         <Reveal>
           <SectionHeading
@@ -234,7 +234,7 @@ export default function PlatformPage() {
         </div>
       </section>
 
-      {/* Final CTA */}
+      {}
       <section className="section-forest section-wide band-y text-center">
         <Reveal>
           <h2 className="display display-lg mx-auto mb-5 max-w-3xl text-white">

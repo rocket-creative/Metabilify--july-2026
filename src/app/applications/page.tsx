@@ -94,7 +94,7 @@ export default function ApplicationsPage() {
         <Button href="/discuss">Discuss Your Project</Button>
       </PageHero>
 
-      {/* Shared platform explainer */}
+      {}
       <section className="section">
         <div className="grid gap-8 md:gap-10 lg:grid-cols-12 lg:items-start">
           <div className="lg:col-span-5">
@@ -141,7 +141,7 @@ export default function ApplicationsPage() {
         </div>
       </section>
 
-      {/* Application cards */}
+      {}
       <section className="section section-sage">
         <Reveal>
           <SectionHeading eyebrow="Explore" title="Leading applications" />
@@ -180,10 +180,10 @@ export default function ApplicationsPage() {
         </div>
       </section>
 
-      {/* Emerging application areas from the content registry */}
+      {}
       <MoreApplications />
 
-      {/* Final CTA */}
+      {}
       <section className="section-forest section-wide band-y text-center">
         <Reveal>
           <h2 className="display display-lg mx-auto mb-5 max-w-3xl text-white">

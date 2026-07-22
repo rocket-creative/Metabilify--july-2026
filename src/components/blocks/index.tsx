@@ -11,7 +11,6 @@ import type {
 
 export { CtaBlock } from "@/components/cta/CtaBlock";
 
-/** Shared prose section used by the semantic Problem and Mechanism blocks. */
 function ProseBlock({
   eyebrow,
   title,

@@ -16,16 +16,16 @@ export default function HomePage() {
 
       <MetabolomeExplainer />
 
-      {/* Discovery — forest-green band with line icons */}
+      {}
       <CapabilitiesBand />
 
-      {/* Scale ribbon accent */}
+      {}
       <MarqueeRibbon />
 
-      {/* Applications — 2-col split cards */}
+      {}
       <ApplicationsCarousel />
 
-      {/* Work with us */}
+      {}
       <section className="section-wide section-grey band-y">
         <div className="gutter-x mx-auto max-w-[80rem]">
           <Reveal>
@@ -81,13 +81,13 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Full-width lifestyle image */}
+      {}
       <FullBleedImage
         src="/images/team-workspace.png"
         alt="The Metablify team collaborating in the lab and workspace"
       />
 
-      {/* Origin */}
+      {}
       <section className="section">
         <Reveal>
           <p className="eyebrow mb-4">Origin</p>
@@ -105,10 +105,10 @@ export default function HomePage() {
         </Reveal>
       </section>
 
-      {/* Getting started */}
+      {}
       <ProcessFlow />
 
-      {/* Final CTA */}
+      {}
       <section className="section-forest section-wide band-y text-center">
         <Reveal>
           <h2 className="display display-lg mx-auto mb-5 max-w-3xl text-white">

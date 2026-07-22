@@ -48,7 +48,7 @@ export default function PlatformDevelopmentPage() {
         <Button href="/discuss">Discuss Your Project</Button>
       </PageHero>
 
-      {/* Narrative */}
+      {}
       <section className="section section-sage">
         <Reveal>
           <SectionHeading
@@ -74,7 +74,7 @@ export default function PlatformDevelopmentPage() {
         </Reveal>
       </section>
 
-      {/* Focus areas */}
+      {}
       <section className="section">
         <Reveal>
           <SectionHeading
@@ -99,7 +99,7 @@ export default function PlatformDevelopmentPage() {
         </div>
       </section>
 
-      {/* How we partner */}
+      {}
       <section className="section-forest section-wide band-y">
         <div className="gutter-x mx-auto max-w-[80rem]">
           <Reveal>
@@ -151,7 +151,7 @@ export default function PlatformDevelopmentPage() {
         </div>
       </section>
 
-      {/* Final CTA */}
+      {}
       <section className="section section-sage text-center">
         <Reveal>
           <h2 className="display display-md mx-auto mb-6 max-w-2xl">

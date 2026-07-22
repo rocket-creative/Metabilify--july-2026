@@ -74,7 +74,7 @@ export default function WorkWithUsPage() {
         <Button href="/discuss">Discuss Your Project</Button>
       </PageHero>
 
-      {/* Three paths */}
+      {}
       <section className="section">
         <Reveal>
           <SectionHeading
@@ -108,7 +108,7 @@ export default function WorkWithUsPage() {
         </div>
       </section>
 
-      {/* Getting started rail */}
+      {}
       <section className="section-wide section-sage band-y">
         <div className="gutter-x mx-auto max-w-[80rem]">
           <Reveal>
@@ -138,7 +138,7 @@ export default function WorkWithUsPage() {
         </div>
       </section>
 
-      {/* Final CTA */}
+      {}
       <section className="section-forest section-wide band-y text-center">
         <Reveal>
           <h2 className="display display-lg mx-auto mb-5 max-w-3xl text-white">

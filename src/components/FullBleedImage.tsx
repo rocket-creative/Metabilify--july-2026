@@ -4,7 +4,6 @@ type Props = {
   src: string;
   alt: string;
   caption?: string;
-  /** "wide" sits inside the content container; "bleed" runs edge-to-edge */
   variant?: "wide" | "bleed";
   height?: string;
 };

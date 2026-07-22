@@ -64,7 +64,7 @@ export default function MetabolomicsPage() {
         <Button href="/discuss">Discuss Your Project</Button>
       </PageHero>
 
-      {/* Intro + visual */}
+      {}
       <section className="section">
         <div className="grid items-center gap-8 md:gap-10 lg:grid-cols-12">
           <div className="lg:col-span-6">
@@ -88,7 +88,7 @@ export default function MetabolomicsPage() {
         </div>
       </section>
 
-      {/* Workflow — forest band */}
+      {}
       <section className="section-forest section-wide band-y">
         <div className="gutter-x mx-auto max-w-[80rem]">
           <Reveal>
@@ -124,7 +124,7 @@ export default function MetabolomicsPage() {
         </div>
       </section>
 
-      {/* Outcomes */}
+      {}
       <section className="section">
         <Reveal>
           <SectionHeading
@@ -148,7 +148,7 @@ export default function MetabolomicsPage() {
         </div>
       </section>
 
-      {/* Use cases */}
+      {}
       <section className="section section-sage">
         <Reveal>
           <SectionHeading eyebrow="Where it fits" title="Built for real studies" />
@@ -170,7 +170,7 @@ export default function MetabolomicsPage() {
         </div>
       </section>
 
-      {/* Final CTA */}
+      {}
       <section className="section-forest section-wide band-y text-center">
         <Reveal>
           <h2 className="display display-lg mx-auto mb-5 max-w-3xl text-white">

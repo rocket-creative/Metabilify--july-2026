@@ -2,7 +2,6 @@ import type { ContentPage, Faq } from "@/types/content";
 import { pageHref } from "@/types/content";
 import { siteConfig } from "@/lib/site";
 
-/** Render a JSON-LD script tag from a plain object. */
 export function JsonLd({ data }: { data: Record<string, unknown> }) {
   return (
     <script

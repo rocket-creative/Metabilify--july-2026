@@ -2,15 +2,6 @@ import { Button } from "@/components/Button";
 import { Reveal } from "@/components/Reveal";
 import type { Cta, CtaTier } from "@/types/content";
 
-/**
- * Three tier CTA ladder. Placement is driven by page intent:
- *  - benchmark  low commitment, informational pages
- *  - assessment mid, solution and comparison pages, sends a dataset
- *  - discuss    high, application and services pages
- *
- * Every CTA sits beside one concrete proof element, because a bare ask converts
- * worse than an ask with evidence next to it.
- */
 export const CTA_TIERS: Record<
   CtaTier,
   { label: string; href: string; heading: string; sub: string }

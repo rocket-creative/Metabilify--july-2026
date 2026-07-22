@@ -1,17 +1,10 @@
 import type { ContentPage } from "@/types/content";
 import { allContent, getAnyBySlug } from "@/content/registry";
 
-/**
- * Internal link engine. Given a page, return related pages so loose pages form
- * a topical cluster. Author declared relatedSlugs come first, then pages that
- * share the most tags. No page should surface fewer than three links; the audit
- * enforces that authors provide at least three resolvable relatedSlugs.
- */
 export function relatedPages(page: ContentPage, limit = 4): ContentPage[] {
   const results: ContentPage[] = [];
   const seen = new Set<string>([`${page.family}/${page.slug}`]);
 
-  // 1. Explicit author declared links, in order.
   for (const slug of page.relatedSlugs) {
     const found = getAnyBySlug(slug);
     if (found && !seen.has(`${found.family}/${found.slug}`)) {
@@ -21,7 +14,6 @@ export function relatedPages(page: ContentPage, limit = 4): ContentPage[] {
     if (results.length >= limit) return results;
   }
 
-  // 2. Fill remaining slots by shared tag count.
   const tagSet = new Set(page.tags);
   const scored = allContent()
     .filter((p) => !seen.has(`${p.family}/${p.slug}`))
@@ -41,7 +33,6 @@ export function relatedPages(page: ContentPage, limit = 4): ContentPage[] {
   return results;
 }
 
-/** Resolve relatedSlugs to pages, dropping any that do not exist. */
 export function resolveRelatedSlugs(page: ContentPage): ContentPage[] {
   return page.relatedSlugs
     .map((slug) => getAnyBySlug(slug))

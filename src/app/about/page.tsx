@@ -44,7 +44,7 @@ export default function AboutPage() {
         lead="Metablify was developed at the Donald Danforth Plant Science Center to solve large scale LC/MS challenges beyond the reach of conventional workflows."
       />
 
-      {/* Mission */}
+      {}
       <section className="section">
         <div className="grid gap-8 md:grid-cols-2 md:gap-10 lg:grid-cols-12 lg:items-start">
           <div className="lg:col-span-5">
@@ -69,13 +69,13 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Workspace image */}
+      {}
       <FullBleedImage
         src="/images/team-workspace.png"
         alt="The Metablify team collaborating in the lab and workspace"
       />
 
-      {/* Values */}
+      {}
       <section className="section section-sage">
         <Reveal>
           <SectionHeading eyebrow="What we value" title="How we work" />
@@ -97,7 +97,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Team */}
+      {}
       <section className="section">
         <Reveal>
           <SectionHeading eyebrow="Team" title="Leadership" />
@@ -124,7 +124,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Origin */}
+      {}
       <section className="section section-sage">
         <Reveal>
           <SectionHeading
@@ -143,7 +143,7 @@ export default function AboutPage() {
         </Reveal>
       </section>
 
-      {/* Final CTA */}
+      {}
       <section className="section-forest section-wide band-y text-center">
         <Reveal>
           <h2 className="display display-lg mx-auto mb-5 max-w-3xl text-white">

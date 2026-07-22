@@ -14,8 +14,6 @@ export function Preloader() {
 
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduced) {
-      // Skip the intro, but defer to a frame so state is not set synchronously
-      // inside the effect body.
       const raf = requestAnimationFrame(finish);
       return () => cancelAnimationFrame(raf);
     }

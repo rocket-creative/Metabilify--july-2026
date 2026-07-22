@@ -48,7 +48,6 @@ export async function POST(request: Request) {
 
   const data = parsed.data;
 
-  // Honeypot tripped
   if (data.website && data.website.length > 0) {
     return NextResponse.json({ ok: true });
   }
@@ -103,7 +102,6 @@ export async function POST(request: Request) {
       });
     } catch (err) {
       console.error("Resend error:", err);
-      // Inquiry already stored; still return success if Supabase worked
       if (!supabase) {
         return NextResponse.json(
           { error: "Unable to send your inquiry right now." },

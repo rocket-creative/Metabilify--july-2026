@@ -8,7 +8,7 @@ export const discussSchema = z.object({
     message: "Select an interest",
   }),
   message: z.string().trim().min(10, "Tell us a bit more").max(4000),
-  website: z.string().max(0).optional(), // honeypot
+  website: z.string().max(0).optional(),
 });
 
 export type DiscussInput = z.infer<typeof discussSchema>;
@@ -19,12 +19,6 @@ export const interestLabels: Record<DiscussInput["interest"], string> = {
   collaboration: "Strategic Collaboration",
 };
 
-/**
- * Qualified lead form for the dataset assessment offer. The extra fields let
- * the team triage fit instantly, which is the difference between a lead list
- * and a pipeline. Optional fields keep the visible form light via progressive
- * disclosure on the client.
- */
 export const leadSchema = z.object({
   name: z.string().trim().min(2, "Name is required").max(120),
   email: z.string().trim().email("Enter a valid email").max(200),
@@ -38,8 +32,7 @@ export const leadSchema = z.object({
   currentSoftware: z.string().trim().max(200).optional().or(z.literal("")),
   timeline: z.string().trim().max(120).optional().or(z.literal("")),
   message: z.string().trim().min(10, "Tell us a bit more").max(4000),
-  website: z.string().max(0).optional(), // honeypot
+  website: z.string().max(0).optional(),
 });
 
 export type LeadInput = z.infer<typeof leadSchema>;
-

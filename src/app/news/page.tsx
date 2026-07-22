@@ -54,7 +54,7 @@ export default function NewsPage() {
         </Reveal>
       </section>
 
-      {/* What to expect */}
+      {}
       <section className="section section-sage">
         <Reveal>
           <p className="eyebrow mb-4">What to expect</p>

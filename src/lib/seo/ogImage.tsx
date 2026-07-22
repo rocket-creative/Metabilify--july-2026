@@ -3,11 +3,6 @@ import { ImageResponse } from "next/og";
 export const ogSize = { width: 1200, height: 630 };
 export const ogContentType = "image/png";
 
-/**
- * Shared OG image renderer. Per page images are generated from the title so
- * every back page has a distinct, on brand social card. Uses inline styles
- * only, as required by the OG image runtime.
- */
 export function renderOgImage(kicker: string, title: string) {
   return new ImageResponse(
     (

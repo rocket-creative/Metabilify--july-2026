@@ -3,13 +3,13 @@
 import { useEffect, useRef } from "react";
 
 type Particle = {
-  bx: number; // base 3D coords (|v| = radius factor)
+  bx: number;
   by: number;
   bz: number;
   size: number;
   a: number;
-  hi: boolean; // highlight tone (lime / white) vs base (green / blue)
-  ox: number; // screen-space offset (mouse displacement)
+  hi: boolean;
+  ox: number;
   oy: number;
   ovx: number;
   ovy: number;
@@ -34,7 +34,6 @@ type Props = {
   density?: number;
   tone?: "blue" | "green";
   flares?: boolean;
-  /** 0..1 reveal multiplier for orbs/labels (defaults fully revealed) */
   reveal?: number;
 };
 
@@ -56,7 +55,6 @@ export function ParticleField({
   const dotRefs = useRef<(SVGCircleElement | null)[]>([]);
   const boxRefs = useRef<(HTMLDivElement | null)[]>([]);
 
-  // reveal inputs live in refs so scroll changes never reseed the sphere
   const showOrbitsRef = useRef(showOrbits);
   const showLabelsRef = useRef(showLabels);
   const revealRef = useRef(reveal);
@@ -84,7 +82,6 @@ export function ParticleField({
     let particles: Particle[] = [];
     let flareList: Flare[] = [];
 
-    // smoothly animated reveal alphas (no hard snap on scroll)
     let orbitAlpha = 0;
     let labelAlpha = 0;
 
@@ -169,7 +166,6 @@ export function ParticleField({
       );
       particles = [];
       for (let i = 0; i < count; i++) {
-        // uniform direction on unit sphere
         const u = Math.random() * 2 - 1;
         const th = Math.random() * PI2;
         const s = Math.sqrt(1 - u * u);
@@ -195,7 +191,6 @@ export function ParticleField({
           size = 0.5 + Math.random() * 1.4;
         }
 
-        // occasional larger "hero" particle for size variety
         if (Math.random() < 0.05) size += 2.6 + Math.random() * 2.2;
 
         particles.push({
@@ -241,7 +236,6 @@ export function ParticleField({
           size: 0,
         };
         spawnFlare(f);
-        // stagger initial lives so they don't pulse in unison
         f.life = Math.random();
         f.r += Math.random() * geometry().R * 0.3;
         flareList.push(f);
@@ -311,7 +305,6 @@ export function ParticleField({
       ctx.beginPath();
       ctx.arc(x, y, rr, 0, PI2);
       ctx.clip();
-      // magnify the already-rendered region beneath the lens
       ctx.drawImage(
         canvas,
         (x - srcSize / 2) * dpr,
@@ -325,7 +318,6 @@ export function ParticleField({
       );
       ctx.restore();
 
-      // soft inner edge
       ctx.globalAlpha = alpha;
       const ig = ctx.createRadialGradient(x, y, rr * 0.7, x, y, rr);
       ig.addColorStop(0, "rgba(0,0,0,0)");
@@ -335,14 +327,12 @@ export function ParticleField({
       ctx.fillStyle = ig;
       ctx.fill();
 
-      // rim
       ctx.beginPath();
       ctx.arc(x, y, rr, 0, PI2);
       ctx.strokeStyle = palette.rim;
       ctx.lineWidth = Math.max(1.5, rr * 0.04);
       ctx.stroke();
 
-      // glass highlight
       ctx.beginPath();
       ctx.ellipse(x - rr * 0.32, y - rr * 0.36, rr * 0.42, rr * 0.22, -0.6, 0, PI2);
       ctx.fillStyle = "rgba(255,255,255,0.3)";
@@ -433,10 +423,6 @@ export function ParticleField({
     const drawScene = () => {
       const { cx, cy, R } = geometry();
 
-      // ease reveal alphas toward their targets. Labels reach well past the
-      // sphere, so they only fit on a wide (desktop 16/11) canvas of adequate
-      // width. On the squarer mobile 4/3 canvas they would clip, so require the
-      // wide aspect as well as a minimum width.
       const labelsFit = w >= 560 && w / h > 1.4;
       const oTarget = (showOrbitsRef.current ? 1 : 0) * revealRef.current;
       const lTarget =
@@ -453,7 +439,6 @@ export function ParticleField({
       ctx.fillStyle = palette.bg;
       ctx.fillRect(0, 0, w, h);
 
-      // soft body glow behind the sphere
       const bgGlow = ctx.createRadialGradient(cx, cy, R * 0.1, cx, cy, R * 1.3);
       bgGlow.addColorStop(0, palette.glow);
       bgGlow.addColorStop(1, "rgba(255,255,255,0)");
@@ -464,7 +449,6 @@ export function ParticleField({
 
       drawFlares(cx, cy, R);
 
-      // 3D rotating point sphere
       const spin = t * 0.16;
       const cosA = Math.cos(spin);
       const sinA = Math.sin(spin);
@@ -506,7 +490,6 @@ export function ParticleField({
         sy += p.oy;
 
         const depth = (Z + 1.3) / 2.6;
-        // subtle shimmer for extra life
         const shimmer = reduced ? 1 : 0.85 + 0.15 * Math.sin(t * 2 + p.seed);
         const size = p.size * (0.5 + depth) * persp * shimmer;
         const alpha = p.a * (0.28 + 0.72 * depth) * (reduced ? 1 : 0.85 + 0.15 * Math.sin(t * 1.5 + p.seed));
@@ -550,8 +533,6 @@ export function ParticleField({
     }
 
     window.addEventListener("resize", resize);
-    // Pointer repel is a fine-pointer (mouse) affordance. On touch devices it
-    // adds nothing and risks competing with scroll, so only bind it there.
     const coarse = window.matchMedia("(pointer: coarse)").matches;
     if (interactive && !reduced && !coarse) {
       canvas.addEventListener("pointermove", onMove);

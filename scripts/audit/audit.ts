@@ -1,14 +1,3 @@
-/**
- * Agent 9 quality gate. Scans the content registry for the failure modes the
- * 2026 scaled content policy punishes and writes docs/AUDIT-REPORT.md with a
- * per page verdict of ship, revise, or cut.
- *
- * Run: npm run audit
- *
- * Exit code is non zero only when a page marked `live` has a hard violation, so
- * staged content can be reviewed without blocking. The client approves the live
- * list before promotion.
- */
 import { writeFileSync, mkdirSync } from "node:fs";
 import { join } from "node:path";
 import { allContent } from "../../src/content/registry";
@@ -37,12 +26,8 @@ const UNSAFE_CLAIMS = [
   "fda",
 ];
 
-// Proper nouns whose hyphen is unavoidable and allowed in body copy.
 const HYPHEN_ALLOWLIST = ["MS-DIAL"];
 
-// Thin thresholds by family. Glossary entries have a lower legitimate bar
-// (the policy targets dictionary stubs, so 200 words with a worked example is
-// substantive). Everything else targets 600.
 const WORD_MIN: Record<ContentPage["family"], number> = {
   glossary: 200,
   instrument: 400,
@@ -143,14 +128,12 @@ function auditPage(page: ContentPage, all: ContentPage[]): Finding[] {
   const joined = prose.join(" ");
   const lower = joined.toLowerCase();
 
-  // 1. Banned phrases
   for (const phrase of BANNED_PHRASES) {
     if (lower.includes(phrase)) {
       findings.push({ level: "hard", message: `Banned phrase: "${phrase}"` });
     }
   }
 
-  // 1b. Hyphens and dashes in body copy
   for (let text of prose) {
     for (const allowed of HYPHEN_ALLOWLIST) {
       text = text.split(allowed).join(" ");
@@ -169,7 +152,6 @@ function auditPage(page: ContentPage, all: ContentPage[]): Finding[] {
     }
   }
 
-  // 2. Thin content
   const words = wordCount(joined);
   const target = WORD_MIN[page.family];
   if (words < target) {
@@ -182,7 +164,6 @@ function auditPage(page: ContentPage, all: ContentPage[]): Finding[] {
     findings.push({ level: "hard", message: "Fewer than three value blocks" });
   }
 
-  // 2b. Similarity with siblings
   const mine = wordSet(joined);
   for (const sibling of all) {
     if (sibling === page || sibling.family !== page.family) continue;
@@ -195,7 +176,6 @@ function auditPage(page: ContentPage, all: ContentPage[]): Finding[] {
     }
   }
 
-  // 2c. Duplicate title or meta description
   const dupTitle = all.find(
     (o) => o !== page && o.metaTitle === page.metaTitle,
   );
@@ -212,7 +192,6 @@ function auditPage(page: ContentPage, all: ContentPage[]): Finding[] {
     });
   }
 
-  // 3. Claim safety
   for (const claim of UNSAFE_CLAIMS) {
     if (lower.includes(claim)) {
       findings.push({
@@ -228,7 +207,6 @@ function auditPage(page: ContentPage, all: ContentPage[]): Finding[] {
     });
   }
 
-  // 4. Link health
   const resolved = page.relatedSlugs.filter((s) => getAnyBySlug(s));
   if (resolved.length < 3) {
     findings.push({
@@ -247,7 +225,6 @@ function auditPage(page: ContentPage, all: ContentPage[]): Finding[] {
     findings.push({ level: "hard", message: "Missing CTA" });
   }
 
-  // 5. Metadata length
   if (page.metaTitle.length > 60) {
     findings.push({
       level: "soft",

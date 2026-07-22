@@ -1,12 +1,6 @@
 import { z } from "zod";
 import type { ContentPage } from "@/types/content";
 
-/**
- * Build time validation. A malformed or thin entry throws here, which fails the
- * build rather than shipping a low quality page. This is the first line of the
- * quality gate; the Agent 9 audit is the second.
- */
-
 const ctaSchema = z.object({
   tier: z.enum(["benchmark", "assessment", "discuss"]),
   label: z.string().optional(),

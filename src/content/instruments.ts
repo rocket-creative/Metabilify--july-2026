@@ -3,12 +3,6 @@ import type { InstrumentPage } from "@/types/content";
 const author = "Metablify Science Team";
 const lastReviewed = "2026-07-18";
 
-/**
- * Instrument pages ship as staged with roadmap language until the client
- * confirms which vendors and file formats are production supported today
- * (Wave 1 open question, Agent 4 blocker). productionSupported stays false and
- * copy avoids implying support that does not exist.
- */
 export const instruments: InstrumentPage[] = [
   {
     family: "instrument",

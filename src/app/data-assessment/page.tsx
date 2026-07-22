@@ -6,8 +6,6 @@ import { JsonLd, breadcrumbSchema } from "@/lib/seo/jsonld";
 import { buildBasicMetadata } from "@/lib/seo/metadata";
 import { siteConfig } from "@/lib/site";
 
-// Ships noindex until the team confirms the offer is operationally deliverable,
-// including turnaround and confidentiality terms (Wave 1 open question).
 export const metadata: Metadata = buildBasicMetadata({
   title: "Send Us a Dataset | Metablify",
   description:
@@ -62,7 +60,7 @@ export default function DataAssessmentPage() {
         lead="Assertions are easy. Send a limited set of your existing LC/MS data and see how many additional real mass features Metablify recovers against your current workflow output."
       />
 
-      {/* Confidentiality first: this is a conversion blocker for pharma. */}
+      {}
       <section className="section">
         <Reveal>
           <div className="border-l-4 border-ink bg-neutral p-8 md:p-10">
@@ -80,7 +78,7 @@ export default function DataAssessmentPage() {
         </Reveal>
       </section>
 
-      {/* What to send */}
+      {}
       <section className="section section-sage">
         <Reveal>
           <SectionHeading eyebrow="What to send" title="Three things, nothing heavy" />
@@ -102,7 +100,7 @@ export default function DataAssessmentPage() {
         </div>
       </section>
 
-      {/* Formats and vendors */}
+      {}
       <section className="section">
         <div className="grid gap-8 md:grid-cols-2 md:gap-10 lg:grid-cols-12 lg:items-start">
           <div className="lg:col-span-5">
@@ -139,7 +137,7 @@ export default function DataAssessmentPage() {
         </div>
       </section>
 
-      {/* What you get back */}
+      {}
       <section className="section section-sage">
         <Reveal>
           <SectionHeading
@@ -164,7 +162,7 @@ export default function DataAssessmentPage() {
         </div>
       </section>
 
-      {/* Form + proof adjacency */}
+      {}
       <section className="section">
         <div className="grid gap-8 md:gap-10 lg:grid-cols-12">
           <div className="lg:col-span-5">

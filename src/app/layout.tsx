@@ -21,7 +21,6 @@ const plexMono = IBM_Plex_Mono({
   display: "swap",
 });
 
-// Funky display face reserved for the "We make scale possible" scale ribbon.
 const syne = Syne({
   variable: "--font-syne",
   subsets: ["latin"],

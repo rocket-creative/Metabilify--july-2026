@@ -48,7 +48,6 @@ export async function POST(request: Request) {
 
   const data = parsed.data;
 
-  // Honeypot tripped: pretend success and drop.
   if (data.website && data.website.length > 0) {
     return NextResponse.json({ ok: true });
   }
@@ -84,7 +83,6 @@ export async function POST(request: Request) {
 
     if (error) {
       console.error("Supabase lead insert error:", error.message);
-      // Do not hard fail on storage; still try email below.
     }
   } else {
     console.warn("Supabase not configured. Lead logged only:", data.email);

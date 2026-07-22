@@ -12,7 +12,6 @@ const SUPPORTING = [
   "cleaner, aligned, and quantified mass-feature results",
 ];
 
-// One full ribbon sequence: the anchor recurs between each supporting phrase.
 const SEQUENCE: { text: string; anchor: boolean }[] = SUPPORTING.flatMap(
   (phrase) => [
     { text: ANCHOR, anchor: true },
@@ -20,12 +19,9 @@ const SEQUENCE: { text: string; anchor: boolean }[] = SUPPORTING.flatMap(
   ],
 );
 
-// --- Wave field geometry (SVG user units; stretched to full width/height) ---
-// The field spans the whole band; lines are distributed both ABOVE and BELOW
-// the centered marquee bar so it reads as floating in front of them.
 const WAVE_VIEW_W = 1200;
 const WAVE_VIEW_H = 200;
-const WAVE_PATH_W = 2400; // 2x the viewBox so a one-wavelength shift never bares an edge
+const WAVE_PATH_W = 2400;
 
 type WaveLine = {
   amp: number;
@@ -39,8 +35,6 @@ type WaveLine = {
   bobDur: number;
 };
 
-// yMid values alternate above/below center (100). The middle ones sit behind
-// the white bar (occluded); the outer ones peek above and below it.
 const WAVE_LINES: WaveLine[] = [
   { amp: 14, wavelength: 400, yMid: 30, opacity: 0.9, width: 0.75, duration: 8, startX: 0, bob: 5, bobDur: 5 },
   { amp: 20, wavelength: 560, yMid: 170, opacity: 0.85, width: 0.75, duration: 13, startX: -120, bob: 6, bobDur: 7 },
@@ -99,8 +93,6 @@ export function MarqueeRibbon() {
 
     const tweens: gsap.core.Tween[] = [];
 
-    // --- Ticker: scroller holds two identical tracks, so xPercent -50 moves it
-    // by exactly one track-width with no rounding -> a seamless loop. ---
     const firstTrack = scroller.querySelector<HTMLElement>(".mr-track");
     let tickerTween: gsap.core.Tween | null = null;
 
@@ -111,7 +103,7 @@ export function MarqueeRibbon() {
       gsap.set(scroller, { xPercent: 0, x: 0 });
       tickerTween = gsap.to(scroller, {
         xPercent: -50,
-        duration: distance / 85, // ~85px/sec
+        duration: distance / 85,
         ease: "none",
         repeat: -1,
       });
@@ -123,10 +115,6 @@ export function MarqueeRibbon() {
     scroller.addEventListener("mouseenter", onEnter);
     scroller.addEventListener("mouseleave", onLeave);
 
-    // --- Waves: drift RIGHT by exactly one wavelength (periodic -> seamless),
-    // counter to the leftward ticker text, with an optional gentle vertical bob
-    // for an oceanic feel. Travelling across the same [startX - wavelength,
-    // startX] range keeps the loop edge-free. ---
     const groups = gsap.utils.toArray<SVGGElement>(".mr-wave-group", root);
     groups.forEach((g, i) => {
       const cfg = WAVE_LINES[i];
@@ -176,8 +164,7 @@ export function MarqueeRibbon() {
       className="mr-ribbon"
       aria-label="Metablify — we make scale possible"
     >
-      {/* Green wave field spanning the whole band, sitting BEHIND the marquee
-          so the white bar reads as floating in front of it in 3D. */}
+      {}
       <div className="mr-waves" aria-hidden="true">
         <svg
           className="mr-waves-svg"
@@ -201,10 +188,9 @@ export function MarqueeRibbon() {
         </svg>
       </div>
 
-      {/* White ticker bar — hard edges (no fade), floating over the waves. */}
+      {}
       <div className="mr-ticker">
-        {/* Static, screen-reader-friendly line. Always visible if JS fails and
-            the sole non-animated copy under reduced motion. */}
+        {}
         <div className="mr-reduced">
           <span className="mr-anchor">{ANCHOR}</span>
           <Dot />
