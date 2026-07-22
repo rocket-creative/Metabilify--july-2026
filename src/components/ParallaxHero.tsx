@@ -151,7 +151,7 @@ export function ParallaxHero() {
         </div>
 
         <div className="relative lg:col-span-6">
-          <div className="hero-canvas-frame relative aspect-[5/4] w-full md:aspect-[4/3]">
+          <div className="hero-canvas-frame relative mx-auto aspect-square w-[72%] max-w-[18rem] sm:max-w-[22rem] md:w-full md:max-w-none md:aspect-[4/3]">
             <div className="absolute inset-0 z-0 lg:left-[-110%] lg:right-[-10%] lg:top-[-83%] lg:bottom-[-83%]">
               <ParticleField
                 className="absolute inset-0"
@@ -161,6 +161,7 @@ export function ParallaxHero() {
                 transparent
                 radiusScale={2}
                 orbitScale={0.5}
+                fieldOffsetX={0.14}
               />
             </div>
           </div>

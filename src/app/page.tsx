@@ -17,10 +17,10 @@ export default function HomePage() {
       <MetabolomeExplainer />
 
       {}
-      <CapabilitiesBand />
+      <MarqueeRibbon />
 
       {}
-      <MarqueeRibbon />
+      <CapabilitiesBand />
 
       {}
       <ApplicationsCarousel />

@@ -38,6 +38,7 @@ type Props = {
   transparent?: boolean;
   radiusScale?: number;
   orbitScale?: number;
+  fieldOffsetX?: number;
 };
 
 const PI2 = Math.PI * 2;
@@ -54,6 +55,7 @@ export function ParticleField({
   transparent = false,
   radiusScale = 1,
   orbitScale = 1,
+  fieldOffsetX = 0,
 }: Props) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
@@ -154,8 +156,8 @@ export function ParticleField({
     const baseSprite = tone === "green" ? greenSprite : blueSprite;
     const hiSprite = tone === "green" ? limeSprite : whiteSprite;
 
-    const geometry = () => {
-      const cx = w * 0.5;
+    const geometry = (shiftField = true) => {
+      const cx = w * 0.5 + (shiftField ? fieldOffsetX * w : 0);
       const cy = h * 0.5;
       const R =
         Math.min(w, h) * (showLabelsRef.current ? 0.26 : 0.3) * radiusScale;
@@ -349,7 +351,7 @@ export function ParticleField({
     };
 
     const computeOrbits = () => {
-      const { cx, cy, R } = geometry();
+      const { cx, cy, R } = geometry(false);
       const px = cx + R * 0.42;
       const py = cy - R * 0.02;
       const driftX = Math.cos(t * 0.11) * R * 0.05;
@@ -431,7 +433,7 @@ export function ParticleField({
     const drawScene = () => {
       const { cx, cy, R } = geometry();
 
-      const labelsFit = w >= 560 && w / h > 1.4;
+      const labelsFit = w >= 420 && w / h > 1.1;
       const oTarget = (showOrbitsRef.current ? 1 : 0) * revealRef.current;
       const lTarget =
         (showLabelsRef.current && labelsFit ? 1 : 0) * revealRef.current;
@@ -570,7 +572,16 @@ export function ParticleField({
       canvas.removeEventListener("pointermove", onMove);
       canvas.removeEventListener("pointerleave", onLeave);
     };
-  }, [interactive, density, tone, flares, transparent, radiusScale, orbitScale]);
+  }, [
+    interactive,
+    density,
+    tone,
+    flares,
+    transparent,
+    radiusScale,
+    orbitScale,
+    fieldOffsetX,
+  ]);
 
   const labelColor = tone === "green" ? "#1f4d2e" : "#33538f";
   const labelLine =
@@ -594,7 +605,7 @@ export function ParticleField({
   ];
 
   return (
-    <div className={`h-full w-full ${className}`}>
+    <div className={`h-full w-full overflow-visible ${className}`}>
       <canvas
         ref={canvasRef}
         className={`absolute inset-0 h-full w-full ${interactive ? "" : "pointer-events-none"}`}
@@ -602,10 +613,10 @@ export function ParticleField({
         aria-hidden="true"
       />
       {showLabels && (
-        <>
+        <div className="pointer-events-none absolute inset-0 z-10">
           <svg
             ref={svgRef}
-            className="pointer-events-none absolute inset-0"
+            className="pointer-events-none absolute inset-0 h-full w-full"
             aria-hidden="true"
           >
             {[0, 1, 2].map((i) => (
@@ -641,7 +652,7 @@ export function ParticleField({
               {content}
             </div>
           ))}
-        </>
+        </div>
       )}
     </div>
   );

@@ -39,6 +39,7 @@
   --font-body: var(--font-jakarta), system-ui, sans-serif;
   --font-mono: var(--font-plex), ui-monospace, monospace;
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --header-offset: 5.5rem;
 }
 
 @theme inline {
@@ -589,6 +590,7 @@ img.no-round,
 }
 
 .metabolome-section {
+  position: relative;
   background: var(--color-neutral);
   border-top: 1px solid var(--color-stone);
   border-bottom: 1px solid var(--color-stone);
@@ -597,6 +599,7 @@ img.no-round,
 .metabolome-stage {
   border: 1px solid var(--color-stone);
   background: var(--color-white);
+  overflow: visible;
   transform: scale(0.985);
   opacity: 0.92;
   transition: transform 800ms var(--ease-out-expo), opacity 800ms var(--ease-out-expo);
@@ -622,6 +625,9 @@ img.no-round,
   width: 7px;
   height: 7px;
   border-radius: 50%;
+  padding: 0;
+  border: 0;
+  cursor: pointer;
   background: #d4d4d4;
   transition: background 300ms ease, transform 300ms ease;
 }
@@ -629,6 +635,11 @@ img.no-round,
 .metabolome-dot.is-active {
   background: var(--color-accent);
   transform: scale(1.25);
+}
+
+.metabolome-dot:focus-visible {
+  outline: 2px solid var(--color-forest);
+  outline-offset: 3px;
 }
 
 .metabolome-stages {
@@ -640,7 +651,7 @@ img.no-round,
   position: absolute;
   inset: 0;
   opacity: 0;
-  transform: translateY(22px);
+  transform: translateY(16px);
   pointer-events: none;
   transition: opacity 680ms var(--ease-out-expo), transform 680ms var(--ease-out-expo);
 }
@@ -828,19 +839,7 @@ img.no-round,
   }
 
   .metabolome-stages {
-    min-height: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 1.75rem;
-  }
-
-  .stage-copy {
-    position: relative;
-    inset: auto;
-    opacity: 1;
-    transform: none;
-    pointer-events: auto;
-    transition: none;
+    min-height: clamp(14rem, 32vh, 18rem);
   }
 }
 
@@ -1244,6 +1243,10 @@ html.lenis body {
     opacity: 1;
     transform: none;
     transition: none;
+  }
+
+  .stage-copy:not(.is-active) {
+    opacity: 0;
   }
 
   .hero-scroll-arrow {
