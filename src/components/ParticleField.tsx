@@ -356,11 +356,11 @@ export function ParticleField({
       const sr = R * 0.34 * orbitScale;
       const lr = R * 0.3 * orbitScale;
       return {
-        c1x: px - R * 0.04 + driftX,
-        c1y: py - R * 0.12 + driftY,
+        c1x: px + (-R * 0.04 + driftX) * orbitScale,
+        c1y: py + (-R * 0.12 + driftY) * orbitScale,
         sr,
-        c2x: px + R * 0.06 + Math.cos(t * 0.1 + 1.2) * R * 0.035,
-        c2y: py + R * 0.14 + Math.sin(t * 0.085 + 1.2) * R * 0.035,
+        c2x: px + (R * 0.06 + Math.cos(t * 0.1 + 1.2) * R * 0.035) * orbitScale,
+        c2y: py + (R * 0.14 + Math.sin(t * 0.085 + 1.2) * R * 0.035) * orbitScale,
         lr,
       };
     };
