@@ -112,7 +112,6 @@ export function ParallaxHero() {
     };
 
     window.addEventListener("metablify:ready", onReady, { once: true });
-    // Fallback if event already fired
     const fallback = window.setTimeout(() => {
       if (!cleanup) cleanup = start();
     }, 3200);
@@ -125,10 +124,10 @@ export function ParallaxHero() {
   }, []);
 
   return (
-    <section ref={rootRef} className="hero-vireo relative min-h-[100svh] overflow-hidden">
+    <section ref={rootRef} className="hero-vireo relative overflow-hidden">
       <div className="hero-parallax-slow pointer-events-none absolute inset-0 bg-white" aria-hidden="true" />
 
-      <div className="relative z-10 mx-auto grid min-h-[100svh] max-w-[90rem] items-center gap-8 px-5 py-28 md:px-10 lg:grid-cols-12 lg:gap-4 lg:px-16 lg:py-20">
+      <div className="relative z-10 mx-auto grid max-w-[90rem] items-center gap-8 px-5 py-14 md:min-h-[70svh] md:px-10 md:py-16 lg:grid-cols-12 lg:gap-4 lg:px-16 lg:py-14">
         <div className="hero-parallax-fast lg:col-span-6">
           <p className="eyebrow mb-6 hero-anim hero-eyebrow">
             LC/MS platform · First principles of physics

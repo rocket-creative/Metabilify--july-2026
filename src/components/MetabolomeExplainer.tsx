@@ -26,8 +26,6 @@ export function MetabolomeExplainer() {
     const isDesktop = window.matchMedia("(min-width: 810px)").matches;
 
     const ctx = gsap.context(() => {
-      // On mobile (and reduced motion) skip the pinned scrollytelling and show
-      // the full, stacked story so the copy never overlaps.
       if (reduced || !isDesktop) {
         setReady(true);
         setStage(3);
@@ -35,22 +33,16 @@ export function MetabolomeExplainer() {
         return;
       }
 
-      // Pin an inner element rather than the section itself. The section is a
-      // direct child of <main>, so if GSAP wrapped it in a pin-spacer, React
-      // would fail to remove it on route change ("removeChild ... not a child").
-      // Keeping the pin-spacer inside the section avoids that crash.
       ScrollTrigger.create({
         trigger: section,
-        start: "top top",
-        end: "+=220%",
-        pin: pinEl,
+        start: "top 78%",
+        end: "bottom 22%",
         scrub: 0.65,
-        anticipatePin: 1,
         onUpdate: (self) => {
           progressRef.current = self.progress;
-          if (self.progress < 0.22) setStage(0);
-          else if (self.progress < 0.48) setStage(1);
-          else if (self.progress < 0.72) setStage(2);
+          if (self.progress < 0.25) setStage(0);
+          else if (self.progress < 0.5) setStage(1);
+          else if (self.progress < 0.75) setStage(2);
           else setStage(3);
         },
         onEnter: () => setReady(true),
@@ -61,10 +53,6 @@ export function MetabolomeExplainer() {
     return () => ctx.revert();
   }, []);
 
-  // Ambient 3D depth: slowly rotate the orbital shells that frame the point
-  // cloud so the visual reads as a dimensional sphere rather than a flat disc.
-  // GSAP owns the transforms; reduced motion / mobile leave the shells static
-  // but still visible (no opacity/visibility set here or in CSS).
   useEffect(() => {
     const group = orbitsRef.current?.querySelector<HTMLElement>(
       ".metabolome-orbit-group",
@@ -74,10 +62,6 @@ export function MetabolomeExplainer() {
     const isDesktop = window.matchMedia("(min-width: 810px)").matches;
     if (reduced || !isDesktop) return;
 
-    // Only the group is animated. The rings keep their CSS 3D tilt (rotateX /
-    // rotateY); rotating the group in 3D orbits those tilted shells so the
-    // cloud reads dimensional. Animating the rings directly would let GSAP
-    // overwrite their tilt transform, so we intentionally leave them to CSS.
     const ctx = gsap.context(() => {
       gsap.set(group, { transformPerspective: 1000 });
       gsap.to(group, {
@@ -114,19 +98,16 @@ export function MetabolomeExplainer() {
           ))}
         </div>
 
-        <div className="relative mx-auto flex min-h-[100svh] max-w-[90rem] flex-col justify-center px-5 py-16 md:px-10 lg:px-14">
+        <div className="relative mx-auto max-w-[90rem] px-5 py-14 md:px-10 md:py-20 lg:px-14">
         <div className="grid items-center gap-8 lg:grid-cols-12 lg:gap-8">
           <div className="lg:col-span-5">
-            <p className="eyebrow mb-4">Why Metablify</p>
-            <h2 className="display display-lg mb-6">
-              Don’t leave real mass features in the noise.
-            </h2>
+            <p className="eyebrow mb-6">Why Metablify</p>
 
             <div className="metabolome-stages">
               <StageCopy
                 active={stage === 0}
                 label="01 Cloud"
-                title="The detectable landscape"
+                title="Don’t leave real mass features in the noise."
                 body="Complex LC/MS datasets hold a vast field of mass features. Most of what is real is buried in noise."
               />
               <StageCopy
@@ -196,13 +177,8 @@ function StageCopy({
 }) {
   return (
     <div className={`stage-copy ${active ? "is-active" : ""}`}>
-      <p className="eyebrow mb-2">{label}</p>
-      <h3
-        className="mb-2 text-xl text-ink md:text-2xl"
-        style={{ fontFamily: "var(--font-display)" }}
-      >
-        {title}
-      </h3>
+      <p className="eyebrow mb-3">{label}</p>
+      <h2 className="display display-lg mb-4 text-ink">{title}</h2>
       <p className="text-sm leading-relaxed text-muted md:text-base">{body}</p>
     </div>
   );

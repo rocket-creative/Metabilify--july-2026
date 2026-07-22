@@ -1,7 +1,6 @@
 @import "tailwindcss";
 
 :root {
-  /* Glyphic-inspired: charcoal + white + greys only */
   --color-ink: #1a1a1a;
   --color-ink-deep: #0f0f0f;
   --color-accent: #1a1a1a;
@@ -16,7 +15,6 @@
   --color-stone: #e6e6e6;
   --color-grey-soft: #fafafa;
 
-  /* Aliases for existing class names */
   --color-evergreen: #1a1a1a;
   --color-evergreen-deep: #0f0f0f;
   --color-evergreen-bright: #1a1a1a;
@@ -30,7 +28,6 @@
   --color-berry-wash: #f4f4f4;
   --color-cream: #fafafa;
 
-  /* Forest band + lime accent (feature/capability sections) */
   --color-forest: #123227;
   --color-forest-deep: #0d2620;
   --color-lime: #c4e86b;
@@ -117,7 +114,6 @@ img {
   border-radius: 0.875rem;
 }
 
-/* The brand mark keeps its designed shape. */
 img.no-round,
 .no-round img {
   border-radius: 0;
@@ -158,7 +154,6 @@ img.no-round,
   border: 0;
 }
 
-/* Full-bleed — no magazine frame */
 .magazine {
   min-height: 100vh;
   background: var(--color-white);
@@ -277,8 +272,6 @@ img.no-round,
   padding-right: clamp(1.25rem, 5vw, 4rem);
 }
 
-/* Shared vertical rhythm for full-bleed colored bands + even inner gutters.
-   Mobile-first: only the low end drops; the desktop maximum is unchanged. */
 .band-y {
   padding-block: clamp(3rem, 7vw, 7.5rem);
 }
@@ -324,12 +317,10 @@ img.no-round,
   color: rgba(255, 255, 255, 0.74);
 }
 
-/* Keep card interiors light-on-white inside a forest band */
 .section-forest .card .eyebrow {
   color: var(--color-accent);
 }
 
-/* Capability columns with thin line icons */
 .capability {
   border-top: 1px solid rgba(255, 255, 255, 0.14);
   padding-top: 1.75rem;
@@ -356,7 +347,6 @@ img.no-round,
   color: rgba(255, 255, 255, 0.68);
 }
 
-/* Card system — rounded, thin border (Cohere-inspired) */
 .card {
   position: relative;
   background: var(--color-white);
@@ -483,7 +473,6 @@ img.no-round,
   background: var(--color-white);
 }
 
-/* Hero — Vireo-like full viewport */
 .hero-vireo {
   background: var(--color-white);
   border-bottom: 1px solid var(--color-stone);
@@ -536,7 +525,6 @@ img.no-round,
   }
 }
 
-/* Metabolome */
 .metabolome-section {
   background: var(--color-neutral);
   border-top: 1px solid var(--color-stone);
@@ -582,7 +570,7 @@ img.no-round,
 
 .metabolome-stages {
   position: relative;
-  min-height: 11rem;
+  min-height: clamp(15rem, 27vh, 20rem);
 }
 
 .stage-copy {
@@ -651,8 +639,6 @@ img.no-round,
   max-width: 13rem;
 }
 
-/* Annotation callouts read as labelled points on the 3D sphere:
-   a node dot on the sphere-facing corner + a thin leader line. */
 .callout-node {
   position: absolute;
   width: 9px;
@@ -715,8 +701,6 @@ img.no-round,
   left: -1.9rem;
 }
 
-/* Orbital shells that frame the point cloud so it reads dimensional.
-   GSAP rotates the group/rings; these rules only set position + tilt. */
 .metabolome-orbits {
   position: absolute;
   inset: 0;
@@ -780,7 +764,6 @@ img.no-round,
     bottom: 4%;
   }
 
-  /* Stack the stage copy normally on mobile so it never overlaps */
   .metabolome-stages {
     min-height: 0;
     display: flex;
@@ -798,7 +781,6 @@ img.no-round,
   }
 }
 
-/* Process rail (Vireo-style) */
 .process-rail {
   display: grid;
   gap: 0;
@@ -827,7 +809,6 @@ img.no-round,
   }
 }
 
-/* Story rows — no cards */
 .story-row {
   display: grid;
   gap: 1.5rem;
@@ -847,7 +828,6 @@ img.no-round,
   border-bottom: 1px solid var(--color-stone);
 }
 
-/* Process flow (Getting Started) — horizontal 3D/particle connective motion */
 .process-flow {
   background: var(--color-white);
   border-top: 1px solid var(--color-stone);
@@ -917,7 +897,6 @@ img.no-round,
   z-index: 1;
 }
 
-/* White disc so the connecting rail visually terminates at each node. */
 .process-flow-node::before {
   content: "";
   position: absolute;
@@ -955,8 +934,6 @@ img.no-round,
   box-shadow: 0 0 8px rgba(196, 232, 107, 0.9);
 }
 
-/* Vertical connector between stacked steps (mobile), from this node down to
-   the next one regardless of copy height. */
 .process-flow-step:not(:last-child)::after {
   content: "";
   position: absolute;
@@ -1010,7 +987,6 @@ img.no-round,
   }
 }
 
-/* Horizontal rail connecting the node centres (desktop only). */
 .process-flow-rail {
   display: none;
 }
@@ -1091,15 +1067,16 @@ img.no-round,
   border-bottom-color: var(--color-stone);
 }
 
-/* Two-tier masthead: brand row + evenly spaced nav row. The rows condense
-   on scroll so the header never eats too much vertical space. */
 .site-header-bar {
   padding-block: clamp(0.85rem, 1.4vw, 1.25rem);
+  transition: padding-block 260ms var(--ease-out-expo);
 }
 
 .site-nav-row {
   padding-block: 0.85rem;
   border-top: 1px solid var(--color-stone);
+  transition: padding-block 260ms var(--ease-out-expo),
+    border-top-color 260ms ease;
 }
 
 .site-header.is-scrolled .site-header-bar {
@@ -1223,23 +1200,15 @@ html.lenis body {
   }
 }
 
-/* ============================================================
-   Scale ribbon — "We make scale possible"
-   White band, black text, funky display face for the anchor.
-   ============================================================ */
 .mr-ribbon {
   position: relative;
   width: 100%;
   max-width: none;
   overflow: hidden;
   background: var(--color-forest);
-  /* Room for waves both above and below the centered ticker bar. All spacing is
-     internal (green) padding — no outer margin — so the ribbon never opens a
-     white gap between the solid-green sections it sits between. */
   padding-block: clamp(2rem, 5vw, 3.75rem);
 }
 
-/* Full-height green wave field, behind the marquee bar (3D depth). */
 .mr-waves {
   position: absolute;
   inset: 0;
@@ -1255,7 +1224,6 @@ html.lenis body {
   display: block;
 }
 
-/* White ticker bar — hard clipped edges, no fade, floating over the waves. */
 .mr-ticker {
   position: relative;
   z-index: 1;
@@ -1268,7 +1236,6 @@ html.lenis body {
   box-shadow: 0 14px 34px -16px rgba(0, 0, 0, 0.55);
 }
 
-/* Static fallback line — shown only under reduced motion / no JS. */
 .mr-reduced {
   display: none;
   width: 100%;

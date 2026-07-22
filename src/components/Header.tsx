@@ -12,10 +12,21 @@ export function Header() {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 12);
+    let raf = 0;
+    const update = () => {
+      raf = 0;
+      const y = window.scrollY;
+      setScrolled((prev) => (prev ? y > 16 : y > 72));
+    };
+    const onScroll = () => {
+      if (!raf) raf = requestAnimationFrame(update);
+    };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      if (raf) cancelAnimationFrame(raf);
+    };
   }, []);
 
   const isActive = (href: string) =>
@@ -29,7 +40,7 @@ export function Header() {
         scrolled ? "is-scrolled" : "bg-transparent"
       }`}
     >
-      {/* Tier 1 — brand + primary action */}
+      {}
       <div className="site-header-bar gutter-x flex items-center justify-between gap-4">
         <Logo priority />
 
@@ -68,7 +79,7 @@ export function Header() {
         </div>
       </div>
 
-      {/* Tier 2 — evenly spaced primary navigation (desktop) */}
+      {}
       <nav className="site-nav-row hidden lg:block" aria-label="Primary">
         <ul className="gutter-x mx-auto flex max-w-[80rem] items-center justify-center gap-8 xl:gap-12">
           {navLinks.map((link) => (
