@@ -6,12 +6,15 @@ type Capability = {
   icon: React.ReactNode;
 };
 
-const DetectIcon = (
+const NoiseIcon = (
   <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
-    <circle cx="32" cy="32" r="21" opacity="0.5" />
-    <circle cx="32" cy="32" r="13.5" />
-    <circle cx="32" cy="32" r="6" />
-    <circle cx="32" cy="32" r="2" fill="currentColor" stroke="none" />
+    <circle cx="32" cy="32" r="22" opacity="0.35" />
+    <circle cx="32" cy="32" r="12" opacity="0.55" />
+    <circle cx="32" cy="32" r="3" fill="currentColor" stroke="none" />
+    <circle cx="18" cy="20" r="1.5" fill="currentColor" stroke="none" opacity="0.5" />
+    <circle cx="46" cy="18" r="1.5" fill="currentColor" stroke="none" opacity="0.4" />
+    <circle cx="48" cy="42" r="1.5" fill="currentColor" stroke="none" opacity="0.5" />
+    <circle cx="16" cy="44" r="1.5" fill="currentColor" stroke="none" opacity="0.4" />
   </svg>
 );
 
@@ -41,7 +44,7 @@ const CAPABILITIES: Capability[] = [
   {
     title: "Real Mass Features Get Lost in the Noise",
     body: "Large LC/MS datasets are noisy, complex, and difficult to align across samples. Real mass features can be missed, split, or buried in background signal. Metablify organizes the chaos of large, noisy datasets to extract the signal from the noise and identify mass features other workflows miss.",
-    icon: DetectIcon,
+    icon: NoiseIcon,
   },
   {
     title: "Metablify Amplifies What is Real",

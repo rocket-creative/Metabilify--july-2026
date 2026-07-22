@@ -16,7 +16,7 @@ const APPLICATIONS: Application[] = [
     index: "01",
     href: "/applications/metabolomics",
     name: "Metabolomics",
-    body: "Turn complex untargeted LC/MS datasets into cleaner, aligned, and quantified mass feature results.",
+    body: "Turn complex untargeted LC/MS datasets into cleaner, aligned, and quantified mass-feature results.",
     points: [
       "Recover low abundance features",
       "Align features across large cohorts",
@@ -29,7 +29,7 @@ const APPLICATIONS: Application[] = [
     index: "02",
     href: "/applications/proteomics",
     name: "Proteomics",
-    body: "Reveal and quantify peptide mass features across complex LC/MS datasets, with a workflow built for scale, alignment, and signal clarity.",
+    body: "Reveal and quantify peptide mass features across complex LC/MS datasets with a workflow built for scale, alignment, and signal clarity.",
     points: [
       "Surface peptide mass features",
       "Stabilize alignment at scale",
@@ -48,10 +48,10 @@ export function ApplicationsCarousel() {
           <div className="mb-10 max-w-2xl md:mb-14">
             <p className="eyebrow mb-4">Applications</p>
             <h2 className="display display-lg mb-6">
-              One Metablify platform. Multiple omics.
+              One Metablify Platform. Multiple Omics.
             </h2>
             <p className="lead">
-              Metablify analyzes the mass feature layer shared across LC/MS
+              Metablify analyzes the mass-feature layer shared across LC/MS
               workflows, with leading applications in metabolomics and
               proteomics.
             </p>

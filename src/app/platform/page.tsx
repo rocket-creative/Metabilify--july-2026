@@ -6,12 +6,10 @@ import { PageHero, SectionHeading } from "@/components/PageHero";
 import { Reveal } from "@/components/Reveal";
 import { ChromatogramVisual } from "@/components/ChromatogramVisual";
 import { FeatureCompare } from "@/components/FeatureCompare";
-import { MarqueeRibbon } from "@/components/MarqueeRibbon";
-
 export const metadata: Metadata = {
   title: "The Metablify Platform",
   description:
-    "Where first principles find and amplify real mass features. Metablify puts the law of large numbers to work across complex LC/MS datasets.",
+    "Where First Principles Find and Amplify Real Mass Features. Metablify puts the law of large numbers to work across complex LC/MS datasets.",
   alternates: { canonical: "/platform" },
 };
 
@@ -68,8 +66,8 @@ export default function PlatformPage() {
       />
 
       <PageHero
-        eyebrow="Platform"
-        title="Where first principles find and amplify real mass features"
+        eyebrow="The Metablify Platform"
+        title="Where First Principles Find and Amplify Real Mass Features"
         lead="Metablify puts the law of large numbers to work, amplifying consistent signals to detect, align, and quantify mass features across complex LC/MS datasets."
       >
         <div className="flex flex-wrap gap-4">
@@ -114,9 +112,6 @@ export default function PlatformPage() {
           </div>
         </div>
       </section>
-
-      {}
-      <MarqueeRibbon />
 
       {}
       <section className="section-forest section-wide band-y">

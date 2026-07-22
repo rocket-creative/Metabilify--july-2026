@@ -783,6 +783,17 @@ img.no-round,
   pointer-events: none;
   perspective: 1000px;
   z-index: 2;
+  opacity: 0;
+  transition: opacity 680ms var(--ease-out-expo);
+}
+
+.metabolome-stage[data-story-phase="sample"] .metabolome-orbits,
+.metabolome-stage[data-story-phase="legacy"] .metabolome-orbits {
+  opacity: 0.9;
+}
+
+.metabolome-stage[data-story-phase="metablify"] .metabolome-orbits {
+  opacity: 0.45;
 }
 
 .metabolome-orbit-group {

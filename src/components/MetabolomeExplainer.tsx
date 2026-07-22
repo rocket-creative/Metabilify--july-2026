@@ -2,39 +2,39 @@
 
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
-import { ParticleField } from "./ParticleField";
+import { ParticleField, type StoryPhase } from "./ParticleField";
 
-type Stage = 0 | 1 | 2 | 3;
+type Stage = 0 | 1 | 2;
+
+const PHASES: StoryPhase[] = ["cloud", "legacy", "metablify"];
 
 const STAGES: {
   stage: Stage;
+  phase: StoryPhase;
   label: string;
   title: string;
   body: string;
 }[] = [
   {
     stage: 0,
-    label: "01 Cloud",
+    phase: "cloud",
+    label: "01 Noise",
     title: "Don’t leave real mass features in the noise.",
-    body: "Complex LC/MS datasets hold a vast field of mass features. Most of what is real is buried in noise.",
+    body: "Large LC/MS datasets are noisy, complex, and difficult to align across samples. Real mass features can be missed, split, or buried in background signal.",
   },
   {
     stage: 1,
-    label: "02 Sample",
-    title: "What is actually in your sample",
-    body: "Real mass features are present in your experiment. The question is whether your workflow can recover them.",
+    phase: "legacy",
+    label: "02 Legacy",
+    title: "Legacy recovers only a subset",
+    body: "Legacy workflows may recover only a subset of detectable mass features.",
   },
   {
     stage: 2,
-    label: "03 Legacy",
-    title: "Legacy recovers only the overlap",
-    body: "Conventional workflows may recover only a subset of detectable mass features, leaving discovery on the table.",
-  },
-  {
-    stage: 3,
-    label: "04 Metablify",
-    title: "Amplify what is real",
-    body: "Metablify reveals a broader set of real mass features across LC/MS datasets by amplifying consistent signals.",
+    phase: "metablify",
+    label: "03 Metablify",
+    title: "Metablify reveals what is real",
+    body: "Metablify reveals a broader set of real mass features across LC/MS datasets.",
   },
 ];
 
@@ -48,6 +48,8 @@ export function MetabolomeExplainer() {
   const [stage, setStage] = useState<Stage>(0);
   const [ready, setReady] = useState(false);
 
+  const storyPhase = PHASES[stage];
+
   useEffect(() => {
     const section = sectionRef.current;
     if (!section) return;
@@ -56,7 +58,7 @@ export function MetabolomeExplainer() {
     setReady(true);
 
     if (reduced) {
-      setStage(3);
+      setStage(2);
       return;
     }
 
@@ -71,7 +73,7 @@ export function MetabolomeExplainer() {
       clearTimer();
       if (!visibleRef.current) return;
       timerRef.current = setInterval(() => {
-        setStage((prev) => ((prev + 1) % 4) as Stage);
+        setStage((prev) => ((prev + 1) % 3) as Stage);
       }, STAGE_MS);
     };
 
@@ -128,7 +130,7 @@ export function MetabolomeExplainer() {
     if (timerRef.current) {
       clearInterval(timerRef.current);
       timerRef.current = setInterval(() => {
-        setStage((prev) => ((prev + 1) % 4) as Stage);
+        setStage((prev) => ((prev + 1) % 3) as Stage);
       }, STAGE_MS);
     }
   };
@@ -141,7 +143,7 @@ export function MetabolomeExplainer() {
     >
       <div className="relative mx-auto max-w-[90rem] px-5 py-12 md:px-10 md:py-16 lg:px-14">
         <div className="metabolome-progress" role="tablist" aria-label="Story stages">
-          {[0, 1, 2, 3].map((i) => (
+          {[0, 1, 2].map((i) => (
             <button
               key={i}
               type="button"
@@ -177,6 +179,7 @@ export function MetabolomeExplainer() {
           <div className="relative lg:col-span-7">
             <div
               className={`metabolome-stage relative aspect-[4/3] w-full md:aspect-[16/10] ${ready ? "is-ready" : ""}`}
+              data-story-phase={storyPhase}
             >
               <ParticleField
                 className="absolute inset-0"
@@ -184,7 +187,7 @@ export function MetabolomeExplainer() {
                 showOrbits
                 showLabels
                 tone="green"
-                reveal={stage >= 1 ? 1 : 0}
+                storyPhase={storyPhase}
               />
 
               <div

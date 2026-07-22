@@ -1,5 +1,9 @@
 "use client";
 
+/**
+ * Parked — not currently rendered on any page.
+ * Re-import <MarqueeRibbon /> on home or platform when ready to bring it back.
+ */
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 

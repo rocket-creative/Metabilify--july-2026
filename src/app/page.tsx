@@ -2,7 +2,6 @@ import { ApplicationsCarousel } from "@/components/ApplicationsCarousel";
 import { Button } from "@/components/Button";
 import { CapabilitiesBand } from "@/components/CapabilitiesBand";
 import { FullBleedImage } from "@/components/FullBleedImage";
-import { MarqueeRibbon } from "@/components/MarqueeRibbon";
 import { MetabolomeExplainer } from "@/components/MetabolomeExplainer";
 import { ParallaxHero } from "@/components/ParallaxHero";
 import { ProcessFlow } from "@/components/ProcessFlow";
@@ -15,9 +14,6 @@ export default function HomePage() {
       <ParallaxHero />
 
       <MetabolomeExplainer />
-
-      {}
-      <MarqueeRibbon />
 
       {}
       <CapabilitiesBand />

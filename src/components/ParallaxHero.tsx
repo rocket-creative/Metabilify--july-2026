@@ -23,24 +23,13 @@ export function ParallaxHero() {
         gsap.set(".hero-anim", { opacity: 0, y: 40, filter: "blur(10px)" });
 
         const tl = gsap.timeline();
-        tl.to(".hero-eyebrow", {
+        tl.to(".hero-line-1", {
           opacity: 1,
           y: 0,
           filter: "blur(0px)",
-          duration: 0.8,
-          ease: "power3.out",
+          duration: 0.95,
+          ease: "power4.out",
         })
-          .to(
-            ".hero-line-1",
-            {
-              opacity: 1,
-              y: 0,
-              filter: "blur(0px)",
-              duration: 0.95,
-              ease: "power4.out",
-            },
-            "-=0.45",
-          )
           .to(
             ".hero-line-2",
             {
@@ -129,9 +118,6 @@ export function ParallaxHero() {
 
       <div className="relative z-10 mx-auto grid max-w-[90rem] items-center gap-8 px-5 py-12 md:px-10 md:py-14 lg:grid-cols-12 lg:gap-4 lg:px-16">
         <div className="hero-parallax-fast relative z-10 lg:col-span-6">
-          <p className="eyebrow mb-6 hero-anim hero-eyebrow">
-            LC/MS platform · First principles of physics
-          </p>
           <h1 className="display hero-headline">
             <span className="block hero-anim hero-line-1">See more in your</span>
             <span className="block hero-anim hero-line-2 text-ink">
@@ -144,9 +130,6 @@ export function ParallaxHero() {
           </p>
           <div className="mt-12 flex flex-wrap gap-4 hero-anim hero-cta">
             <Button href="/platform">Explore Metablify</Button>
-            <Button href="/discuss" variant="secondary">
-              Discuss a Project
-            </Button>
           </div>
         </div>
 

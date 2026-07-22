@@ -26,6 +26,8 @@ type Flare = {
   size: number;
 };
 
+export type StoryPhase = "cloud" | "legacy" | "metablify";
+
 type Props = {
   className?: string;
   interactive?: boolean;
@@ -39,6 +41,7 @@ type Props = {
   radiusScale?: number;
   orbitScale?: number;
   fieldOffsetX?: number;
+  storyPhase?: StoryPhase;
 };
 
 const PI2 = Math.PI * 2;
@@ -56,6 +59,7 @@ export function ParticleField({
   radiusScale = 1,
   orbitScale = 1,
   fieldOffsetX = 0,
+  storyPhase,
 }: Props) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
@@ -66,12 +70,14 @@ export function ParticleField({
   const showOrbitsRef = useRef(showOrbits);
   const showLabelsRef = useRef(showLabels);
   const revealRef = useRef(reveal);
+  const storyPhaseRef = useRef(storyPhase);
 
   useEffect(() => {
     showOrbitsRef.current = showOrbits;
     showLabelsRef.current = showLabels;
     revealRef.current = reveal;
-  }, [showOrbits, showLabels, reveal]);
+    storyPhaseRef.current = storyPhase;
+  }, [showOrbits, showLabels, reveal, storyPhase]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -91,10 +97,60 @@ export function ParticleField({
     let particles: Particle[] = [];
     let flareList: Flare[] = [];
 
-    let orbitAlpha = 0;
-    let labelAlpha = 0;
+    let sampleLensAlpha = 0;
+    let legacyLensAlpha = 0;
+    let labelAlphas = [0, 0, 0];
+    let radiusMul = 1;
+    let fieldAlpha = 1;
 
     const mouse = { x: -9999, y: -9999, active: false };
+
+    const lerp = (current: number, target: number, amount: number) =>
+      reduced ? target : current + (target - current) * amount;
+
+    const phaseTargets = (labelsFit: boolean) => {
+      const phase = storyPhaseRef.current;
+      if (!phase) {
+        const o = (showOrbitsRef.current ? 1 : 0) * revealRef.current;
+        const l =
+          (showLabelsRef.current && labelsFit ? 1 : 0) * revealRef.current;
+        return {
+          sampleLens: o,
+          legacyLens: o,
+          labels: [l, l, l] as [number, number, number],
+          radiusMul: 1,
+          fieldAlpha: 1,
+        };
+      }
+
+      const labelOn = showLabelsRef.current && labelsFit ? 1 : 0;
+      switch (phase) {
+        case "cloud":
+          return {
+            sampleLens: 0,
+            legacyLens: 0,
+            labels: [0, 0, 0] as [number, number, number],
+            radiusMul: 0.92,
+            fieldAlpha: 0.72,
+          };
+        case "legacy":
+          return {
+            sampleLens: 1,
+            legacyLens: 1,
+            labels: [0, labelOn, 0] as [number, number, number],
+            radiusMul: 0.98,
+            fieldAlpha: 0.8,
+          };
+        case "metablify":
+          return {
+            sampleLens: 0.5,
+            legacyLens: 0.5,
+            labels: [0, 0, labelOn] as [number, number, number],
+            radiusMul: 1.08,
+            fieldAlpha: 1,
+          };
+      }
+    };
 
     const palette =
       tone === "green"
@@ -160,7 +216,10 @@ export function ParticleField({
       const cx = w * 0.5 + (shiftField ? fieldOffsetX * w : 0);
       const cy = h * 0.5;
       const R =
-        Math.min(w, h) * (showLabelsRef.current ? 0.26 : 0.3) * radiusScale;
+        Math.min(w, h) *
+        (showLabelsRef.current ? 0.26 : 0.3) *
+        radiusScale *
+        radiusMul;
       return { cx, cy, R };
     };
 
@@ -369,15 +428,17 @@ export function ParticleField({
     };
 
     const drawOrbits = (o: ReturnType<typeof computeOrbits>) => {
-      if (orbitAlpha <= 0.01) return;
-      drawLens(o.c1x, o.c1y, o.sr, orbitAlpha);
-      drawLens(o.c2x, o.c2y, o.lr, orbitAlpha);
+      if (sampleLensAlpha > 0.01) {
+        drawLens(o.c1x, o.c1y, o.sr, sampleLensAlpha);
+      }
+      if (legacyLensAlpha > 0.01) {
+        drawLens(o.c2x, o.c2y, o.lr, legacyLensAlpha);
+      }
     };
 
     const layoutLabels = (o: ReturnType<typeof computeOrbits>) => {
       if (!showLabelsRef.current) return;
       const { cx, cy, R } = geometry();
-      const rise = (1 - labelAlpha) * 16;
 
       const dir = (ax: number, ay: number, bx: number, by: number) => {
         const dx = bx - ax;
@@ -387,12 +448,38 @@ export function ParticleField({
       };
 
       const defs = [
-        { ox: o.c1x, oy: o.c1y, rr: o.sr, ex: cx + R * 1.35, ey: cy - R * 0.85, align: "left" as const, ph: 0 },
-        { ox: o.c2x, oy: o.c2y, rr: o.lr, ex: cx + R * 1.35, ey: cy + R * 0.68, align: "left" as const, ph: 2 },
-        { ox: cx, oy: cy, rr: R * 0.98, ex: cx - R * 1.3, ey: cy + R * 1.02, align: "right" as const, ph: 4 },
+        {
+          ox: o.c1x,
+          oy: o.c1y,
+          rr: o.sr,
+          ex: cx + R * 1.35,
+          ey: cy - R * 0.85,
+          align: "left" as const,
+          ph: 0,
+        },
+        {
+          ox: o.c2x,
+          oy: o.c2y,
+          rr: o.lr,
+          ex: cx + R * 1.35,
+          ey: cy + R * 0.68,
+          align: "left" as const,
+          ph: 2,
+        },
+        {
+          ox: cx,
+          oy: cy,
+          rr: R * 0.98,
+          ex: cx - R * 1.3,
+          ey: cy + R * 1.02,
+          align: "right" as const,
+          ph: 4,
+        },
       ];
 
       defs.forEach((d, i) => {
+        const alpha = labelAlphas[i] ?? 0;
+        const rise = (1 - alpha) * 16;
         const fx = Math.sin(t * 0.5 + d.ph) * R * 0.03;
         const fy = Math.cos(t * 0.45 + d.ph) * R * 0.03;
         const ex = d.ex + fx;
@@ -407,13 +494,13 @@ export function ParticleField({
           line.setAttribute("y1", String(ay));
           line.setAttribute("x2", String(ex));
           line.setAttribute("y2", String(ey));
-          line.setAttribute("opacity", String(labelAlpha));
+          line.setAttribute("opacity", String(alpha));
         }
         const dot = dotRefs.current[i];
         if (dot) {
           dot.setAttribute("cx", String(ax));
           dot.setAttribute("cy", String(ay));
-          dot.setAttribute("opacity", String(labelAlpha));
+          dot.setAttribute("opacity", String(alpha));
         }
         const box = boxRefs.current[i];
         if (box) {
@@ -421,7 +508,7 @@ export function ParticleField({
           box.style.left = `${ex}px`;
           box.style.top = `${ey}px`;
           box.style.textAlign = d.align;
-          box.style.opacity = String(labelAlpha);
+          box.style.opacity = String(alpha);
           box.style.transform =
             d.align === "left"
               ? "translate(10px, -50%)"
@@ -431,19 +518,17 @@ export function ParticleField({
     };
 
     const drawScene = () => {
-      const { cx, cy, R } = geometry();
-
       const labelsFit = w >= 420 && w / h > 1.1;
-      const oTarget = (showOrbitsRef.current ? 1 : 0) * revealRef.current;
-      const lTarget =
-        (showLabelsRef.current && labelsFit ? 1 : 0) * revealRef.current;
-      if (reduced) {
-        orbitAlpha = oTarget;
-        labelAlpha = lTarget;
-      } else {
-        orbitAlpha += (oTarget - orbitAlpha) * 0.07;
-        labelAlpha += (lTarget - labelAlpha) * 0.07;
-      }
+      const targets = phaseTargets(labelsFit);
+      sampleLensAlpha = lerp(sampleLensAlpha, targets.sampleLens, 0.08);
+      legacyLensAlpha = lerp(legacyLensAlpha, targets.legacyLens, 0.08);
+      labelAlphas = labelAlphas.map((a, i) =>
+        lerp(a, targets.labels[i] ?? 0, 0.08),
+      );
+      radiusMul = lerp(radiusMul, targets.radiusMul, 0.06);
+      fieldAlpha = lerp(fieldAlpha, targets.fieldAlpha, 0.08);
+
+      const { cx, cy, R } = geometry();
 
       ctx.clearRect(0, 0, w, h);
       if (!transparent) {
@@ -457,6 +542,7 @@ export function ParticleField({
       ctx.beginPath();
       ctx.arc(cx, cy, R * 1.3, 0, PI2);
       ctx.fillStyle = bgGlow;
+      ctx.globalAlpha = fieldAlpha;
       ctx.fill();
 
       drawFlares(cx, cy, R);
@@ -504,7 +590,11 @@ export function ParticleField({
         const depth = (Z + 1.3) / 2.6;
         const shimmer = reduced ? 1 : 0.85 + 0.15 * Math.sin(t * 2 + p.seed);
         const size = p.size * (0.5 + depth) * persp * shimmer;
-        const alpha = p.a * (0.28 + 0.72 * depth) * (reduced ? 1 : 0.85 + 0.15 * Math.sin(t * 1.5 + p.seed));
+        const alpha =
+          p.a *
+          (0.28 + 0.72 * depth) *
+          (reduced ? 1 : 0.85 + 0.15 * Math.sin(t * 1.5 + p.seed)) *
+          fieldAlpha;
 
         const sprite = p.hi ? hiSprite : baseSprite;
         ctx.globalAlpha = Math.max(0, Math.min(1, alpha));
@@ -590,17 +680,13 @@ export function ParticleField({
     tone === "green" ? "rgba(26,78,48,0.8)" : "rgba(51,83,143,0.8)";
 
   const labels = [
+    <>Don’t leave real mass features in the noise.</>,
     <>
-      <strong>~5,000</strong> biologically relevant metabolites in your sample
+      Legacy workflows may recover only a subset of detectable mass features.
     </>,
     <>
-      Legacy workflows only identify metabolites that overlap a{" "}
-      <strong>~5,000</strong> compound library
-    </>,
-    <>
-      Metablify identifies more metabolites using a{" "}
-      <strong>&gt;280k compound database</strong> spanning the entire known
-      metabolome
+      Metablify reveals a broader set of real mass features across LC/MS
+      datasets.
     </>,
   ];
 
