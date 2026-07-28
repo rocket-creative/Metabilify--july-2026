@@ -71,7 +71,8 @@ export default function AboutPage() {
 
       {}
       <FullBleedImage
-        src="/images/team-workspace.png"
+        ratio="16/9"
+        src="/images/team-workspace.jpg"
         alt="The Metablify team collaborating in the lab and workspace"
       />
 

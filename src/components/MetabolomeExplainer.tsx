@@ -8,36 +8,6 @@ type Stage = 0 | 1 | 2;
 
 const PHASES: StoryPhase[] = ["cloud", "legacy", "metablify"];
 
-const STAGES: {
-  stage: Stage;
-  phase: StoryPhase;
-  label: string;
-  title: string;
-  body: string;
-}[] = [
-  {
-    stage: 0,
-    phase: "cloud",
-    label: "01",
-    title: "Don’t leave real mass features in the noise.",
-    body: "Large LC/MS datasets are noisy, complex, and difficult to align across samples. Real mass features can be missed, split, or buried in background signal.",
-  },
-  {
-    stage: 1,
-    phase: "legacy",
-    label: "02",
-    title: "Legacy workflows may recover only a subset of detectable mass features.",
-    body: "Don’t leave real mass features in the noise.",
-  },
-  {
-    stage: 2,
-    phase: "metablify",
-    label: "03",
-    title: "Metablify reveals a broader set of real mass features across LC/MS datasets.",
-    body: "Metablify organizes the chaos of large, noisy datasets to extract the signal from the noise and identify mass features other workflows miss.",
-  },
-];
-
 const STAGE_MS = 4500;
 
 export function MetabolomeExplainer() {
@@ -159,21 +129,9 @@ export function MetabolomeExplainer() {
         <div className="grid items-center gap-8 lg:grid-cols-12 lg:gap-8">
           <div className="lg:col-span-5">
             <p className="eyebrow mb-6">Why Metablify</p>
-
-            <div className="metabolome-stages">
-              {STAGES.map((item) => (
-                <div
-                  key={item.label}
-                  className={`stage-copy ${stage === item.stage ? "is-active" : ""}`}
-                >
-                  <p className="eyebrow mb-3">{item.label}</p>
-                  <h2 className="display display-lg mb-4 text-ink">{item.title}</h2>
-                  <p className="text-sm leading-relaxed text-muted md:text-base">
-                    {item.body}
-                  </p>
-                </div>
-              ))}
-            </div>
+            <h2 className="display display-lg text-ink">
+              Don’t leave real mass features in the noise.
+            </h2>
           </div>
 
           <div className="relative lg:col-span-7">

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { Button } from "./Button";
 import { ParticleField } from "./ParticleField";
@@ -8,6 +8,17 @@ import { ParticleField } from "./ParticleField";
 export function ParallaxHero() {
   const rootRef = useRef<HTMLElement>(null);
   const orbitsRef = useRef<HTMLDivElement>(null);
+  // The stage only outgrows its frame at lg, where the field is meant to bleed.
+  // Below that the canvas is the visible frame, so the sphere has to fit inside it.
+  const [stageBleeds, setStageBleeds] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 1024px)");
+    const sync = () => setStageBleeds(mq.matches);
+    sync();
+    mq.addEventListener("change", sync);
+    return () => mq.removeEventListener("change", sync);
+  }, []);
 
   useEffect(() => {
     const root = rootRef.current;
@@ -174,6 +185,7 @@ export function ParallaxHero() {
                 radiusScale={2}
                 orbitScale={0.5}
                 fieldOffsetX={0.14}
+                fitToBox={!stageBleeds}
               />
 
               <div

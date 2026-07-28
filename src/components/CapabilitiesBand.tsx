@@ -43,17 +43,17 @@ const IdentifyIcon = (
 const CAPABILITIES: Capability[] = [
   {
     title: "Real Mass Features Get Lost in the Noise",
-    body: "Large LC/MS datasets are noisy, complex, and difficult to align across samples. Real mass features can be missed, split, or buried in background signal. Metablify organizes the chaos of large, noisy datasets to extract the signal from the noise and identify mass features other workflows miss.",
+    body: "Large LC/MS datasets are noisy, complex, and difficult to align across samples. Real mass features can be missed, split, or buried in background signal.",
     icon: NoiseIcon,
   },
   {
     title: "Metablify Amplifies What is Real",
-    body: "Cleaner, higher-confidence mass-feature data reduces manual review and provides a stronger foundation for downstream metabolomics, proteomics, and discovery.",
+    body: "Metablify organizes the chaos of large, noisy datasets to extract the signal from the noise and identify mass features other workflows miss.",
     icon: AmplifyIcon,
   },
   {
     title: "Get More From Every Experiment",
-    body: "Don’t leave real mass features in the noise. Legacy workflows may recover only a subset of detectable mass features. Metablify reveals a broader set of real mass features across LC/MS datasets.",
+    body: "Cleaner, higher-confidence mass-feature data reduces manual review and provides a stronger foundation for downstream metabolomics, proteomics, and discovery.",
     icon: IdentifyIcon,
   },
 ];

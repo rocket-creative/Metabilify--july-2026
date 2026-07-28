@@ -6,7 +6,6 @@ type Application = {
   href: string;
   name: string;
   body: string;
-  points: string[];
   link: string;
   visual: React.ReactNode;
 };
@@ -17,11 +16,6 @@ const APPLICATIONS: Application[] = [
     href: "/applications/metabolomics",
     name: "Metabolomics",
     body: "Turn complex untargeted LC/MS datasets into cleaner, aligned, and quantified mass-feature results.",
-    points: [
-      "Recover low abundance features",
-      "Align features across large cohorts",
-      "Quantify with higher confidence",
-    ],
     link: "Explore Metabolomics",
     visual: <MetaboliteField />,
   },
@@ -30,11 +24,6 @@ const APPLICATIONS: Application[] = [
     href: "/applications/proteomics",
     name: "Proteomics",
     body: "Reveal and quantify peptide mass features across complex LC/MS datasets with a workflow built for scale, alignment, and signal clarity.",
-    points: [
-      "Surface peptide mass features",
-      "Stabilize alignment at scale",
-      "Sharpen signal from the noise",
-    ],
     link: "Explore Proteomics",
     visual: <PeptideChain />,
   },
@@ -61,10 +50,12 @@ export function ApplicationsCarousel() {
         <div className="applications-grid">
           {APPLICATIONS.map((app, i) => (
             <Reveal key={app.href} delay={i * 120} className="h-full">
-              <Link href={app.href} className="card card-link app-card group">
-                <div className="app-card-media">{app.visual}</div>
-                <div className="app-card-body">
-                  <span className="app-card-index">{app.index}</span>
+              <Link href={app.href} className="card card-link media-card group">
+                <div className="media-card-media media-card-media--wide">
+                  {app.visual}
+                </div>
+                <div className="media-card-body">
+                  <span className="media-card-index">{app.index}</span>
                   <h3
                     className="mb-4 text-2xl text-ink md:text-3xl"
                     style={{
@@ -74,17 +65,9 @@ export function ApplicationsCarousel() {
                   >
                     {app.name}
                   </h3>
-                  <p className="max-w-md text-base leading-relaxed text-muted">
+                  <p className="mb-8 max-w-md text-base leading-relaxed text-muted">
                     {app.body}
                   </p>
-                  <ul className="app-card-points">
-                    {app.points.map((point) => (
-                      <li key={point} className="app-card-point">
-                        <span className="dot" aria-hidden="true" />
-                        <span>{point}</span>
-                      </li>
-                    ))}
-                  </ul>
                   <span className="arrow-link mt-auto">
                     {app.link} <span className="arrow-ne">↗</span>
                   </span>

@@ -6,6 +6,7 @@ import { MetabolomeExplainer } from "@/components/MetabolomeExplainer";
 import { ParallaxHero } from "@/components/ParallaxHero";
 import { ProcessFlow } from "@/components/ProcessFlow";
 import { Reveal } from "@/components/Reveal";
+import Image from "next/image";
 import Link from "next/link";
 
 export default function HomePage() {
@@ -27,7 +28,8 @@ export default function HomePage() {
           <div className="mb-10 md:mb-14">
             <FullBleedImage
               variant="embedded"
-              src="/images/team-workspace.png"
+              ratio="16/9"
+              src="/images/team-workspace.jpg"
               alt="The Metablify team collaborating in the lab and workspace"
             />
           </div>
@@ -50,34 +52,53 @@ export default function HomePage() {
                 title: "Analytical Services",
                 body: "Turn complex LC/MS datasets into cleaner, aligned, and quantified mass-feature results.",
                 link: "Explore Services",
+                image: "/images/service-analytical.webp",
+                imageAlt:
+                  "A row of identical glass sample vials holding pale green plant extract",
               },
               {
                 href: "/work-with-us/platform-development",
                 title: "Platform Development",
                 body: "Develop and extend Metablify workflows for new applications, datasets, and partner needs.",
                 link: "Explore Platform Development",
+                image: "/images/service-platform.webp",
+                imageAlt: "A young fern frond unfurling in a tight spiral",
               },
               {
                 href: "/work-with-us/collaborations",
                 title: "Strategic Collaborations",
                 body: "Apply the platform to high-value scientific and commercial opportunities.",
                 link: "Explore Strategic Collaborations",
+                image: "/images/service-collaboration.webp",
+                imageAlt:
+                  "Two young plant stems twining together into a single stem",
               },
             ].map((item, i) => (
               <Reveal key={item.href} delay={i * 80}>
-                <Link href={item.href} className="card card-link group flex h-full flex-col">
-                  <h3
-                    className="mb-3 text-xl text-ink"
-                    style={{ fontFamily: "var(--font-display)" }}
-                  >
-                    {item.title}
-                  </h3>
-                  <p className="mb-8 text-sm leading-relaxed text-muted">
-                    {item.body}
-                  </p>
-                  <span className="arrow-link mt-auto">
-                    {item.link} <span className="arrow-ne">↗</span>
-                  </span>
+                <Link href={item.href} className="card card-link media-card group">
+                  <div className="media-card-media media-card-media--square">
+                    <Image
+                      src={item.image}
+                      alt={item.imageAlt}
+                      fill
+                      sizes="(min-width: 810px) 26rem, 100vw"
+                      className="object-cover"
+                    />
+                  </div>
+                  <div className="media-card-body">
+                    <h3
+                      className="mb-3 text-xl text-ink"
+                      style={{ fontFamily: "var(--font-display)" }}
+                    >
+                      {item.title}
+                    </h3>
+                    <p className="mb-8 text-sm leading-relaxed text-muted">
+                      {item.body}
+                    </p>
+                    <span className="arrow-link mt-auto">
+                      {item.link} <span className="arrow-ne">↗</span>
+                    </span>
+                  </div>
                 </Link>
               </Reveal>
             ))}
@@ -87,6 +108,15 @@ export default function HomePage() {
 
       {}
       <section className="section">
+        <div className="mb-10 md:mb-14">
+          <FullBleedImage
+            variant="embedded"
+            ratio="16/9"
+            src="/images/origin-growth-chamber.webp"
+            alt="Rows of young seedlings growing in even ranks inside a plant growth chamber"
+          />
+        </div>
+
         <Reveal>
           <p className="eyebrow mb-4">Origin</p>
           <h2 className="display display-lg mb-6 max-w-3xl">

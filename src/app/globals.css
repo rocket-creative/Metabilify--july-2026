@@ -471,7 +471,7 @@ img.no-round,
   }
 }
 
-.app-card {
+.media-card {
   height: 100%;
   padding: 0;
   overflow: hidden;
@@ -479,49 +479,33 @@ img.no-round,
   flex-direction: column;
 }
 
-.app-card-media {
+.media-card-media {
   position: relative;
-  aspect-ratio: 16 / 9;
   background: var(--color-neutral);
   border-bottom: 1px solid var(--color-stone);
 }
 
-.app-card-body {
+.media-card-media--wide {
+  aspect-ratio: 16 / 9;
+}
+
+.media-card-media--square {
+  aspect-ratio: 1 / 1;
+}
+
+.media-card-body {
   display: flex;
   flex: 1;
   flex-direction: column;
   padding: clamp(1.75rem, 3vw, 2.5rem);
 }
 
-.app-card-index {
+.media-card-index {
   font-family: var(--font-mono);
   font-size: 0.72rem;
   letter-spacing: 0.2em;
   color: var(--color-forest);
   margin-bottom: 0.85rem;
-}
-
-.app-card-points {
-  display: grid;
-  gap: 0.6rem;
-  margin-block: 1.35rem 1.85rem;
-}
-
-.app-card-point {
-  display: flex;
-  align-items: flex-start;
-  gap: 0.65rem;
-  font-size: 0.9rem;
-  line-height: 1.5;
-  color: var(--color-muted);
-}
-
-.app-card-point .dot {
-  flex: none;
-  width: 5px;
-  height: 5px;
-  margin-top: 0.5rem;
-  background: var(--color-lime);
 }
 
 .section-sage,
@@ -581,13 +565,24 @@ img.no-round,
   aspect-ratio: 1;
 }
 
+/*
+ * Below lg the canvas is the visible frame, so ParticleField caps the sphere at
+ * 92% of the distance from its shifted centre to the nearest edge. Track that
+ * cap here, or the rings float clear of the orb and clip on their own.
+ */
+@media (max-width: 1023px) {
+  .hero-artistic-orbits .metabolome-orbit-group {
+    width: min(128cqmin, 98cqh, 71cqw);
+  }
+}
+
 @media (max-width: 809px) {
   .hero-vireo .hero-artistic-orbits {
     display: grid;
   }
 
   .hero-artistic-orbits .metabolome-orbit-group {
-    width: 118cqmin;
+    width: min(118cqmin, 90cqh, 65cqw);
   }
 }
 
@@ -673,26 +668,6 @@ img.no-round,
 .metabolome-dot:focus-visible {
   outline: 2px solid var(--color-forest);
   outline-offset: 3px;
-}
-
-.metabolome-stages {
-  position: relative;
-  min-height: clamp(15rem, 27vh, 20rem);
-}
-
-.stage-copy {
-  position: absolute;
-  inset: 0;
-  opacity: 0;
-  transform: translateY(16px);
-  pointer-events: none;
-  transition: opacity 680ms var(--ease-out-expo), transform 680ms var(--ease-out-expo);
-}
-
-.stage-copy.is-active {
-  opacity: 1;
-  transform: translateY(0);
-  pointer-events: auto;
 }
 
 .callout {
@@ -875,10 +850,6 @@ img.no-round,
     right: 4%;
     max-width: none;
     bottom: 4%;
-  }
-
-  .metabolome-stages {
-    min-height: clamp(14rem, 32vh, 18rem);
   }
 }
 
@@ -1293,15 +1264,10 @@ html.lenis body {
     scroll-behavior: auto;
   }
 
-  .callout,
-  .stage-copy {
+  .callout {
     opacity: 1;
     transform: none;
     transition: none;
-  }
-
-  .stage-copy:not(.is-active) {
-    opacity: 0;
   }
 
   .hero-scroll-arrow {

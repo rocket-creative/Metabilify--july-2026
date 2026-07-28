@@ -42,6 +42,11 @@ type Props = {
   orbitScale?: number;
   fieldOffsetX?: number;
   storyPhase?: StoryPhase;
+  /**
+   * Shrink the sphere so it always fits its canvas. Leave off where the canvas
+   * deliberately extends past its section and the field is meant to bleed.
+   */
+  fitToBox?: boolean;
 };
 
 const PI2 = Math.PI * 2;
@@ -60,6 +65,7 @@ export function ParticleField({
   orbitScale = 1,
   fieldOffsetX = 0,
   storyPhase,
+  fitToBox = false,
 }: Props) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
@@ -214,13 +220,19 @@ export function ParticleField({
     const hiSprite = tone === "green" ? limeSprite : whiteSprite;
 
     const geometry = (shiftField = true) => {
-      const cx = w * 0.5 + (shiftField ? fieldOffsetX * w : 0);
+      const shift = fieldOffsetX * w;
+      const cx = w * 0.5 + (shiftField ? shift : 0);
       const cy = h * 0.5;
-      const R =
+      const base =
         Math.min(w, h) *
         (showLabelsRef.current ? 0.26 : 0.3) *
         radiusScale *
         radiusMul;
+      // The canvas flat-cuts whatever is drawn past its edges. Measure the
+      // shifted centre against the nearest edge so the sphere stays whole,
+      // keeping 8% back for sprite glow.
+      const halfSpan = Math.min(h * 0.5, w * 0.5 - Math.abs(shift));
+      const R = fitToBox ? Math.min(base, halfSpan * 0.92) : base;
       return { cx, cy, R };
     };
 
@@ -667,6 +679,7 @@ export function ParticleField({
     radiusScale,
     orbitScale,
     fieldOffsetX,
+    fitToBox,
   ]);
 
   const legacyLabelColor = tone === "green" ? "#1f4d2e" : "#33538f";
