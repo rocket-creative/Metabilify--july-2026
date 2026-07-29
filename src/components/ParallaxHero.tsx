@@ -1,24 +1,13 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
+import Image from "next/image";
 import gsap from "gsap";
 import { Button } from "./Button";
-import { ParticleField } from "./ParticleField";
 
 export function ParallaxHero() {
   const rootRef = useRef<HTMLElement>(null);
-  const orbitsRef = useRef<HTMLDivElement>(null);
-  // The stage only outgrows its frame at lg, where the field is meant to bleed.
-  // Below that the canvas is the visible frame, so the sphere has to fit inside it.
-  const [stageBleeds, setStageBleeds] = useState(false);
-
-  useEffect(() => {
-    const mq = window.matchMedia("(min-width: 1024px)");
-    const sync = () => setStageBleeds(mq.matches);
-    sync();
-    mq.addEventListener("change", sync);
-    return () => mq.removeEventListener("change", sync);
-  }, []);
+  const leafRef = useRef<HTMLImageElement>(null);
 
   useEffect(() => {
     const root = rootRef.current;
@@ -125,29 +114,49 @@ export function ParallaxHero() {
   }, []);
 
   useEffect(() => {
-    const group = orbitsRef.current?.querySelector<HTMLElement>(
-      ".metabolome-orbit-group",
-    );
-    if (!group) return;
+    const leaf = leafRef.current;
+    if (!leaf) return;
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduced) return;
 
     const ctx = gsap.context(() => {
-      gsap.set(group, { transformPerspective: 1000 });
-      gsap.to(group, {
-        rotationY: 360,
-        duration: 44,
-        ease: "none",
-        repeat: -1,
-      });
-      gsap.to(group, {
-        rotationX: "+=6",
-        duration: 9,
+      gsap.set(leaf, { rotationY: -30 });
+
+      // A flat plane turning a full circle goes edge on and vanishes twice a
+      // revolution, so the turn oscillates inside a range instead. The three
+      // axes run on different periods so the drift never visibly loops.
+      gsap.to(leaf, {
+        rotationY: 30,
+        duration: 11,
         ease: "sine.inOut",
         yoyo: true,
         repeat: -1,
       });
-    }, group);
+      // The tilt and roll are kept shallow. Both swell the leaf's on screen
+      // box, and roll swells it most because the leaf is nearly twice as wide
+      // as it is tall, so a few degrees adds real height at this size.
+      gsap.to(leaf, {
+        rotationX: 9,
+        duration: 7.5,
+        ease: "sine.inOut",
+        yoyo: true,
+        repeat: -1,
+      });
+      gsap.to(leaf, {
+        rotationZ: 2.5,
+        duration: 13,
+        ease: "sine.inOut",
+        yoyo: true,
+        repeat: -1,
+      });
+      gsap.to(leaf, {
+        y: -22,
+        duration: 5.5,
+        ease: "sine.inOut",
+        yoyo: true,
+        repeat: -1,
+      });
+    }, leaf);
 
     return () => ctx.revert();
   }, []);
@@ -174,31 +183,16 @@ export function ParallaxHero() {
         </div>
 
         <div className="relative lg:col-span-6">
-          <div className="hero-canvas-frame relative mx-auto aspect-square w-[72%] max-w-[18rem] sm:max-w-[22rem] md:w-full md:max-w-none md:aspect-[4/3]">
-            <div className="hero-particle-stage absolute inset-0 z-0 lg:left-[-110%] lg:right-[-10%] lg:top-[-83%] lg:bottom-[-83%]">
-              <ParticleField
-                className="absolute inset-0"
-                interactive
-                showOrbits={false}
-                tone="green"
-                transparent
-                radiusScale={2}
-                orbitScale={0.5}
-                fieldOffsetX={0.14}
-                fitToBox={!stageBleeds}
+          <div className="hero-canvas-frame relative mx-auto aspect-[4/3] w-full lg:aspect-square">
+            <div className="hero-leaf-stage" aria-hidden="true">
+              <Image
+                ref={leafRef}
+                src="/images/hero-leaf.webp"
+                alt=""
+                width={857}
+                height={454}
+                priority
               />
-
-              <div
-                ref={orbitsRef}
-                className="metabolome-orbits hero-artistic-orbits"
-                aria-hidden="true"
-              >
-                <div className="metabolome-orbit-group">
-                  <span className="metabolome-ring metabolome-ring-1" />
-                  <span className="metabolome-ring metabolome-ring-2" />
-                  <span className="metabolome-ring metabolome-ring-3" />
-                </div>
-              </div>
             </div>
           </div>
         </div>

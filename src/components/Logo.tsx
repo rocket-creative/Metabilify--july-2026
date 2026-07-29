@@ -10,23 +10,19 @@ export function Logo({ className = "", priority = false }: LogoProps) {
   return (
     <Link
       href="/"
-      className={`inline-flex items-center gap-3 ${className}`}
+      className={`inline-flex items-center ${className}`}
       aria-label="Metablify home"
     >
       <Image
-        src="/images/logo-mark.svg"
+        src="/images/logo-lockup.png"
         alt=""
-        width={40}
-        height={40}
-        className="no-round h-9 w-9 md:h-10 md:w-10"
+        width={644}
+        height={146}
+        // Important: the global img rule is unlayered, so it outranks plain
+        // height utilities and would leave this at height auto.
+        className="no-round !h-12 w-auto md:!h-14"
         priority={priority}
       />
-      <span
-        className="text-lg font-semibold tracking-[0.04em] text-ink uppercase md:text-xl"
-        style={{ fontFamily: "var(--font-body)" }}
-      >
-        Metablify
-      </span>
     </Link>
   );
 }

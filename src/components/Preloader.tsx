@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import gsap from "gsap";
 
 export function Preloader() {
@@ -64,16 +65,25 @@ export function Preloader() {
     <div className="preloader" aria-hidden="true">
       <div className="preloader-inner">
         <div className="preloader-mark">
-          <svg viewBox="0 0 48 48" width="48" height="48" fill="none">
-            <rect width="48" height="48" rx="4" fill="#1a1a1a" />
-            <path
-              d="M8 38 L14 28 L18 32 L24 12 L30 26 L34 20 L40 38 Z"
-              fill="white"
-              fillOpacity="0.95"
-            />
-          </svg>
+          <Image
+            className="no-round"
+            src="/images/logo-icon.png"
+            alt=""
+            width={146}
+            height={146}
+            priority
+          />
         </div>
-        <p className="preloader-word">Metablify</p>
+        <div className="preloader-word">
+          <Image
+            className="no-round"
+            src="/images/logo-wordmark.png"
+            alt=""
+            width={485}
+            height={76}
+            priority
+          />
+        </div>
         <div className="preloader-track">
           <div className="preloader-bar" />
         </div>

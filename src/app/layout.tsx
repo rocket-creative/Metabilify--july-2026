@@ -55,10 +55,6 @@ export const metadata: Metadata = {
     description: siteConfig.description,
   },
   robots: { index: true, follow: true },
-  icons: {
-    icon: "/favicon.ico",
-    apple: "/images/logo-mark.svg",
-  },
 };
 
 export default function RootLayout({

@@ -540,49 +540,51 @@ img.no-round,
 
 .hero-canvas-frame {
   background: transparent;
+  container-type: inline-size;
 }
 
-.hero-particle-stage {
-  container-type: size;
-  container-name: hero-particle;
-}
-
-.hero-artistic-orbits {
-  display: grid;
-  place-items: unset;
-  opacity: 0.8;
-}
-
-/* Match ParticleField geometry: cx = 50% + 14% width, R = 0.6 * min(w,h) */
-.hero-artistic-orbits .metabolome-orbit-group {
+.hero-leaf-stage {
   position: absolute;
-  left: 64%;
-  top: 50%;
-  translate: -50% -50%;
-  /* Orb diameter ≈ 120cqmin; rings slightly larger to wrap the orb */
-  width: 128cqmin;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  /* Depth for the leaf's turn. Sized against the frame rather than in fixed
+     pixels so the amount of foreshortening reads the same at every breakpoint,
+     and set on the parent so the leaf itself is free for GSAP to write to. */
+  perspective: 175cqw;
+}
+
+.hero-leaf-stage img {
+  /* Perspective throws the near edge of the turn forward, which scales that
+     edge up. Below lg the frame nearly spans the viewport and the leaf has to
+     stay whole, so it is held back far enough to absorb that growth. */
+  width: 100%;
+  height: auto;
   max-width: none;
-  aspect-ratio: 1;
+  transform-style: preserve-3d;
+  will-change: transform;
+  filter: drop-shadow(0 26px 34px rgba(18, 50, 39, 0.16));
 }
 
-/*
- * Below lg the canvas is the visible frame, so ParticleField caps the sphere at
- * 92% of the distance from its shifted centre to the nearest edge. Track that
- * cap here, or the rings float clear of the orb and clip on their own.
- */
-@media (max-width: 1023px) {
-  .hero-artistic-orbits .metabolome-orbit-group {
-    width: min(128cqmin, 98cqh, 71cqw);
+@media (min-width: 1024px) {
+  /* From lg the leaf is twice the size it can be contained at, so it runs off
+     the right edge of the screen by design. The stage is pushed right to keep
+     the leaf clear of the headline and lead, and perspective is pulled further
+     back because foreshortening compounds with size and would otherwise swell
+     the leaf past the top and bottom of the section. */
+  .hero-leaf-stage {
+    left: 14%;
+    perspective: 380cqw;
+    /* Anchored rather than centred. The leaf is wider than the stage here, and
+       centred overflow is engine dependent: Chrome pins the near edge, others
+       may split the overflow and push the leaf back across the copy. */
+    justify-items: start;
   }
-}
 
-@media (max-width: 809px) {
-  .hero-vireo .hero-artistic-orbits {
-    display: grid;
-  }
-
-  .hero-artistic-orbits .metabolome-orbit-group {
-    width: min(118cqmin, 90cqh, 65cqw);
+  /* Sized against the frame, not the offset stage, so this stays exactly twice
+     the contained size regardless of how far the stage is pushed across. */
+  .hero-leaf-stage img {
+    width: 168cqw;
   }
 }
 
@@ -1226,14 +1228,15 @@ img.no-round,
   gap: 1rem;
 }
 
-.preloader-word {
-  margin: 0;
-  font-family: var(--font-body);
-  font-size: 1.1rem;
-  font-weight: 600;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--color-text);
+/* Sized here because the global img rule is unlayered and wins over utilities. */
+.preloader-mark img {
+  width: 3rem;
+  height: 3rem;
+}
+
+/* Matches the track below it, so the three elements share one optical width. */
+.preloader-word img {
+  width: 8.75rem;
 }
 
 .preloader-track {

@@ -8,7 +8,7 @@ export function OrganizationJsonLd() {
     url: siteConfig.url,
     description: siteConfig.description,
     email: siteConfig.email,
-    logo: `${siteConfig.url}/images/logo-mark.svg`,
+    logo: `${siteConfig.url}/images/logo-lockup.png`,
   };
 
   return (
