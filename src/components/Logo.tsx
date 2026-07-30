@@ -10,17 +10,19 @@ export function Logo({ className = "", priority = false }: LogoProps) {
   return (
     <Link
       href="/"
-      className={`inline-flex items-center ${className}`}
+      className={`inline-flex shrink-0 items-center ${className}`}
       aria-label="Metablify home"
     >
       <Image
         src="/images/logo-lockup.png"
         alt=""
-        width={644}
-        height={146}
+        width={1034}
+        height={269}
         // Important: the global img rule is unlayered, so it outranks plain
-        // height utilities and would leave this at height auto.
-        className="no-round !h-12 w-auto md:!h-14"
+        // height utilities and would leave this at height auto. max-w-none goes
+        // with the shrink-0 above: without it a tight bar squeezes the width
+        // while the height class holds, which distorts the lockup.
+        className="no-round !h-12 w-auto !max-w-none md:!h-14"
         priority={priority}
       />
     </Link>

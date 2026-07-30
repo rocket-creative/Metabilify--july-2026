@@ -47,7 +47,10 @@ export function Header() {
         <div className="flex items-center gap-3">
           <Link
             href="/discuss"
-            className="btn btn-primary hidden lg:inline-flex !px-5 !py-3 !text-[0.7rem]"
+            // Forced because .btn sets display in an unlayered rule, which
+            // outranks the plain hidden utility and left this on show at every
+            // width, crowding the logo out of the bar.
+            className="btn btn-primary !hidden lg:!inline-flex !px-5 !py-3 !text-[0.7rem]"
           >
             <span>Discuss a Project</span>
             <span className="arrow" aria-hidden="true">

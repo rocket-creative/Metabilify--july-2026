@@ -1228,10 +1228,12 @@ img.no-round,
   gap: 1rem;
 }
 
-/* Sized here because the global img rule is unlayered and wins over utilities. */
+/* Sized here because the global img rule is unlayered and wins over utilities.
+   Height is left to the image: the tile is taller than it is wide, so pinning
+   both axes would squash it. */
 .preloader-mark img {
   width: 3rem;
-  height: 3rem;
+  height: auto;
 }
 
 /* Matches the track below it, so the three elements share one optical width. */
