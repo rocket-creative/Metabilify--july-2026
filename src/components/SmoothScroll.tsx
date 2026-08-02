@@ -28,10 +28,14 @@ export function SmoothScroll({ children }: { children: React.ReactNode }) {
     gsap.ticker.lagSmoothing(0);
 
     document.documentElement.classList.add("lenis");
+    // Hero dive handoff jumps scroll when the pin releases; ParallaxHero
+    // reaches Lenis through this hook instead of fighting its RAF loop.
+    (window as Window & { __lenis?: Lenis }).__lenis = lenis;
 
     return () => {
       gsap.ticker.remove(ticker);
       lenis.destroy();
+      delete (window as Window & { __lenis?: Lenis }).__lenis;
       document.documentElement.classList.remove("lenis");
     };
   }, []);

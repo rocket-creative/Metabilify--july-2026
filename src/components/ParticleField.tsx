@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, type RefObject } from "react";
 
 type Particle = {
   bx: number;
@@ -33,8 +33,10 @@ type Props = {
   interactive?: boolean;
   showOrbits?: boolean;
   showLabels?: boolean;
+  /** Show callouts even when the canvas is tall/narrow (full-bleed dive). */
+  forceLabels?: boolean;
   density?: number;
-  tone?: "blue" | "green";
+  tone?: "blue" | "green" | "mono";
   flares?: boolean;
   reveal?: number;
   transparent?: boolean;
@@ -42,6 +44,11 @@ type Props = {
   orbitScale?: number;
   fieldOffsetX?: number;
   storyPhase?: StoryPhase;
+  // Scrubbed phase without React state — keeps the dive scroll from re-rendering.
+  storyPhaseRef?: RefObject<StoryPhase>;
+  // Scrubbed from outside without re-seeding. 1 = full orb; ~0.32 matches the
+  // legacy compare circle so a field can grow from "what others see" outward.
+  expansionRef?: RefObject<number>;
 };
 
 const PI2 = Math.PI * 2;
@@ -51,6 +58,7 @@ export function ParticleField({
   interactive = true,
   showOrbits = true,
   showLabels = false,
+  forceLabels = false,
   density = 1,
   tone = "blue",
   flares = false,
@@ -60,6 +68,8 @@ export function ParticleField({
   orbitScale = 1,
   fieldOffsetX = 0,
   storyPhase,
+  storyPhaseRef: storyPhasePropRef,
+  expansionRef,
 }: Props) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
@@ -69,15 +79,19 @@ export function ParticleField({
 
   const showOrbitsRef = useRef(showOrbits);
   const showLabelsRef = useRef(showLabels);
+  const forceLabelsRef = useRef(forceLabels);
   const revealRef = useRef(reveal);
-  const storyPhaseRef = useRef(storyPhase);
+  const storyPhaseLocalRef = useRef(storyPhase);
+  const expansionPropRef = useRef(expansionRef);
+  expansionPropRef.current = expansionRef;
 
   useEffect(() => {
     showOrbitsRef.current = showOrbits;
     showLabelsRef.current = showLabels;
+    forceLabelsRef.current = forceLabels;
     revealRef.current = reveal;
-    storyPhaseRef.current = storyPhase;
-  }, [showOrbits, showLabels, reveal, storyPhase]);
+    storyPhaseLocalRef.current = storyPhase;
+  }, [showOrbits, showLabels, forceLabels, reveal, storyPhase]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -109,7 +123,7 @@ export function ParticleField({
       reduced ? target : current + (target - current) * amount;
 
     const phaseTargets = (labelsFit: boolean) => {
-      const phase = storyPhaseRef.current;
+      const phase = storyPhasePropRef?.current ?? storyPhaseLocalRef.current;
       if (!phase) {
         const o = (showOrbitsRef.current ? 1 : 0) * revealRef.current;
         const l =
@@ -163,14 +177,23 @@ export function ParticleField({
             flare: "rgba(170,214,92,",
             hiProb: 0.3,
           }
-        : {
-            bg: "#ffffff",
-            glow: "rgba(196,222,249,0.4)",
-            rim: "rgba(42,96,190,0.6)",
-            rimSoft: "rgba(42,96,190,0.16)",
-            flare: "rgba(120,180,235,",
-            hiProb: 0.45,
-          };
+        : tone === "mono"
+          ? {
+              bg: "#417337",
+              glow: "rgba(30,55,18,0.28)",
+              rim: "rgba(230,230,220,0.55)",
+              rimSoft: "rgba(230,230,220,0.18)",
+              flare: "rgba(245,245,235,",
+              hiProb: 0.45,
+            }
+          : {
+              bg: "#ffffff",
+              glow: "rgba(196,222,249,0.4)",
+              rim: "rgba(42,96,190,0.6)",
+              rimSoft: "rgba(42,96,190,0.16)",
+              flare: "rgba(120,180,235,",
+              hiProb: 0.45,
+            };
 
     const makeSprite = (core: string, mid: string, edge: string) => {
       const s = document.createElement("canvas");
@@ -209,20 +232,58 @@ export function ParticleField({
       "rgba(150,200,80,0.5)",
       "rgba(150,200,80,0)",
     );
+    // Darker grey so the field still reads on the pale leaf-tip veil; white
+    // highlights stay for the bright mass features.
+    const greySprite = makeSprite(
+      "rgba(72,72,68,1)",
+      "rgba(105,105,100,0.55)",
+      "rgba(150,150,145,0)",
+    );
+    const ashWhiteSprite = makeSprite(
+      "rgba(255,255,255,1)",
+      "rgba(245,245,240,0.65)",
+      "rgba(230,230,220,0)",
+    );
 
-    const baseSprite = tone === "green" ? greenSprite : blueSprite;
-    const hiSprite = tone === "green" ? limeSprite : whiteSprite;
+    const baseSprite =
+      tone === "green" ? greenSprite : tone === "mono" ? greySprite : blueSprite;
+    const hiSprite =
+      tone === "green"
+        ? limeSprite
+        : tone === "mono"
+          ? ashWhiteSprite
+          : whiteSprite;
 
     const geometry = (shiftField = true) => {
       const shift = fieldOffsetX * w;
       const cx = w * 0.5 + (shiftField ? shift : 0);
       const cy = h * 0.5;
-      const R =
+      // Rings stay on the full orb; only the particle cloud is scrubbed by
+      // expansion, so it can start inside the legacy circle and shout outward.
+      const baseR =
         Math.min(w, h) *
         (showLabelsRef.current ? 0.26 : 0.3) *
         radiusScale *
         radiusMul;
-      return { cx, cy, R };
+      const expansion = expansionPropRef.current?.current ?? 1;
+      const R = baseR * Math.max(0.08, expansion);
+
+      // When expansion is driven, park the cloud on the legacy circle at the
+      // start and lerp its origin to the full-orb centre as it grows.
+      let fieldCx = cx;
+      let fieldCy = cy;
+      if (expansionPropRef.current) {
+        const legacyCx = cx + baseR * 0.18;
+        const legacyCy = cy + baseR * 0.08;
+        const shout = Math.min(
+          1,
+          Math.max(0, (expansion - 0.32) / (1 - 0.32)),
+        );
+        fieldCx = legacyCx + (cx - legacyCx) * shout;
+        fieldCy = legacyCy + (cy - legacyCy) * shout;
+      }
+
+      return { cx, cy, R, baseR, fieldCx, fieldCy };
     };
 
     const perfFactor = () => {
@@ -365,8 +426,8 @@ export function ParticleField({
       ctx.globalAlpha = 1;
     };
 
-    // Outline-only red for the large Metablify capture ring (not artistic orbits)
-    const metablifyRed = "rgba(196, 78, 58, 0.95)";
+    // Fluorescent lime (same family as capability icons) for the Metablify ring.
+    const metablifyHot = "rgba(196, 232, 107, 0.98)";
 
     /** Clean compare rings: large orb = Metablify, small circle = legacy. No magnifier. */
     const drawCompareRing = (
@@ -377,48 +438,54 @@ export function ParticleField({
       weight: "large" | "small",
     ) => {
       if (alpha <= 0.01) return;
-      const metablifyHot =
-        weight === "large" && storyPhaseRef.current === "metablify";
+      const phase = storyPhasePropRef?.current ?? storyPhaseLocalRef.current;
+      const isMetablifyHot = weight === "large" && phase === "metablify";
       ctx.globalAlpha = alpha;
 
       if (weight === "small") {
         ctx.beginPath();
         ctx.arc(x, y, r, 0, PI2);
         ctx.fillStyle =
-          tone === "green" ? "rgba(196, 205, 196, 0.55)" : "rgba(210, 218, 230, 0.55)";
+          tone === "green"
+            ? "rgba(196, 205, 196, 0.55)"
+            : tone === "mono"
+              ? "rgba(200, 200, 195, 0.55)"
+              : "rgba(210, 218, 230, 0.55)";
         ctx.fill();
       }
 
       ctx.beginPath();
       ctx.arc(x, y, r, 0, PI2);
-      ctx.strokeStyle = metablifyHot
-        ? metablifyRed
+      ctx.strokeStyle = isMetablifyHot
+        ? metablifyHot
         : weight === "large"
           ? palette.rim
           : tone === "green"
             ? "rgba(120, 140, 120, 0.85)"
-            : "rgba(120, 140, 170, 0.85)";
+            : tone === "mono"
+              ? "rgba(130, 130, 125, 0.85)"
+              : "rgba(120, 140, 170, 0.85)";
       ctx.lineWidth =
         weight === "large"
-          ? Math.max(2.5, r * (metablifyHot ? 0.028 : 0.018))
+          ? Math.max(2.5, r * (isMetablifyHot ? 0.028 : 0.018))
           : Math.max(1.5, r * 0.05);
       ctx.stroke();
       ctx.globalAlpha = 1;
     };
 
     const computeOrbits = () => {
-      const { cx, cy, R } = geometry(false);
-      const driftX = Math.cos(t * 0.11) * R * 0.02;
-      const driftY = Math.sin(t * 0.09) * R * 0.015;
-      const legacyR = R * 0.32 * orbitScale;
+      const { cx, cy, baseR } = geometry(false);
+      const driftX = Math.cos(t * 0.11) * baseR * 0.02;
+      const driftY = Math.sin(t * 0.09) * baseR * 0.015;
+      const legacyR = baseR * 0.32 * orbitScale;
       return {
         // Large ring around the full particle orb (Metablify)
         c1x: cx,
         c1y: cy,
-        sr: R * 0.98,
+        sr: baseR * 0.98,
         // Smaller circular section inside (legacy / rest of field)
-        c2x: cx + R * 0.18 + driftX,
-        c2y: cy + R * 0.08 + driftY,
+        c2x: cx + baseR * 0.18 + driftX,
+        c2y: cy + baseR * 0.08 + driftY,
         lr: legacyR,
       };
     };
@@ -458,8 +525,8 @@ export function ParticleField({
           ox: o.c2x,
           oy: o.c2y,
           rr: o.lr,
-          ex: cx + R * 1.28,
-          ey: cy + R * 0.55,
+          ex: cx + R * 1.32,
+          ey: cy + R * 0.62,
           align: "left" as const,
           ph: 2,
         },
@@ -467,9 +534,10 @@ export function ParticleField({
           ox: o.c1x,
           oy: o.c1y,
           rr: o.sr,
-          ex: cx - R * 1.22,
-          ey: cy - R * 0.15,
-          align: "right" as const,
+          // Keep clear of the Why Metablify copy on the left.
+          ex: cx + R * 1.18,
+          ey: cy - R * 0.72,
+          align: "left" as const,
           ph: 4,
         },
       ];
@@ -501,21 +569,22 @@ export function ParticleField({
         }
         const box = boxRefs.current[i];
         if (box) {
-          box.style.width = `${R * 1.35}px`;
+          box.style.width = `${Math.min(R * 1.7, w * 0.42)}px`;
           box.style.left = `${ex}px`;
           box.style.top = `${ey}px`;
           box.style.textAlign = d.align;
           box.style.opacity = String(alpha);
           box.style.transform =
             d.align === "left"
-              ? "translate(10px, -50%)"
-              : "translate(calc(-100% - 10px), -50%)";
+              ? "translate(12px, -50%)"
+              : "translate(calc(-100% - 12px), -50%)";
         }
       });
     };
 
     const drawScene = () => {
-      const labelsFit = w >= 420 && w / h > 1.1;
+      const labelsFit =
+        forceLabelsRef.current || (w >= 420 && w / h > 1.1);
       const targets = phaseTargets(labelsFit);
       sampleLensAlpha = lerp(sampleLensAlpha, targets.sampleLens, 0.08);
       legacyLensAlpha = lerp(legacyLensAlpha, targets.legacyLens, 0.08);
@@ -525,7 +594,7 @@ export function ParticleField({
       radiusMul = lerp(radiusMul, targets.radiusMul, 0.06);
       fieldAlpha = lerp(fieldAlpha, targets.fieldAlpha, 0.08);
 
-      const { cx, cy, R } = geometry();
+      const { cx, cy, R, fieldCx, fieldCy } = geometry();
 
       ctx.clearRect(0, 0, w, h);
       if (!transparent) {
@@ -533,16 +602,23 @@ export function ParticleField({
         ctx.fillRect(0, 0, w, h);
       }
 
-      const bgGlow = ctx.createRadialGradient(cx, cy, R * 0.1, cx, cy, R * 1.3);
+      const bgGlow = ctx.createRadialGradient(
+        fieldCx,
+        fieldCy,
+        R * 0.1,
+        fieldCx,
+        fieldCy,
+        R * 1.3,
+      );
       bgGlow.addColorStop(0, palette.glow);
       bgGlow.addColorStop(1, "rgba(255,255,255,0)");
       ctx.beginPath();
-      ctx.arc(cx, cy, R * 1.3, 0, PI2);
+      ctx.arc(fieldCx, fieldCy, R * 1.3, 0, PI2);
       ctx.fillStyle = bgGlow;
       ctx.globalAlpha = fieldAlpha;
       ctx.fill();
 
-      drawFlares(cx, cy, R);
+      drawFlares(fieldCx, fieldCy, R);
 
       const spin = t * 0.16;
       const cosA = Math.cos(spin);
@@ -561,8 +637,8 @@ export function ParticleField({
         const Z = p.by * sinT + Z0 * cosT;
 
         const persp = 1 / (1 - Z * 0.14);
-        let sx = cx + X * R * persp;
-        let sy = cy + Y * R * persp;
+        let sx = fieldCx + X * R * persp;
+        let sy = fieldCy + Y * R * persp;
 
         if (interactive && mouse.active) {
           const dxm = sx + p.ox - mouse.x;
@@ -670,14 +746,24 @@ export function ParticleField({
     fieldOffsetX,
   ]);
 
-  const legacyLabelColor = tone === "green" ? "#1f4d2e" : "#33538f";
+  const legacyLabelColor =
+    tone === "green" ? "#1f4d2e" : tone === "mono" ? "#f0ebe0" : "#33538f";
   const legacyLine =
-    tone === "green" ? "rgba(26,78,48,0.55)" : "rgba(51,83,143,0.55)";
+    tone === "green"
+      ? "rgba(26,78,48,0.55)"
+      : tone === "mono"
+        ? "rgba(240,235,224,0.55)"
+        : "rgba(51,83,143,0.55)";
   const legacyDotStroke =
-    tone === "green" ? "rgba(26,78,48,0.8)" : "rgba(51,83,143,0.8)";
-  const metablifyLabelColor = "#c44e3a";
-  const metablifyLine = "rgba(196,78,58,0.65)";
-  const metablifyDotStroke = "rgba(196,78,58,0.9)";
+    tone === "green"
+      ? "rgba(26,78,48,0.8)"
+      : tone === "mono"
+        ? "rgba(240,235,224,0.85)"
+        : "rgba(51,83,143,0.8)";
+  // Lime callouts — matches --color-lime / icon light.
+  const metablifyLabelColor = "#c4e86b";
+  const metablifyLine = "rgba(196, 232, 107, 0.8)";
+  const metablifyDotStroke = "rgba(196, 232, 107, 0.95)";
 
   const labels = [
     null,
@@ -699,7 +785,7 @@ export function ParticleField({
         aria-hidden="true"
       />
       {showLabels && (
-        <div className="pointer-events-none absolute inset-0 z-10">
+        <div className="reel-callouts pointer-events-none absolute inset-0 z-10">
           <svg
             ref={svgRef}
             className="pointer-events-none absolute inset-0 h-full w-full"
@@ -714,16 +800,16 @@ export function ParticleField({
                       lineRefs.current[i] = el;
                     }}
                     stroke={isMetablify ? metablifyLine : legacyLine}
-                    strokeWidth="1"
+                    strokeWidth="1.75"
                   />
                   <circle
                     ref={(el) => {
                       dotRefs.current[i] = el;
                     }}
-                    r="3.5"
+                    r="4.5"
                     fill="#ffffff"
                     stroke={isMetablify ? metablifyDotStroke : legacyDotStroke}
-                    strokeWidth="1.25"
+                    strokeWidth="1.5"
                   />
                 </g>
               );
@@ -735,11 +821,11 @@ export function ParticleField({
               ref={(el) => {
                 boxRefs.current[i] = el;
               }}
-              className="pointer-events-none absolute left-0 top-0 text-[0.72rem] leading-snug md:text-[0.8rem]"
+              className="pointer-events-none absolute left-0 top-0 text-[0.95rem] font-semibold leading-snug tracking-[-0.01em] md:text-[1.125rem] md:leading-snug"
               style={{
                 color: i === 2 ? metablifyLabelColor : legacyLabelColor,
                 fontFamily: "var(--font-body)",
-                fontWeight: i === 2 ? 600 : 400,
+                fontWeight: i === 2 ? 700 : 600,
               }}
             >
               {content}

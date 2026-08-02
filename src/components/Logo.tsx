@@ -10,19 +10,26 @@ export function Logo({ className = "", priority = false }: LogoProps) {
   return (
     <Link
       href="/"
-      className={`inline-flex shrink-0 items-center ${className}`}
+      className={`inline-flex shrink-0 items-center gap-2.5 ${className}`}
       aria-label="Metablify home"
     >
       <Image
-        src="/images/logo-lockup.png"
+        src="/images/logo-icon.png"
         alt=""
-        width={1034}
-        height={269}
+        width={333}
+        height={333}
         // Important: the global img rule is unlayered, so it outranks plain
-        // height utilities and would leave this at height auto. max-w-none goes
-        // with the shrink-0 above: without it a tight bar squeezes the width
-        // while the height class holds, which distorts the lockup.
-        className="no-round !h-12 w-auto !max-w-none md:!h-14"
+        // height utilities and would leave this at height auto.
+        className="no-round !h-11 w-auto !max-w-none md:!h-12"
+        priority={priority}
+      />
+      <Image
+        src="/images/logo-wordmark.png"
+        alt=""
+        width={1270}
+        height={308}
+        // Wordmark sits below the icon’s optical weight — a bit over half its height.
+        className="no-round !h-7 w-auto !max-w-none md:!h-8"
         priority={priority}
       />
     </Link>

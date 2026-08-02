@@ -2,8 +2,7 @@ import { ApplicationsCarousel } from "@/components/ApplicationsCarousel";
 import { Button } from "@/components/Button";
 import { CapabilitiesBand } from "@/components/CapabilitiesBand";
 import { FullBleedImage } from "@/components/FullBleedImage";
-import { MetabolomeExplainer } from "@/components/MetabolomeExplainer";
-import { ParallaxHero } from "@/components/ParallaxHero";
+import { DiveReel } from "@/components/DiveReel";
 import { ProcessFlow } from "@/components/ProcessFlow";
 import { Reveal } from "@/components/Reveal";
 import Image from "next/image";
@@ -12,11 +11,9 @@ import Link from "next/link";
 export default function HomePage() {
   return (
     <>
-      <ParallaxHero />
+      {/* Pinned dive: orb + Why Metablify/callouts; free scroll starts next. */}
+      <DiveReel />
 
-      <MetabolomeExplainer />
-
-      {}
       <CapabilitiesBand />
 
       {}

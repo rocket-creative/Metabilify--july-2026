@@ -69,8 +69,8 @@ export function Preloader() {
             className="no-round"
             src="/images/logo-icon.png"
             alt=""
-            width={373}
-            height={400}
+            width={333}
+            height={333}
             priority
           />
         </div>
@@ -79,8 +79,8 @@ export function Preloader() {
             className="no-round"
             src="/images/logo-wordmark.png"
             alt=""
-            width={873}
-            height={237}
+            width={1270}
+            height={308}
             priority
           />
         </div>

@@ -525,6 +525,130 @@ img.no-round,
 .hero-vireo {
   background: var(--color-white);
   border-bottom: 1px solid var(--color-stone);
+  /* The zoom pins this section, so it has to fill the viewport: the section
+     clips its overflow, and anything short of full height would cut the
+     growing leaf off across the middle of the screen. */
+  min-height: 100svh;
+  display: grid;
+  align-content: center;
+}
+
+/* Pinned leaf dive: one orb; Why Metablify copy + callouts land on that field.
+   Keep the reel above following sections while pinned so later bands cannot
+   paint over the leaf mid-dive. */
+.dive-reel {
+  position: relative;
+  z-index: 4;
+}
+
+.dive-reel-stage {
+  position: relative;
+  z-index: 4;
+  min-height: 100svh;
+  background: var(--color-white);
+  isolation: isolate;
+}
+
+.dive-reel-stage > .hero-vireo {
+  min-height: 100svh;
+  border-bottom: none;
+  background: var(--color-white);
+}
+
+/* Sections after the dive stay under the pinned frame until it releases. */
+.dive-reel ~ * {
+  position: relative;
+  z-index: 1;
+}
+
+/* The field the leaf resolves into once the zoom passes the point where a
+   photograph can hold detail. */
+.hero-molecular {
+  position: absolute;
+  inset: 0;
+  /* Above the hero grid (z-10) so the veil and field can cover the leaf once
+     the dive has racked past photographic resolution. */
+  z-index: 20;
+  pointer-events: none;
+}
+
+.hero-reel-copy {
+  position: absolute;
+  left: 0;
+  /* Clear sticky header + keep the headline inside the pinned frame. */
+  top: clamp(6.5rem, 22vh, 10rem);
+  z-index: 30;
+  max-width: min(34rem, 46vw);
+  padding: 0 clamp(1.25rem, 3vw, 4rem);
+  color: #f4f1e8;
+}
+
+.hero-reel-copy .eyebrow {
+  color: rgba(244, 241, 232, 0.72);
+}
+
+.hero-reel-copy .reel-headline {
+  color: #f4f1e8;
+  text-wrap: balance;
+  font-size: clamp(1.65rem, 3.4vw, 2.75rem);
+  line-height: 1.08;
+}
+
+@media (max-width: 809px) {
+  .hero-reel-copy {
+    top: clamp(5.5rem, 16vh, 7.5rem);
+    max-width: min(100%, 22rem);
+    padding: 0 1.25rem;
+  }
+
+  .hero-reel-copy .reel-headline {
+    font-size: clamp(1.45rem, 6.5vw, 1.85rem);
+  }
+}
+
+.hero-molecular-veil {
+  position: absolute;
+  inset: 0;
+  /* Real leaf-tissue crop as the plane you land in — green flesh, not pale
+     yellow paper. Soft wash underneath keeps empty edges from flashing. */
+  background-color: #417337;
+  background-image:
+    url("/images/hero-leaf-interior.webp"),
+    url("/images/hero-leaf-wash.webp");
+  background-size: cover, cover;
+  background-position: 42% 38%, center;
+}
+
+/* Deepen the greens so the tissue reads as leaf, not lime chartreuse. */
+.hero-molecular-veil::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      ellipse 90% 80% at 48% 45%,
+      rgba(120, 160, 40, 0.15) 0%,
+      rgba(70, 110, 28, 0.35) 55%,
+      rgba(40, 72, 18, 0.5) 100%
+    );
+}
+
+/* Fine cellular grain over the tissue — molecular scale of the same surface. */
+.hero-molecular-veil::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0.55;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.35' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.12 0 0 0 0 0.22 0 0 0 0 0.04 0 0 0 0.65 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 110px 110px;
+  mix-blend-mode: soft-light;
+}
+
+.hero-molecular-field {
+  position: absolute;
+  inset: 0;
 }
 
 .hero-headline {
@@ -1228,9 +1352,7 @@ img.no-round,
   gap: 1rem;
 }
 
-/* Sized here because the global img rule is unlayered and wins over utilities.
-   Height is left to the image: the tile is taller than it is wide, so pinning
-   both axes would squash it. */
+/* Sized here because the global img rule is unlayered and wins over utilities. */
 .preloader-mark img {
   width: 3rem;
   height: auto;
