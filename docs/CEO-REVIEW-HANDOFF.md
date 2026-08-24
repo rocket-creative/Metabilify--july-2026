@@ -67,15 +67,21 @@ QRM Capital renders as an unlinked tile because we have no confirmed URL.
 
 ## Decisions worth a second opinion
 
-- **The ribbon does not scroll.** It was built as a static announcement rather
-  than a marquee: a permanent animation directly above a sticky header competes
-  with the navigation it sits on. It ships no JavaScript as a result. Easy to
-  reverse if motion was the point.
+- **The ribbon rotates rather than scrolls.** It was first built static, on the
+  grounds that a marquee directly above a sticky header competes with the
+  navigation. At the client's request it now advances through the news items
+  every 5 seconds instead, which gives it movement without a continuously
+  sliding target. It pauses on hover and focus so the text cannot change while
+  someone is reading or reaching for the link, pauses when the tab is hidden,
+  and does not rotate at all under `prefers-reduced-motion`. It reads from the
+  same `src/content/news.ts` as the News page, so headlines cannot drift.
 - **`/news` now has real content.** The ribbon links to it, so a "coming soon"
   stub would have been a dead end. It lists the two milestones the ribbon
   advertises — the 2025 INNO Startup to Watch recognition and the 2024 Arch
-  Grants award — using the fact-checked About copy verbatim so the two pages
-  cannot drift. Years only; no publication dates were invented.
+  Grants award — using the fact-checked About copy verbatim. Years only; no
+  publication dates were invented. **Adding a news item is now a one-file
+  change:** append to `src/content/news.ts` and both the page and the ribbon
+  rotation pick it up.
 - **Search covers staged content.** Every hub page (`/solutions`, `/compare`,
   `/learn/glossary`) already lists pages with `status: "staged"`, so search
   matches that rule rather than a stricter one. Pages marked `draft` are

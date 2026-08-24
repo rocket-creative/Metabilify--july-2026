@@ -90,12 +90,18 @@ This is the part most likely to drift, so it is specific.
 
 ### Motion reveals once, then holds still
 
-No `repeat: -1`. Every animation on the site is a one-time reveal tied to a
-`ScrollTrigger` with `once: true`. A perpetual animation keeps a
+No `repeat: -1` in GSAP. Every scroll animation on the site is a one-time reveal
+tied to a `ScrollTrigger` with `once: true`. A perpetual GSAP timeline keeps a
 `requestAnimationFrame` loop alive while its section is off-screen, and it reads
-as restless — which is the same reason the announcement ribbon is static rather
-than a marquee. If a looping effect seems necessary, raise it instead of adding
-it.
+as restless. If a looping effect seems necessary, raise it instead of adding it.
+
+**The announcement ribbon is the one sanctioned exception**, added at the
+client's request: it rotates through news items every 5 seconds. It is allowed
+because it is content rotation rather than decoration, and because it is
+bounded — no `requestAnimationFrame`, just a `setInterval` that stops on hover,
+on focus, when the tab is hidden, and entirely under
+`prefers-reduced-motion`. Any future looping motion must clear the same four
+bars.
 
 ### Circular badges
 

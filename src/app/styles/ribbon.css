@@ -1,7 +1,10 @@
 /* Slim announcement ribbon above the header. Everything here is at metadata
-   scale on purpose — the ribbon announces, the header navigates. It wraps
-   rather than scrolls, so it needs no JavaScript and holds up under
-   prefers-reduced-motion and text zoom without a special case. */
+   scale on purpose — the ribbon announces, the header navigates.
+
+   One news item occupies one line, spread across the bar: flag hard left,
+   headline centred, call to action hard right. The item never wraps; it
+   ellipsises instead, so a long headline cannot push the bar to two lines or
+   overflow the viewport. */
 
 .ribbon {
   width: 100%;
@@ -13,14 +16,23 @@
 
 .ribbon-link {
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
-  justify-content: center;
-  gap: 0.35rem 0.75rem;
+  /* Spreads the three parts to the edges of the measure rather than clustering
+     them in the middle. */
+  justify-content: space-between;
+  gap: clamp(0.75rem, 3vw, 2rem);
+  width: 100%;
+  max-width: 80rem;
+  margin: 0 auto;
+  flex-wrap: nowrap;
   line-height: 1.4;
+  /* Holds the bar at one line's height so a rotation cannot make the page
+     jump, even mid-fade. */
+  min-height: 1.5rem;
 }
 
 .ribbon-flag {
+  flex: none;
   font-family: var(--font-mono);
   font-size: 0.6rem;
   font-weight: 500;
@@ -29,9 +41,83 @@
   color: var(--color-lime);
 }
 
+/* The window the headlines roll through. Fixed to one line's height and
+   clipped, so an item travelling out is cut off at the edge instead of
+   spilling into the header. Height matches the bar's content box, so the
+   ribbon never changes height mid-roll.
+
+   Takes the slack in the row so the flag and CTA stay pinned to the edges. */
+.ribbon-window {
+  position: relative;
+  flex: 1 1 auto;
+  min-width: 0;
+  height: 1.5rem;
+  overflow: hidden;
+}
+
+/* Items are stacked rather than in flow, so the outgoing and incoming
+   headlines can occupy the same line and move independently. */
+.ribbon-item {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  min-width: 0;
+}
+
+.ribbon-item.is-rolling-in {
+  animation: ribbon-roll-in var(--ribbon-roll, 700ms) ease-in-out both;
+}
+
+.ribbon-item.is-rolling-out {
+  animation: ribbon-roll-out var(--ribbon-roll, 700ms) ease-in-out both;
+}
+
+/* Pure movement, no fade — the clip at the window edge does the work. */
+@keyframes ribbon-roll-in {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes ribbon-roll-out {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-100%);
+  }
+}
+
+.ribbon-year {
+  flex: none;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.ribbon-sep {
+  flex: none;
+  width: 1px;
+  height: 0.75rem;
+  background: rgba(255, 255, 255, 0.22);
+}
+
 .ribbon-headline {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   font-size: 0.78rem;
-  letter-spacing: -0.005em;
+  /* Slight positive tracking. At this size the default set looks cramped
+     against the mono flag either side of it. */
+  letter-spacing: 0.035em;
   color: rgba(255, 255, 255, 0.92);
 }
 
@@ -40,18 +126,8 @@
   text-underline-offset: 0.2em;
 }
 
-.ribbon-sep {
-  width: 1px;
-  height: 0.75rem;
-  background: rgba(255, 255, 255, 0.22);
-}
-
-.ribbon-aside {
-  font-size: 0.78rem;
-  color: rgba(255, 255, 255, 0.62);
-}
-
 .ribbon-cta {
+  flex: none;
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
@@ -71,15 +147,28 @@
   translate: 3px 0;
 }
 
-/* Below the header breakpoint the secondary note and the call-to-action label
+/* Below the header breakpoint the year, its rule, and the call-to-action label
    drop, leaving flag, headline and arrow — one line on a 393px screen. */
 @media (max-width: 809.98px) {
+  .ribbon-year,
   .ribbon-sep,
-  .ribbon-aside,
   .ribbon-cta-label {
     display: none;
   }
-  .ribbon-link {
-    gap: 0.35rem 0.5rem;
+  .ribbon-item {
+    justify-content: flex-start;
+  }
+  .ribbon-headline {
+    letter-spacing: 0.02em;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ribbon-item.is-rolling-in,
+  .ribbon-item.is-rolling-out {
+    animation: none;
+  }
+  .ribbon-arrow {
+    transition: none;
   }
 }

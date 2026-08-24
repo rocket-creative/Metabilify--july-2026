@@ -3,6 +3,7 @@ import { Button } from "@/components/Button";
 import { BreadcrumbJsonLd } from "@/components/JsonLd";
 import { PageHero } from "@/components/PageHero";
 import { Reveal } from "@/components/Reveal";
+import { newsItems } from "@/content/news";
 
 export const metadata: Metadata = {
   title: "News",
@@ -10,25 +11,6 @@ export const metadata: Metadata = {
     "Milestones and announcements from Metablify, including Arch Grants selection and recognition as a St. Louis INNO Startup to Watch.",
   alternates: { canonical: "/news" },
 };
-
-/**
- * Copy is taken from the fact-checked About draft (v0.2) so the two sources
- * cannot drift. The source records years rather than publication dates, so
- * these are labelled by year — do not invent a month or day to make the list
- * look more like a feed.
- */
-const milestones = [
-  {
-    year: "2025",
-    title: "Named a St. Louis INNO Startup to Watch",
-    body: "Metablify was named a St. Louis INNO Startup to Watch as the company began working with potential partners on external validation projects, moving from proving the technology internally to demonstrating what the platform could do with collaborators and real-world applications.",
-  },
-  {
-    year: "2024",
-    title: "Selected as an Arch Grants company",
-    body: "Metablify was selected as a 2024 Arch Grants company and received the standard $75,000 award in equity-free, non-dilutive funding, along with access to the St. Louis entrepreneurial ecosystem as it began validating the technology outside the Danforth Center.",
-  },
-];
 
 const topics = [
   {
@@ -69,8 +51,8 @@ export default function NewsPage() {
           </h2>
         </Reveal>
         <ol className="news-list">
-          {milestones.map((item, i) => (
-            <Reveal key={item.title} delay={i * 70}>
+          {newsItems.map((item, i) => (
+            <Reveal key={item.slug} delay={i * 70}>
               <li className="news-item">
                 <p className="news-year">{item.year}</p>
                 <div>
