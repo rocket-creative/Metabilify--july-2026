@@ -1,0 +1,86 @@
+/* Shared provisional-state treatment for unsourced imagery and unwritten copy.
+   Owned by the design system, not by any one section — keep it identical
+   everywhere so placeholders read as deliberate rather than broken. */
+
+.image-placeholder {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 1.5rem;
+  text-align: center;
+  border: 1.5px dashed var(--color-stone);
+  border-radius: 1.5rem;
+  background: var(--color-grey-soft);
+  color: var(--color-faint);
+  /* Establishes the query container for the compact rule below, so a small slot
+     adapts on its own width rather than the viewport's. */
+  container-type: inline-size;
+}
+
+.image-placeholder--dark {
+  border-color: rgba(255, 255, 255, 0.28);
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.image-placeholder-glyph {
+  width: clamp(1.75rem, 4vw, 2.5rem);
+  height: auto;
+  opacity: 0.75;
+}
+
+.image-placeholder-label {
+  margin: 0;
+  max-width: 26rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  line-height: 1.5;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.image-placeholder-ratio {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  opacity: 0.6;
+}
+
+/* Small slots (headshots, card thumbnails) hide the secondary metadata so the
+   box does not turn into a wall of mono text. */
+@container (max-width: 18rem) {
+  .image-placeholder-ratio {
+    display: none;
+  }
+}
+
+.copy-placeholder {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.5rem 0.75rem;
+  margin: 0;
+  padding: 0.875rem 1rem;
+  border: 1.5px dashed var(--color-stone);
+  border-radius: 0.75rem;
+  background: var(--color-grey-soft);
+  color: var(--color-faint);
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+.copy-placeholder-tag {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.2rem 0.45rem;
+  border-radius: 0.25rem;
+  background: var(--color-stone);
+  color: var(--color-muted);
+}

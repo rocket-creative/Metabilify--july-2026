@@ -1,0 +1,44 @@
+.preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: grid;
+  place-items: center;
+  background: var(--color-white);
+}
+
+.preloader-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* Sized here because the global img rule is unlayered and wins over utilities. */
+.preloader-mark img {
+  width: 3rem;
+  height: auto;
+}
+
+/* Matches the track below it, so the three elements share one optical width. */
+.preloader-word img {
+  width: 8.75rem;
+}
+
+.preloader-track {
+  width: 140px;
+  height: 2px;
+  background: #e6e6e6;
+  overflow: hidden;
+}
+
+.preloader-bar {
+  height: 100%;
+  width: 100%;
+  background: var(--color-ink);
+  transform-origin: left center;
+}
+
+.grain-overlay {
+  display: none;
+}

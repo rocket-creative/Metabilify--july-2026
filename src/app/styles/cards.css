@@ -1,0 +1,285 @@
+.card {
+  position: relative;
+  background: var(--color-white);
+  border: 1px solid var(--color-stone);
+  border-radius: 1.5rem;
+  padding: clamp(1.5rem, 3vw, 2.25rem);
+  transition: border-color 240ms ease, transform 240ms ease, box-shadow 240ms ease;
+}
+
+.card-link:hover {
+  border-color: rgba(26, 26, 26, 0.35);
+  transform: translateY(-3px);
+}
+
+/* For capabilities we are evaluating but do not sell yet. Reuses the dashed
+   border from the placeholder language so "provisional" reads the same whether
+   it is a missing image, unwritten copy, or an unoffered service. */
+.card-provisional {
+  border-style: dashed;
+  background: transparent;
+}
+
+.card-split {
+  padding: 0;
+  overflow: hidden;
+  display: grid;
+}
+
+@media (min-width: 810px) {
+  .card-split {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.card-split-body {
+  padding: clamp(1.75rem, 3vw, 2.5rem);
+  display: flex;
+  flex-direction: column;
+}
+
+.card-split-media {
+  position: relative;
+  min-height: 13rem;
+  background: var(--color-neutral);
+}
+
+.arrow-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.8rem;
+  letter-spacing: 0.02em;
+  color: var(--color-ink);
+  font-weight: 500;
+}
+
+.arrow-link .arrow-ne {
+  display: inline-block;
+  transition: transform 200ms ease;
+}
+
+.arrow-link:hover .arrow-ne {
+  transform: translate(2px, -2px);
+}
+
+.section-nav {
+  display: inline-flex;
+  gap: 0.5rem;
+}
+
+.section-nav-btn {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 999px;
+  border: 1px solid var(--color-stone);
+  background: var(--color-white);
+  display: inline-grid;
+  place-items: center;
+  color: var(--color-ink);
+  cursor: pointer;
+  transition: border-color 200ms ease, background 200ms ease, color 200ms ease;
+}
+
+.section-nav-btn:hover {
+  border-color: var(--color-ink);
+}
+
+.section-nav-btn:disabled {
+  color: var(--color-faint);
+  cursor: default;
+  border-color: var(--color-stone);
+}
+
+.card-scroller {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 88%;
+  gap: 1.25rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  padding-bottom: 0.5rem;
+}
+
+.card-scroller::-webkit-scrollbar {
+  display: none;
+}
+
+.card-scroller > * {
+  scroll-snap-align: start;
+}
+
+@media (min-width: 810px) {
+  .card-scroller {
+    grid-auto-columns: minmax(0, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    overflow-x: visible;
+  }
+}
+
+.applications-grid {
+  display: grid;
+  gap: 1.5rem;
+}
+
+@media (min-width: 810px) {
+  .applications-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.media-card {
+  height: 100%;
+  padding: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.media-card-media {
+  position: relative;
+  background: var(--color-neutral);
+  border-bottom: 1px solid var(--color-stone);
+}
+
+.media-card-media--wide {
+  aspect-ratio: 16 / 9;
+}
+
+.media-card-media--square {
+  aspect-ratio: 1 / 1;
+}
+
+.media-card-body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding: clamp(1.75rem, 3vw, 2.5rem);
+}
+
+.media-card-index {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  color: var(--color-forest);
+  margin-bottom: 0.85rem;
+}
+
+.section-sage,
+.section-grey {
+  background: var(--color-neutral);
+  max-width: none;
+}
+
+.section-berry {
+  background: var(--color-neutral);
+}
+
+.wash-white {
+  background: var(--color-white);
+}
+
+/* "Work With Metablify" split band: pale green copy panel on the left, image
+   on the right. The band itself carries the green, and the image is clipped
+   with a deep arc on its left corners, so the green shows through above and
+   below the arc where the two meet. */
+.work-band {
+  display: grid;
+  background: var(--color-hero-green);
+  border-radius: 1.5rem;
+  overflow: hidden;
+}
+
+.work-band-panel {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(1.75rem, 4vw, 3.25rem);
+}
+
+.work-band-rule {
+  display: block;
+  width: 2.75rem;
+  height: 0.1875rem;
+  border-radius: 999px;
+  background: var(--color-lime);
+}
+
+/* Stacked: the image is inset so the green reads as a frame rather than a
+   stripe above it. */
+.work-band-media {
+  padding: 0 clamp(1rem, 4vw, 1.5rem) clamp(1rem, 4vw, 1.5rem);
+}
+
+@media (min-width: 810px) {
+  .work-band {
+    grid-template-columns: 40fr 60fr;
+    align-items: stretch;
+  }
+
+  .work-band-media {
+    padding: 0;
+  }
+
+  /* Height wins over the placeholder's inline aspect-ratio, so the image fills
+     whatever the copy panel sets. The horizontal radius is the depth of the
+     arc; the 50% vertical radii meet at the midpoint and make it continuous. */
+  .work-band-media .image-placeholder {
+    height: 100%;
+    border-radius: clamp(4rem, 10vw, 9rem) 0 0 clamp(4rem, 10vw, 9rem) /
+      50% 0 0 50%;
+  }
+}
+
+.service-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.service-card-media {
+  margin-bottom: clamp(1.25rem, 2.5vw, 1.75rem);
+}
+
+.service-card-body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+.service-card-head {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.service-card-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.125rem;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  color: var(--color-ink);
+}
+
+/* Contract badge geometry — diameter, perfect circle, icon at 45%. Filled
+   forest with a white icon per the mockup rather than the light-background
+   default, so the badge holds its own next to the title. */
+.service-badge {
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+  width: clamp(3rem, 5vw, 4rem);
+  height: clamp(3rem, 5vw, 4rem);
+  border-radius: 999px;
+  background: var(--color-forest);
+  color: var(--color-white);
+}
+
+.service-badge svg {
+  width: 45%;
+  height: 45%;
+}

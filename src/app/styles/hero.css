@@ -1,0 +1,121 @@
+/* Retained for ParallaxHero, which is parked rather than deleted while the art
+   direction for the zoom is decided. Nothing renders it today. */
+.hero-vireo {
+  background: var(--color-white);
+  border-bottom: 1px solid var(--color-stone);
+  /* The zoom pins this section, so it has to fill the viewport: the section
+     clips its overflow, and anything short of full height would cut the
+     growing subject off across the middle of the screen. */
+  min-height: 100svh;
+  display: grid;
+  align-content: center;
+}
+
+/* Static hero: copy on the left, a single image slot on the right. The image is
+   deliberately unsourced this pass, so the placeholder has to carry the column
+   as a finished state rather than a gap. */
+.hero-static {
+  background: var(--color-white);
+  border-bottom: 1px solid var(--color-stone);
+}
+
+.hero-static-inner {
+  max-width: 90rem;
+  margin-inline: auto;
+  padding: clamp(3.5rem, 7vw, 6.5rem) clamp(1.25rem, 5vw, 4rem);
+  display: grid;
+  gap: clamp(2.5rem, 5vw, 4rem);
+  align-items: center;
+}
+
+@media (min-width: 1024px) {
+  .hero-static-inner {
+    /* The copy column takes the larger share so the headline holds its two
+       tuned lines without wrapping a third at the top of the clamp. */
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  }
+}
+
+.hero-static-copy {
+  max-width: 42rem;
+}
+
+.hero-static-lead {
+  margin-block: clamp(1.5rem, 2.5vw, 2rem) 0;
+  /* Narrower than the global lead measure so this sets to two lines beside the
+     image rather than one long one. */
+  max-width: 32rem;
+}
+
+.hero-static-cta {
+  margin-top: clamp(2rem, 3.5vw, 3rem);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+/* Footnote, not a feature: fills the lower left of the hero without competing
+   with the headline or the CTA. */
+.hero-credibility {
+  margin: clamp(3rem, 6vw, 4.5rem) 0 0;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--color-stone);
+  list-style: none;
+  display: grid;
+  gap: 0.5rem;
+  max-width: 30rem;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  line-height: 1.6;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-faint);
+}
+
+.hero-static-media {
+  width: 100%;
+}
+
+.hero-headline {
+  /* Sized so "See more in your LC/MS data." breaks to two lines rather than
+     three. At 8vw the middle line was a single orphaned word. */
+  font-size: clamp(2.5rem, 5.5vw, 4.25rem);
+  color: var(--color-ink);
+}
+
+.hero-headline span {
+  color: var(--color-ink);
+  -webkit-text-fill-color: var(--color-ink);
+  background: none;
+}
+
+.hero-scroll-hint {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  translate: -50% 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-faint);
+}
+
+.hero-scroll-arrow {
+  display: inline-block;
+  animation: bounce-soft 1.8s ease-in-out infinite;
+}
+
+@keyframes bounce-soft {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(6px);
+  }
+}

@@ -6,6 +6,80 @@ const lastReviewed = "2026-07-18";
 export const applicationPages: ApplicationPage[] = [
   {
     family: "application",
+    slug: "drug-discovery",
+    status: "staged",
+    intent: "commercial",
+    field: "Drug discovery and development",
+    title: "Drug discovery and development",
+    metaTitle: "LC/MS for Drug Discovery | Metablify",
+    metaDescription:
+      "Metabolite identification, metabolism and pharmacokinetic profiling, impurity screens, and biomarker discovery all rest on recovered mass features. See where Metablify fits.",
+    h1: "Drug discovery and development",
+    lead: "Small molecule programs ask LC/MS several questions at once: what a compound turns into, what else is in the vial, and which measured signals track with response. Every answer starts from mass features that were actually recovered.",
+    tags: ["drug discovery", "DMPK", "metabolite identification", "biomarkers"],
+    problem:
+      "A discovery program acquires LC/MS data for several different purposes, and each one depends on signals that processing either recovered or lost. Metabolite identification needs the minor products of a parent compound, which sit at low abundance beside a dominant peak. Metabolism and pharmacokinetic studies compare timepoints, species, and matrices, so the same species has to be matched across every injection before exposure can be read from it. Impurity and degradant work looks for what should not be there, which is by definition an unexpected feature with no prior target list. Biomarker screens run large compound panels or patient cohorts, where drift across a long acquisition campaign quietly separates samples that belong together. When features split, go missing, or fail to align, nothing announces the failure. The conclusion is simply drawn from an incomplete table.",
+    approach:
+      "Metablify works at the mass feature layer on data you already acquired, using agreement across the whole set of injections rather than a threshold applied to each sample alone. Minor metabolites and low level degradants that appear reproducibly are recovered instead of dropped, and features are aligned across timepoints, dose groups, matrices, and batches so that one species keeps one identity for the length of the study. The output is a cleaner and more complete feature table that feeds the identification, structure elucidation, and statistical tools a program already trusts. Metablify does not assign structures and it is not a validated bioanalytical method. It improves the features those steps receive.",
+    audience:
+      "Discovery and development groups at pharmaceutical and biotechnology companies, contract research organizations running metabolism and impurity work, and translational teams screening biomarker candidates across large cohorts, where recovery and alignment across many injections limit what the data can support.",
+    uniqueValueBlocks: [
+      {
+        heading: "Minor products, major peaks",
+        body: "The metabolites that answer a metabolism question are often small signals sitting beside a dominant parent compound. Reproducibility across injections recovers them where a threshold applied sample by sample would not.",
+      },
+      {
+        heading: "One study, many injections",
+        body: "Timepoints, dose groups, species, and matrices are only meaningful against each other, so a feature has to hold one identity across every injection in the study before exposure or response can be read from it.",
+      },
+      {
+        heading: "Unexpected features are the point",
+        body: "Impurity and degradant work searches for signal that no target list anticipated. A more complete feature table gives that search an honest starting point instead of a filtered one.",
+      },
+    ],
+    faqs: [
+      {
+        question: "Can Metablify replace a validated bioanalytical method?",
+        answer:
+          "No. Regulated bioanalysis rests on validated methods and authentic standards, and Metablify does not change that. It is a feature layer for discovery and characterization work, applied to data you have already acquired.",
+      },
+      {
+        question: "Does Metablify identify metabolite structures?",
+        answer:
+          "No. Metablify recovers, aligns, and quantifies mass features. Structure elucidation stays with the identification tools and spectral libraries you already use, which work better when the features reaching them are more complete.",
+      },
+      {
+        question: "Which studies is this best suited to?",
+        answer:
+          "Work where many injections have to be compared: metabolism and pharmacokinetic timecourses, stability and impurity screens, and biomarker discovery across large cohorts. The common factor is that alignment across the whole set, not any single chromatogram, decides the result.",
+      },
+    ],
+    primaryCta: {
+      tier: "discuss",
+      proof:
+        "Discuss a metabolite identification or biomarker screen where recovery is the limiting step.",
+    },
+    sources: [
+      {
+        label:
+          "ICH, Q3A and Q3B guidelines on impurities in new drug substances and products",
+        href: "https://www.ich.org/page/quality-guidelines",
+      },
+      {
+        label: "FDA and NIH Biomarker Working Group, BEST resource (2016)",
+        href: "https://www.ncbi.nlm.nih.gov/books/NBK326791/",
+      },
+    ],
+    relatedSlugs: [
+      "low-abundance-recovery",
+      "batch-effect-alignment",
+      "large-cohort-processing",
+    ],
+    author,
+    lastReviewed,
+  },
+  {
+    family: "application",
     slug: "pfas-environmental",
     status: "staged",
     intent: "commercial",

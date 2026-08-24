@@ -12,7 +12,7 @@ export function PageHero({
   children?: React.ReactNode;
 }) {
   return (
-    <section className="section wash-botanical border-b border-stone">
+    <section className="section wash-white border-b border-stone">
       <Reveal>
         {eyebrow ? <p className="eyebrow mb-4">{eyebrow}</p> : null}
         <h1 className="display display-lg max-w-3xl">{title}</h1>

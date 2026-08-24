@@ -1,0 +1,282 @@
+.metabolome-section {
+  position: relative;
+  background: var(--color-neutral);
+  border-top: 1px solid var(--color-stone);
+  border-bottom: 1px solid var(--color-stone);
+}
+
+.metabolome-stage {
+  border: 1px solid var(--color-stone);
+  background: var(--color-white);
+  overflow: visible;
+  transform: scale(0.985);
+  opacity: 0.92;
+  transition: transform 800ms var(--ease-out-expo), opacity 800ms var(--ease-out-expo);
+}
+
+.metabolome-stage.is-ready {
+  transform: scale(1);
+  opacity: 1;
+}
+
+.metabolome-progress {
+  position: absolute;
+  right: clamp(1rem, 3vw, 2.5rem);
+  top: 50%;
+  translate: 0 -50%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  z-index: 5;
+}
+
+.metabolome-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  padding: 0;
+  border: 0;
+  cursor: pointer;
+  background: #d4d4d4;
+  transition: background 300ms ease, transform 300ms ease;
+}
+
+.metabolome-dot.is-active {
+  background: var(--color-accent);
+  transform: scale(1.25);
+}
+
+.metabolome-dot:focus-visible {
+  outline: 2px solid var(--color-forest);
+  outline-offset: 3px;
+}
+
+.callout {
+  position: absolute;
+  max-width: 15rem;
+  font-size: 0.78rem;
+  line-height: 1.45;
+  color: var(--color-ink);
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 700ms var(--ease-out-expo), transform 700ms var(--ease-out-expo);
+  pointer-events: none;
+  background: #ffffff;
+  border: 1px solid var(--color-stone);
+  padding: 0.55rem 0.65rem;
+  z-index: 3;
+}
+
+.callout strong {
+  color: var(--color-accent);
+  font-weight: 700;
+}
+
+.callout em {
+  color: var(--color-ink);
+  font-style: normal;
+  font-weight: 600;
+}
+
+.callout.is-on {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.callout-main {
+  left: 4%;
+  bottom: 6%;
+  max-width: 16.5rem;
+}
+
+.callout-sample {
+  right: 3%;
+  top: 6%;
+  text-align: right;
+}
+
+.callout-legacy {
+  right: 2%;
+  bottom: 10%;
+  text-align: right;
+  max-width: 13rem;
+}
+
+.callout-node {
+  position: absolute;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--color-white);
+  border: 1.5px solid var(--color-forest);
+  box-shadow: 0 0 0 3px rgba(18, 50, 39, 0.08);
+}
+
+.callout-line {
+  position: absolute;
+  width: 2.7rem;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    rgba(18, 50, 39, 0.55),
+    rgba(18, 50, 39, 0.05)
+  );
+}
+
+.callout-main .callout-node {
+  border-color: var(--color-forest);
+  background: var(--color-lime);
+}
+
+.callout-main .callout-line {
+  top: -0.1rem;
+  right: 0;
+  transform-origin: right center;
+  transform: rotate(-45deg);
+}
+
+.callout-main .callout-node {
+  top: -1.9rem;
+  right: -1.9rem;
+}
+
+.callout-sample .callout-line {
+  bottom: -0.1rem;
+  left: 0;
+  transform-origin: left center;
+  transform: rotate(135deg);
+}
+
+.callout-sample .callout-node {
+  bottom: -1.9rem;
+  left: -1.9rem;
+}
+
+.callout-legacy .callout-line {
+  top: -0.1rem;
+  left: 0;
+  transform-origin: left center;
+  transform: rotate(-135deg);
+}
+
+.callout-legacy .callout-node {
+  top: -1.9rem;
+  left: -1.9rem;
+}
+
+.metabolome-orbits {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+  perspective: 1000px;
+  z-index: 2;
+  opacity: 0.85;
+  transition: opacity 680ms var(--ease-out-expo);
+}
+
+.metabolome-stage[data-story-phase="metablify"] .metabolome-orbits {
+  opacity: 0.7;
+}
+
+.metabolome-orbit-group {
+  position: relative;
+  width: min(64%, 24rem);
+  aspect-ratio: 1;
+  transform-style: preserve-3d;
+}
+
+.metabolome-ring {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  border-radius: 50%;
+  border: 1px solid rgba(18, 50, 39, 0.16);
+}
+
+.metabolome-ring-1 {
+  transform: rotateX(74deg);
+}
+
+.metabolome-ring-2 {
+  width: 80%;
+  height: 80%;
+  border-color: rgba(18, 50, 39, 0.12);
+  transform: rotateX(72deg) rotateY(62deg);
+}
+
+.metabolome-ring-3 {
+  width: 92%;
+  height: 92%;
+  border-color: rgba(196, 232, 107, 0.42);
+  transform: rotateX(60deg) rotateY(-40deg);
+}
+
+@media (max-width: 809px) {
+  .callout-sample,
+  .callout-legacy,
+  .metabolome-progress,
+  .metabolome-orbits {
+    display: none;
+  }
+
+  .callout-node,
+  .callout-line {
+    display: none;
+  }
+
+  .callout-main {
+    left: 4%;
+    right: 4%;
+    max-width: none;
+    bottom: 4%;
+  }
+}
+
+.process-rail {
+  display: grid;
+  gap: 0;
+  border-top: 1px solid var(--color-stone);
+}
+
+@media (min-width: 810px) {
+  .process-rail {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.process-step {
+  padding: 2rem 1.5rem;
+  border-bottom: 1px solid var(--color-stone);
+}
+
+@media (min-width: 810px) {
+  .process-step {
+    border-bottom: none;
+    border-right: 1px solid var(--color-stone);
+  }
+
+  .process-step:last-child {
+    border-right: none;
+  }
+}
+
+.story-row {
+  display: grid;
+  gap: 1.5rem;
+  padding: 2.5rem 0;
+  border-top: 1px solid var(--color-stone);
+}
+
+@media (min-width: 810px) {
+  .story-row {
+    grid-template-columns: 12rem 1fr;
+    gap: 3rem;
+    align-items: start;
+  }
+}
+
+.story-row:last-child {
+  border-bottom: 1px solid var(--color-stone);
+}

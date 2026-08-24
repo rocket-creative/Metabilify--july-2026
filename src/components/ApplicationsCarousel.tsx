@@ -31,7 +31,7 @@ const APPLICATIONS: Application[] = [
 
 export function ApplicationsCarousel() {
   return (
-    <section className="wash-botanical section-wide band-y">
+    <section className="wash-white section-wide band-y">
       <div className="gutter-x mx-auto max-w-[80rem]">
         <Reveal>
           <div className="mb-10 max-w-2xl md:mb-14">

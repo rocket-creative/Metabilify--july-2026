@@ -1,0 +1,154 @@
+.site-header {
+  /* One knob for the row height so the scrolled state only has to retune this. */
+  --site-header-pad: clamp(0.85rem, 1.4vw, 1.25rem);
+  transition: background 300ms ease, border-color 300ms ease,
+    box-shadow 300ms ease;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid transparent;
+}
+
+.site-header.is-scrolled {
+  --site-header-pad: 0.7rem;
+  border-bottom-color: var(--color-stone);
+  box-shadow: 0 12px 30px -26px rgba(0, 0, 0, 0.55);
+}
+
+.site-header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: clamp(0.75rem, 2vw, 2rem);
+  padding-block: var(--site-header-pad);
+  transition: padding-block 260ms var(--ease-out-expo);
+}
+
+/* Nav sits inline with the bar, pushed right so it reads as one row with the
+   logo and the CTA rather than a detached strip beneath them. */
+.site-nav {
+  display: none;
+  margin-inline-start: auto;
+}
+
+.site-nav-list {
+  display: flex;
+  align-items: center;
+  gap: clamp(1.15rem, 2.1vw, 2.25rem);
+}
+
+.site-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+@media (min-width: 1024px) {
+  .site-nav {
+    display: block;
+  }
+}
+
+.site-nav-link {
+  position: relative;
+  display: inline-block;
+  font-size: 0.9rem;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  color: var(--color-muted);
+  transition: color 200ms ease;
+}
+
+.site-nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -0.4rem;
+  height: 1.5px;
+  background: var(--color-ink);
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 220ms var(--ease-out-expo);
+}
+
+.site-nav-link:hover {
+  color: var(--color-ink);
+}
+
+.site-nav-link:hover::after,
+.site-nav-link.is-active::after {
+  transform: scaleX(1);
+}
+
+.site-nav-link.is-active {
+  color: var(--color-ink);
+  font-weight: 600;
+}
+
+/* Icon controls — square, hairline, zero radius to match the buttons. */
+.site-header-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 2.5rem;
+  width: 2.5rem;
+  border: 1px solid var(--color-stone);
+  background: transparent;
+  color: var(--color-muted);
+  cursor: pointer;
+  transition: color 200ms ease, border-color 200ms ease, background 200ms ease;
+}
+
+.site-header-icon:hover {
+  color: var(--color-ink);
+  border-color: var(--color-ink);
+}
+
+.site-burger-bar {
+  display: block;
+  height: 1.5px;
+  width: 1.125rem;
+  background: currentColor;
+  /* Tailwind v4 drives these through the standalone translate/rotate
+     properties, not the transform shorthand. */
+  transition: translate 220ms var(--ease-out-expo),
+    rotate 220ms var(--ease-out-expo), opacity 160ms ease;
+}
+
+.site-header-cta {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .site-header-cta {
+    display: inline-flex;
+  }
+  .site-burger {
+    display: none;
+  }
+}
+
+/* Mobile panel — same hairline language as the bar it drops out of. */
+.site-mobile-nav {
+  border-top: 1px solid var(--color-stone);
+  background: var(--color-white);
+  padding: 0.75rem clamp(1.25rem, 5vw, 2.5rem) 1.5rem;
+}
+
+.site-mobile-link {
+  display: block;
+  padding-block: 0.7rem;
+  font-size: 1.05rem;
+  color: var(--color-muted);
+  border-bottom: 1px solid var(--color-stone);
+  transition: color 200ms ease;
+}
+
+.site-mobile-link:hover {
+  color: var(--color-ink);
+}
+
+.site-mobile-link.is-active {
+  color: var(--color-ink);
+  font-weight: 600;
+}

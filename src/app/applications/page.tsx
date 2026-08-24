@@ -10,11 +10,26 @@ import { pageHref } from "@/types/content";
 export const metadata: Metadata = {
   title: "Applications",
   description:
-    "One Metablify platform. Multiple omics. Leading applications in metabolomics and proteomics.",
+    "What the Metablify platform enables, the omics it serves, and the fields it supports, from drug discovery and environmental analysis to lipidomics and agricultural science.",
   alternates: { canonical: "/applications" },
 };
 
-const applications = [
+const enables = [
+  {
+    title: "Recover real features",
+    body: "Mass features sitting in background signal are surfaced from data you have already acquired, with no change to the instrument method.",
+  },
+  {
+    title: "Keep large sample sets comparable",
+    body: "Features are matched across hundreds of injections, so retention drift and batch structure stop standing in for real differences.",
+  },
+  {
+    title: "Quantify on a cleaner table",
+    body: "Outputs are more complete and ready for the statistics and annotation tools your group already uses.",
+  },
+];
+
+const omics = [
   {
     href: "/applications/metabolomics",
     title: "Metabolomics",
@@ -37,19 +52,37 @@ const applications = [
   },
 ];
 
-function MoreApplications() {
-  const pages = byFamily("application").filter((p) => p.status !== "draft");
+// Explicit ordering so breadth leads and no single field reads as the headline.
+const verticalOrder = [
+  "drug-discovery",
+  "pfas-environmental",
+  "lipidomics",
+  "plant-agricultural-science",
+];
+
+function orderedVerticals() {
+  const rank = (slug: string) => {
+    const i = verticalOrder.indexOf(slug);
+    return i === -1 ? verticalOrder.length : i;
+  };
+  return byFamily("application")
+    .filter((p) => p.status !== "draft")
+    .sort((a, b) => rank(a.slug) - rank(b.slug));
+}
+
+function SpecificApplications() {
+  const pages = orderedVerticals();
   if (pages.length === 0) return null;
   return (
     <section className="section section-sage">
       <Reveal>
         <SectionHeading
-          eyebrow="More application areas"
-          title="Where the platform is expanding"
-          lead="The same feature layer approach extends to fields where recovery and alignment at cohort scale are the bottleneck."
+          eyebrow="Specific applications"
+          title="Fields where recovery and alignment decide the result"
+          lead="LC/MS carries work across many industries. These are the areas where feature level recovery at cohort scale is the limiting step."
         />
       </Reveal>
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-6 md:grid-cols-2">
         {pages.map((page, i) => (
           <Reveal key={page.slug} delay={i * 70}>
             <Link
@@ -89,7 +122,7 @@ export default function ApplicationsPage() {
       <PageHero
         eyebrow="Applications"
         title="One Metablify platform. Multiple omics."
-        lead="Metablify analyzes the mass feature layer shared across LC/MS workflows, with leading applications in metabolomics and proteomics."
+        lead="Metablify analyzes the mass feature layer shared across LC/MS workflows, with leading applications in metabolomics and proteomics and use across drug discovery, environmental, and agricultural science."
       >
         <Button href="/discuss">Discuss Your Project</Button>
       </PageHero>
@@ -100,28 +133,15 @@ export default function ApplicationsPage() {
           <div className="lg:col-span-5">
             <Reveal>
               <SectionHeading
-                eyebrow="One layer, many workflows"
-                title="A shared foundation across omics"
-                lead="Different omics ask different questions, yet they share the same underlying LC/MS measurement. Metablify works at that mass feature layer, so the same first principles benefit every application."
+                eyebrow="What we enable"
+                title="Three gains that carry across every workflow"
+                lead="Metablify works at the mass feature layer shared by all LC/MS analysis, so the same benefits apply whatever the samples are."
               />
             </Reveal>
           </div>
           <div className="lg:col-span-7">
             <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3">
-              {[
-                {
-                  title: "Detect",
-                  body: "Surface real mass features other workflows miss.",
-                },
-                {
-                  title: "Align",
-                  body: "Match features across large, noisy sample sets.",
-                },
-                {
-                  title: "Quantify",
-                  body: "Deliver cleaner outputs ready for analysis.",
-                },
-              ].map((item, i) => (
+              {enables.map((item, i) => (
                 <Reveal key={item.title} delay={i * 80}>
                   <div className="card flex h-full flex-col">
                     <h3
@@ -144,21 +164,25 @@ export default function ApplicationsPage() {
       {}
       <section className="section">
         <Reveal>
-          <SectionHeading eyebrow="Explore" title="Leading applications" />
+          <SectionHeading
+            eyebrow="The omics"
+            title="Two leading applications, one measurement layer"
+            lead="Different omics ask different questions of the same underlying LC/MS measurement, which is where Metablify does its work."
+          />
         </Reveal>
         <div className="grid gap-6 md:grid-cols-2">
-          {applications.map((app, i) => (
+          {omics.map((app, i) => (
             <Reveal key={app.href} delay={i * 90}>
               <Link
                 href={app.href}
                 className="card card-link group flex h-full flex-col"
               >
-                <h2
+                <h3
                   className="mb-4 text-2xl text-ink md:text-3xl"
                   style={{ fontFamily: "var(--font-display)" }}
                 >
                   {app.title}
-                </h2>
+                </h3>
                 <p className="mb-6 text-muted leading-relaxed">{app.body}</p>
                 <ul className="mb-8 space-y-3 text-sm text-muted">
                   {app.points.map((point) => (
@@ -178,10 +202,27 @@ export default function ApplicationsPage() {
             </Reveal>
           ))}
         </div>
+        <Reveal delay={180}>
+          <div className="card card-provisional mt-6">
+            <p className="eyebrow mb-3">Under evaluation</p>
+            <h3
+              className="mb-3 text-lg text-ink"
+              style={{ fontFamily: "var(--font-display)" }}
+            >
+              Other omics
+            </h3>
+            <p className="max-w-2xl text-sm leading-relaxed text-muted">
+              The mass feature layer is not specific to metabolites or peptides.
+              Other omics are under evaluation and are not offered today. If your
+              work sits outside these two, tell us what you measure and we will
+              say plainly whether the platform applies.
+            </p>
+          </div>
+        </Reveal>
       </section>
 
       {}
-      <MoreApplications />
+      <SpecificApplications />
 
       {}
       <section className="section-forest section-wide band-y text-center">

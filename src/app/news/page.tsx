@@ -6,9 +6,29 @@ import { Reveal } from "@/components/Reveal";
 
 export const metadata: Metadata = {
   title: "News",
-  description: "Updates and announcements from Metablify.",
+  description:
+    "Milestones and announcements from Metablify, including Arch Grants selection and recognition as a St. Louis INNO Startup to Watch.",
   alternates: { canonical: "/news" },
 };
+
+/**
+ * Copy is taken from the fact-checked About draft (v0.2) so the two sources
+ * cannot drift. The source records years rather than publication dates, so
+ * these are labelled by year — do not invent a month or day to make the list
+ * look more like a feed.
+ */
+const milestones = [
+  {
+    year: "2025",
+    title: "Named a St. Louis INNO Startup to Watch",
+    body: "Metablify was named a St. Louis INNO Startup to Watch as the company began working with potential partners on external validation projects, moving from proving the technology internally to demonstrating what the platform could do with collaborators and real-world applications.",
+  },
+  {
+    year: "2024",
+    title: "Selected as an Arch Grants company",
+    body: "Metablify was selected as a 2024 Arch Grants company and received the standard $75,000 award in equity-free, non-dilutive funding, along with access to the St. Louis entrepreneurial ecosystem as it began validating the technology outside the Danforth Center.",
+  },
+];
 
 const topics = [
   {
@@ -38,20 +58,29 @@ export default function NewsPage() {
       <PageHero
         eyebrow="News"
         title="Updates from Metablify"
-        lead="Announcements and milestones will appear here as they are published."
+        lead="Milestones from the company so far, and the kinds of updates we will publish here."
       />
 
       <section className="section section-sage">
         <Reveal>
-          <div className="border border-dashed border-stone bg-white p-10 text-center md:p-16">
-            <p className="eyebrow mb-4">Coming soon</p>
-            <p className="mx-auto mb-8 max-w-md text-muted leading-relaxed">
-              Check back for news from the Metablify team. In the meantime, reach
-              out to discuss a project.
-            </p>
-            <Button href="/discuss">Discuss a Project</Button>
-          </div>
+          <p className="eyebrow mb-4">Milestones</p>
+          <h2 className="display display-md mb-8 max-w-2xl md:mb-12">
+            Where Metablify has been recognized
+          </h2>
         </Reveal>
+        <ol className="news-list">
+          {milestones.map((item, i) => (
+            <Reveal key={item.title} delay={i * 70}>
+              <li className="news-item">
+                <p className="news-year">{item.year}</p>
+                <div>
+                  <h3 className="news-title">{item.title}</h3>
+                  <p className="news-body">{item.body}</p>
+                </div>
+              </li>
+            </Reveal>
+          ))}
+        </ol>
       </section>
 
       {}
@@ -79,6 +108,11 @@ export default function NewsPage() {
             </Reveal>
           ))}
         </div>
+        <Reveal delay={210}>
+          <div className="mt-10 text-center">
+            <Button href="/discuss">Discuss a Project</Button>
+          </div>
+        </Reveal>
       </section>
     </>
   );

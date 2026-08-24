@@ -1,0 +1,85 @@
+/* Slim announcement ribbon above the header. Everything here is at metadata
+   scale on purpose — the ribbon announces, the header navigates. It wraps
+   rather than scrolls, so it needs no JavaScript and holds up under
+   prefers-reduced-motion and text zoom without a special case. */
+
+.ribbon {
+  width: 100%;
+  max-width: none;
+  background: var(--color-forest);
+  color: rgba(255, 255, 255, 0.82);
+  padding: 0.5rem clamp(1.25rem, 5vw, 2.5rem);
+}
+
+.ribbon-link {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem 0.75rem;
+  line-height: 1.4;
+}
+
+.ribbon-flag {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-lime);
+}
+
+.ribbon-headline {
+  font-size: 0.78rem;
+  letter-spacing: -0.005em;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.ribbon-link:hover .ribbon-headline {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.ribbon-sep {
+  width: 1px;
+  height: 0.75rem;
+  background: rgba(255, 255, 255, 0.22);
+}
+
+.ribbon-aside {
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.62);
+}
+
+.ribbon-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-lime);
+}
+
+.ribbon-arrow {
+  display: inline-block;
+  transition: translate 200ms var(--ease-out-expo);
+}
+
+.ribbon-link:hover .ribbon-arrow {
+  translate: 3px 0;
+}
+
+/* Below the header breakpoint the secondary note and the call-to-action label
+   drop, leaving flag, headline and arrow — one line on a 393px screen. */
+@media (max-width: 809.98px) {
+  .ribbon-sep,
+  .ribbon-aside,
+  .ribbon-cta-label {
+    display: none;
+  }
+  .ribbon-link {
+    gap: 0.35rem 0.5rem;
+  }
+}

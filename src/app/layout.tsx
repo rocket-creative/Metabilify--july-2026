@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
-import { Plus_Jakarta_Sans, IBM_Plex_Mono, Syne } from "next/font/google";
+import { Plus_Jakarta_Sans, IBM_Plex_Mono } from "next/font/google";
 import { Header } from "@/components/Header";
+import { AnnouncementRibbon } from "@/components/AnnouncementRibbon";
 import { Footer } from "@/components/Footer";
 import { OrganizationJsonLd, WebsiteJsonLd } from "@/components/JsonLd";
 import { SmoothScroll } from "@/components/SmoothScroll";
@@ -18,13 +19,6 @@ const plexMono = IBM_Plex_Mono({
   variable: "--font-plex",
   subsets: ["latin"],
   weight: ["400", "500"],
-  display: "swap",
-});
-
-const syne = Syne({
-  variable: "--font-syne",
-  subsets: ["latin"],
-  weight: ["700", "800"],
   display: "swap",
 });
 
@@ -66,7 +60,7 @@ export default function RootLayout({
     <html
       lang="en"
       data-scroll-behavior="smooth"
-      className={`${jakarta.variable} ${plexMono.variable} ${syne.variable} h-full antialiased`}
+      className={`${jakarta.variable} ${plexMono.variable} h-full antialiased`}
     >
       <body className="min-h-full font-[family-name:var(--font-body)] text-ink">
         <a href="#main" className="skip-link">
@@ -78,6 +72,9 @@ export default function RootLayout({
           <Preloader />
           <div className="magazine">
             <div className="magazine-inner flex min-h-screen flex-col">
+              {/* Above the header and outside it, so it scrolls away while the
+                  header stays sticky at the top of the viewport. */}
+              <AnnouncementRibbon />
               <Header />
               <main id="main" className="flex-1">
                 {children}

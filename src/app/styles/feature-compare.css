@@ -1,0 +1,102 @@
+/* The Venn geometry lives here rather than in utility classes so the pulse
+   rings, the real-feature set and the legacy set cannot drift apart.
+
+   Every value is a percentage of a square stage, so width and height
+   percentages resolve to the same pixel value and the shapes stay circular.
+
+   Real-feature set: centre (40%, 50%), radius 38%.
+   Legacy set:       centre (72%, 50%), radius 23%.
+   The centre distance (32%) is less than 38%, so the legacy centre sits inside
+   the real set while its right edge (95%) runs past the boundary (78%). That
+   overhang is the point of the diagram: legacy workflows miss real features
+   AND report ones that are not real. */
+
+.feature-compare-stage {
+  position: relative;
+  width: 100%;
+  max-width: 28rem;
+  margin-inline: auto;
+  aspect-ratio: 1 / 1;
+}
+
+.feature-compare-ring,
+.feature-compare-ink {
+  position: absolute;
+  left: 2%;
+  top: 12%;
+  width: 76%;
+  height: 76%;
+  border-radius: 50%;
+}
+
+.feature-compare-ring {
+  border: 1px solid color-mix(in srgb, var(--color-forest) 35%, transparent);
+  pointer-events: none;
+}
+
+.feature-compare-ink {
+  background: var(--color-ink);
+}
+
+/* Translucent so the three regions read as three different tones: the ink-only
+   region stays dark, the overlap lightens, and the part hanging outside sits
+   pale against the page. */
+.feature-compare-legacy {
+  position: absolute;
+  left: 49%;
+  top: 27%;
+  width: 46%;
+  height: 46%;
+  border-radius: 50%;
+  border: 1.5px solid var(--color-faint);
+  background: color-mix(in srgb, var(--color-stone) 78%, transparent);
+}
+
+.feature-compare-ink,
+.feature-compare-legacy,
+.feature-compare-ring {
+  transform-origin: center center;
+  will-change: transform, opacity;
+}
+
+/* One circle style for both the markers on the diagram and the keys in front of
+   each statement, so the numbering reads as one system. */
+.feature-compare-key {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: clamp(1.375rem, 5vw, 1.75rem);
+  height: clamp(1.375rem, 5vw, 1.75rem);
+  border-radius: 999px;
+  background: var(--color-ink);
+  color: var(--color-white);
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  line-height: 1;
+}
+
+.feature-compare-marker {
+  position: absolute;
+  top: 50%;
+  z-index: 2;
+  transform: translate(-50%, -50%);
+}
+
+/* Sits on the dark fill, so it inverts. */
+.feature-compare-marker--real {
+  left: 25%;
+  background: var(--color-white);
+  color: var(--color-ink);
+}
+
+.feature-compare-marker--shared {
+  left: 63%;
+}
+
+.feature-compare-marker--noise {
+  left: 86%;
+}
+
+.feature-compare-label--quiet {
+  color: var(--color-faint);
+}

@@ -1,0 +1,42 @@
+/* Dated milestone list on /news. Hairline-separated rows with the year set as
+   metadata in the left column, matching the eyebrow language used elsewhere. */
+
+.news-list {
+  border-top: 1px solid var(--color-stone);
+}
+
+.news-item {
+  display: grid;
+  gap: 0.5rem 2.5rem;
+  padding: clamp(1.5rem, 3vw, 2.25rem) 0;
+  border-bottom: 1px solid var(--color-stone);
+}
+
+@media (min-width: 810px) {
+  .news-item {
+    grid-template-columns: 6rem 1fr;
+    align-items: baseline;
+  }
+}
+
+.news-year {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  color: var(--color-faint);
+}
+
+.news-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.125rem, 1.8vw, 1.375rem);
+  line-height: 1.35;
+  color: var(--color-ink);
+  margin-bottom: 0.5rem;
+}
+
+.news-body {
+  max-width: 44rem;
+  font-size: 0.9375rem;
+  line-height: 1.7;
+  color: var(--color-muted);
+}

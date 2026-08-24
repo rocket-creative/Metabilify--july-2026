@@ -109,7 +109,7 @@ export default function WorkWithUsPage() {
       </section>
 
       {}
-      <section className="section-wide band-y wash-botanical">
+      <section className="section-wide band-y wash-white">
         <div className="gutter-x mx-auto max-w-[80rem]">
           <Reveal>
             <p className="eyebrow mb-4">Getting started</p>

@@ -1,0 +1,39 @@
+.display {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  /* Has to clear the descenders. At 1.02 the y/p/g tails of one line collided
+     with the caps of the next, which is the "hanging letters" the headings were
+     getting flagged for. */
+  line-height: 1.1;
+  color: var(--color-text);
+}
+
+.display-xl {
+  font-size: clamp(2.75rem, 7vw, 5.5rem);
+}
+
+.display-lg {
+  font-size: clamp(2rem, 4.5vw, 3.5rem);
+}
+
+.display-md {
+  font-size: clamp(1.5rem, 3vw, 2.25rem);
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  font-weight: 500;
+}
+
+.lead {
+  font-size: clamp(1.05rem, 1.4vw, 1.25rem);
+  line-height: 1.65;
+  color: var(--color-muted);
+  max-width: 42rem;
+  font-weight: 400;
+}

@@ -1,0 +1,31 @@
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .callout {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .hero-scroll-arrow {
+    animation: none;
+  }
+
+  .chromatogram-path,
+  .peak-bar {
+    animation: none;
+    stroke-dashoffset: 0;
+    transform: none;
+  }
+
+  .btn .arrow {
+    transition: none;
+  }
+}

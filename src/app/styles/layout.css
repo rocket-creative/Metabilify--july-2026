@@ -1,0 +1,62 @@
+.section {
+  padding: clamp(3rem, 7vw, 7.5rem) clamp(1.25rem, 5vw, 4rem);
+  position: relative;
+  max-width: 80rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.section-wide {
+  max-width: none;
+  padding-left: clamp(1.25rem, 5vw, 4rem);
+  padding-right: clamp(1.25rem, 5vw, 4rem);
+}
+
+.band-y {
+  padding-block: clamp(3rem, 7vw, 7.5rem);
+}
+
+.gutter-x {
+  padding-inline: clamp(1.25rem, 5vw, 2.5rem);
+}
+
+.section-green,
+.section-ink {
+  background: var(--color-ink);
+  color: white;
+  max-width: none;
+}
+
+.section-green .display,
+.section-green .lead,
+.section-ink .display,
+.section-ink .lead {
+  color: white;
+}
+
+.section-green .lead,
+.section-ink .lead {
+  opacity: 0.8;
+}
+
+.section-forest {
+  background: var(--color-forest);
+  color: #ffffff;
+  max-width: none;
+}
+
+.section-forest .eyebrow {
+  color: var(--color-lime);
+}
+
+.section-forest .display {
+  color: #ffffff;
+}
+
+.section-forest .lead {
+  color: rgba(255, 255, 255, 0.74);
+}
+
+.section-forest .card .eyebrow {
+  color: var(--color-accent);
+}

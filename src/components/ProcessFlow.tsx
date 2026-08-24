@@ -4,6 +4,12 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Button } from "./Button";
+import {
+  AnalyzeIcon,
+  DefineIcon,
+  DiscussIcon,
+  ReviewIcon,
+} from "./visuals/ProcessIcons";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -11,6 +17,7 @@ type Step = {
   n: string;
   title: string;
   body: string;
+  icon: React.ReactNode;
 };
 
 const STEPS: Step[] = [
@@ -18,21 +25,25 @@ const STEPS: Step[] = [
     n: "01",
     title: "Discuss Your Project",
     body: "Tell us about your scientific objective, samples, existing data, and desired outputs.",
+    icon: <DiscussIcon />,
   },
   {
     n: "02",
-    title: "Choose the Right Approach",
-    body: "We define an analytical-services project, platform-development program, or strategic collaboration.",
+    title: "Define the Right Approach",
+    body: "Together, we define the right analytical services, platform-development, or collaboration approach.",
+    icon: <DefineIcon />,
   },
   {
     n: "03",
     title: "Put Metablify to Work",
-    body: "Metablify processes and analyzes the LC/MS data to produce cleaner, aligned, and quantified mass-feature results.",
+    body: "Metablify processes and analyzes your LC/MS data to generate cleaner, aligned, and quantified mass-feature results.",
+    icon: <AnalyzeIcon />,
   },
   {
     n: "04",
     title: "Review Results",
-    body: "Work with our team to understand the outputs, prioritize next steps, and identify opportunities for further analysis.",
+    body: "Review results with our team and identify next steps and opportunities for further analysis.",
+    icon: <ReviewIcon />,
   },
 ];
 
@@ -49,7 +60,6 @@ export function ProcessFlow() {
 
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const steps = gsap.utils.toArray<HTMLElement>(".process-flow-step", track);
-    const orbits = gsap.utils.toArray<HTMLElement>(".process-flow-orbit", track);
     const rail = railRef.current;
     const spark = sparkRef.current;
 
@@ -89,30 +99,26 @@ export function ProcessFlow() {
         0.1,
       );
 
+      // One sweep, sequenced into the reveal rather than looping. A perpetual
+      // animation would keep a rAF alive while the section is off-screen, and it
+      // reads as restless next to the rest of the page, which reveals once and
+      // then holds still.
       if (spark && window.matchMedia("(min-width: 810px)").matches) {
-        gsap.to(spark, {
-          keyframes: {
-            "0%": { left: "0%", opacity: 0 },
-            "10%": { opacity: 1 },
-            "90%": { opacity: 1 },
-            "100%": { left: "100%", opacity: 0 },
+        tl.to(
+          spark,
+          {
+            keyframes: {
+              "0%": { left: "0%", opacity: 0 },
+              "12%": { opacity: 1 },
+              "88%": { opacity: 1 },
+              "100%": { left: "100%", opacity: 0 },
+            },
+            duration: 1.6,
+            ease: "none",
           },
-          duration: 3.6,
-          ease: "none",
-          repeat: -1,
-          repeatDelay: 0.5,
-          delay: 1,
-        });
+          0.15,
+        );
       }
-
-      orbits.forEach((orbit, i) => {
-        gsap.to(orbit, {
-          rotation: i % 2 === 0 ? 360 : -360,
-          duration: 14 + i * 3,
-          ease: "none",
-          repeat: -1,
-        });
-      });
     }, section);
 
     return () => ctx.revert();
@@ -128,7 +134,7 @@ export function ProcessFlow() {
         <div className="process-flow-head">
           <p className="eyebrow mb-4">How it works</p>
           <h2 className="display display-lg mb-5">
-            Getting Started with Metablify is Easy
+            Getting Started with Metablify is Simple.
           </h2>
           <p className="lead">
             Bring us your samples, LC/MS data, or a challenging workflow. We
@@ -145,13 +151,7 @@ export function ProcessFlow() {
             {STEPS.map((step) => (
               <li key={step.n} className="process-flow-step">
                 <span className="process-flow-marker">
-                  <span className="process-flow-node">
-                    <span className="process-flow-orbit" aria-hidden="true" />
-                    <span
-                      className="process-flow-node-core"
-                      aria-hidden="true"
-                    />
-                  </span>
+                  <span className="process-flow-badge">{step.icon}</span>
                 </span>
                 <div className="process-flow-copy">
                   <p className="process-flow-num">{step.n}</p>
