@@ -1,7 +1,7 @@
-/* Sample-to-mass-feature journey on the home page. A sticky heading and stage
-   index on the left, the five stages scrolling on the right beside a rail
-   that fills as the reader moves down. Below the tablet breakpoint the aside
-   sits above the stages and the index is hidden. */
+/* Sample-to-mass-feature journey on the home page. The heading and stage
+   index sit on the left and scroll with the five stages on the right, beside
+   a rail that fills as the reader moves down. Below the tablet breakpoint the
+   aside sits above the stages and the index is hidden. */
 
 .journey {
   background: var(--color-grey-soft);
@@ -17,11 +17,6 @@
   .journey-layout {
     grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
     align-items: start;
-  }
-
-  .journey-aside-inner {
-    position: sticky;
-    top: clamp(6rem, 14vh, 9rem);
   }
 }
 

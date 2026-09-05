@@ -25,6 +25,9 @@
 ._*
 *.pem
 
+# local scratch scripts
+/_to_delete/
+
 # debug
 npm-debug.log*
 yarn-debug.log*
