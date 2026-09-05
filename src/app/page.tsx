@@ -5,12 +5,14 @@ import { FeatureCompare } from "@/components/FeatureCompare";
 import { ImagePlaceholder } from "@/components/ImagePlaceholder";
 import { ProcessFlow } from "@/components/ProcessFlow";
 import { Reveal } from "@/components/Reveal";
+import { SampleJourney } from "@/components/SampleJourney";
 import { StaticHero } from "@/components/StaticHero";
 import {
   CodeBracketsIcon,
   PartnershipIcon,
   VialIcon,
 } from "@/components/visuals/ServiceIcons";
+import Image from "next/image";
 import Link from "next/link";
 
 const services = [
@@ -47,6 +49,8 @@ export default function HomePage() {
     <>
       <StaticHero />
 
+      <SampleJourney />
+
       {/* The Venn message the pinned dive used to carry. */}
       <section className="section">
         <Reveal>
@@ -77,9 +81,13 @@ export default function HomePage() {
                 </p>
               </div>
               <div className="work-band-media">
-                <ImagePlaceholder
-                  ratio="3/2"
-                  label="Metablify scientists at work between the LC/MS instrument bay and the data workspace"
+                <Image
+                  className="work-band-photo"
+                  src="/images/team-whiteboard.jpg"
+                  alt="Ivan Baxter, Louis Connelly, and Allen Hubbard working through a chromatogram at a whiteboard"
+                  width={1800}
+                  height={1202}
+                  sizes="(min-width: 1024px) 40rem, 90vw"
                 />
               </div>
             </div>

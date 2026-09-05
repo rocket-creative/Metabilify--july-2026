@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { CopyPlaceholder } from "@/components/ImagePlaceholder";
 import { Reveal } from "@/components/Reveal";
 import { supporters } from "@/lib/site";
@@ -24,6 +25,16 @@ export function SupportersSection() {
                 target="_blank"
                 rel="noopener noreferrer"
               >
+                {supporter.logo ? (
+                  <Image
+                    className="about-wordmark-logo"
+                    src={supporter.logo.src}
+                    alt=""
+                    width={supporter.logo.width}
+                    height={supporter.logo.height}
+                    sizes="18rem"
+                  />
+                ) : null}
                 <p className="about-wordmark-name">{supporter.name}</p>
                 <p className="about-wordmark-cue">
                   {hostLabel(supporter.href)}
@@ -33,6 +44,16 @@ export function SupportersSection() {
               </a>
             ) : (
               <div className="about-wordmark">
+                {supporter.logo ? (
+                  <Image
+                    className="about-wordmark-logo"
+                    src={supporter.logo.src}
+                    alt=""
+                    width={supporter.logo.width}
+                    height={supporter.logo.height}
+                    sizes="18rem"
+                  />
+                ) : null}
                 <p className="about-wordmark-name">{supporter.name}</p>
               </div>
             )}

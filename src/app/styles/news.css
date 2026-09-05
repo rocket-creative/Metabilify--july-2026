@@ -1,42 +1,108 @@
-/* Dated milestone list on /news. Hairline-separated rows with the year set as
-   metadata in the left column, matching the eyebrow language used elsewhere. */
+/* /news: one card per article — image, headline, date, read link. */
 
-.news-list {
-  border-top: 1px solid var(--color-stone);
+.news-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 1.5rem;
 }
 
-.news-item {
+/* One column, newest first. Image beside the copy from the tablet breakpoint. */
+.news-grid {
+  max-width: 60rem;
+}
+
+.news-card {
   display: grid;
-  gap: 0.5rem 2.5rem;
-  padding: clamp(1.5rem, 3vw, 2.25rem) 0;
-  border-bottom: 1px solid var(--color-stone);
+  background: var(--color-white);
+  border: 1px solid var(--color-stone);
+  border-radius: 1.5rem;
+  overflow: hidden;
+  transition: border-color 240ms ease, transform 240ms ease;
+}
+
+.news-card:hover {
+  border-color: rgba(26, 26, 26, 0.35);
+  transform: translateY(-3px);
 }
 
 @media (min-width: 810px) {
-  .news-item {
-    grid-template-columns: 6rem 1fr;
-    align-items: baseline;
+  .news-card {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
   }
 }
 
-.news-year {
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  letter-spacing: 0.12em;
-  color: var(--color-faint);
+.news-card-media .image-placeholder {
+  height: 100%;
+  border-radius: 0;
+  border-width: 0 0 1px;
 }
 
-.news-title {
+@media (min-width: 810px) {
+  .news-card-media .image-placeholder {
+    border-width: 0 1px 0 0;
+  }
+}
+
+.news-card-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: clamp(1.25rem, 2.5vw, 1.75rem);
+}
+
+.news-card-title {
   font-family: var(--font-display);
-  font-size: clamp(1.125rem, 1.8vw, 1.375rem);
-  line-height: 1.35;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  font-size: clamp(1.125rem, 1.6vw, 1.3rem);
+  line-height: 1.3;
   color: var(--color-ink);
-  margin-bottom: 0.5rem;
+  margin: 0 0 0.6rem;
 }
 
-.news-body {
-  max-width: 44rem;
+.news-card-title a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.news-card-title a:hover {
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
+.news-card-date {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-faint);
+  margin: 0 0 0.9rem;
+}
+
+.news-card-excerpt {
   font-size: 0.9375rem;
-  line-height: 1.7;
+  line-height: 1.65;
   color: var(--color-muted);
+  margin: 0 0 1.5rem;
+  max-width: 44rem;
+}
+
+.news-card-link {
+  margin-top: auto;
+  align-self: flex-end;
+}
+
+.news-card-pending {
+  margin: auto 0 0;
+  align-self: flex-end;
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-faint);
+  border: 1px dashed var(--color-stone);
+  border-radius: 999px;
+  padding: 0.35rem 0.75rem;
 }

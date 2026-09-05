@@ -9,11 +9,14 @@ export const siteConfig = {
 } as const;
 
 // No "Home" entry: the logo is the home link, which is where people look for it.
+// Team is its own page, per the 9/1 review: board members, investors, and
+// partners look for it first, and it was buried at the bottom of About.
 export const navLinks = [
   { href: "/platform", label: "Platform" },
   { href: "/applications", label: "Applications" },
   { href: "/work-with-us", label: "Work With Us" },
   { href: "/about", label: "About" },
+  { href: "/team", label: "Team" },
   { href: "/news", label: "News" },
 ] as const;
 
@@ -41,6 +44,7 @@ export const footerGroups = [
     title: "Company",
     links: [
       { href: "/about", label: "About" },
+      { href: "/team", label: "Team" },
       { href: "/news", label: "News" },
       { href: "/discuss", label: "Discuss a Project" },
     ],
@@ -58,6 +62,8 @@ export type Person = {
   role: string;
   expertise: string;
   credentials?: string;
+  /** Headshot under /public/images/team. Omit until one is supplied. */
+  photo?: string;
 };
 
 export const founders: Person[] = [
@@ -65,6 +71,7 @@ export const founders: Person[] = [
     slug: "michael-bielski",
     name: "Michael Bielski",
     role: "Co-Founder, President & CEO",
+    photo: "/images/team/michael-bielski.jpg",
     expertise:
       "Entrepreneurship, company formation, commercialization and business development",
   },
@@ -72,6 +79,7 @@ export const founders: Person[] = [
     slug: "ivan-baxter",
     name: "Ivan Baxter, PhD",
     role: "Co-Founder & Chief Science Officer",
+    photo: "/images/team/ivan-baxter.png",
     expertise:
       "Scientific leadership, large-scale biology, LC/MS and metabolomics",
     credentials:
@@ -81,6 +89,7 @@ export const founders: Person[] = [
     slug: "allen-hubbard",
     name: "Allen Hubbard, PhD",
     role: "Co-Founder & Chief Technology Officer",
+    photo: "/images/team/allen-hubbard.png",
     expertise:
       "Computational science, bioinformatics and platform development",
     credentials:
@@ -90,6 +99,7 @@ export const founders: Person[] = [
     slug: "louis-connelly",
     name: "Louis Connelly",
     role: "Co-Founder & Lead Programmer",
+    photo: "/images/team/louis-connelly.png",
     expertise:
       "Scientific computing, programming and technology development",
     credentials:
@@ -116,18 +126,53 @@ export const scientificFounders = [
 ];
 
 /**
- * Investors and supporters named in the About copy draft. QRM Capital has no
- * confirmed URL yet, so it renders as an unlinked tile.
+ * The /team page. Order is the CEO's: him, then the scientific founders. One
+ * more name (Thomas Laurita) is pending his confirmation, so it renders as an
+ * open slot rather than a person.
  */
-export const supporters = [
+export const teamPage = [
+  bySlug("michael-bielski"),
+  bySlug("ivan-baxter"),
+  bySlug("allen-hubbard"),
+  bySlug("louis-connelly"),
+];
+
+export const teamPending = ["Thomas Laurita — confirm role and inclusion"] as const;
+
+/** Building the advisory board is on the to-do list; nothing to show yet. */
+export const advisors: Person[] = [];
+
+/**
+ * Investors and supporters named in the About copy draft. QRM Capital has no
+ * confirmed URL yet, so it renders as an unlinked tile. Also the Partners
+ * section on /team.
+ */
+export type Supporter = {
+  name: string;
+  href: string | null;
+  /** Grey logo under /public/images/partners, with its intrinsic size. */
+  logo?: { src: string; width: number; height: number };
+};
+
+export const supporters: Supporter[] = [
   {
     name: "Donald Danforth Plant Science Center",
     href: "https://www.danforthcenter.org/",
+    logo: { src: "/images/partners/danforth-center.png", width: 700, height: 89 },
   },
   {
     name: "Danforth Technology Company",
     href: "https://danforthtechnology.com/",
+    logo: {
+      src: "/images/partners/danforth-technology-company.png",
+      width: 500,
+      height: 156,
+    },
   },
-  { name: "QRM Capital", href: null },
   { name: "Arch Grants", href: "https://archgrants.org/" },
-] as const;
+  {
+    name: "QRM Capital",
+    href: null,
+    logo: { src: "/images/partners/qrm-capital.png", width: 500, height: 192 },
+  },
+];

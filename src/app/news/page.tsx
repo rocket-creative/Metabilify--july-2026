@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Button } from "@/components/Button";
+import { ImagePlaceholder } from "@/components/ImagePlaceholder";
 import { BreadcrumbJsonLd } from "@/components/JsonLd";
 import { PageHero } from "@/components/PageHero";
 import { Reveal } from "@/components/Reveal";
@@ -12,21 +12,12 @@ export const metadata: Metadata = {
   alternates: { canonical: "/news" },
 };
 
-const topics = [
-  {
-    title: "Platform milestones",
-    body: "Advances in detection, alignment, and quantification across LC/MS data.",
-  },
-  {
-    title: "Applications",
-    body: "New work in metabolomics, proteomics, and beyond.",
-  },
-  {
-    title: "Collaborations",
-    body: "Partnerships putting Metablify to work on problems worth solving.",
-  },
-];
-
+/**
+ * One card per article: image, headline, date, read link — the layout the CEO
+ * pointed at on the Spearhead site. Links and dates come from the client;
+ * until then a card shows its year and a "link needed" note rather than a
+ * made-up URL.
+ */
 export default function NewsPage() {
   return (
     <>
@@ -38,63 +29,50 @@ export default function NewsPage() {
       />
 
       <PageHero
-        eyebrow="News"
-        title="Updates from Metablify"
-        lead="Milestones from the company so far, and the kinds of updates we will publish here."
+        eyebrow="Company updates"
+        title="News & Insights"
+        lead="Milestones, recognition, and announcements from Metablify."
       />
 
-      <section className="section section-sage">
-        <Reveal>
-          <p className="eyebrow mb-4">Milestones</p>
-          <h2 className="display display-md mb-8 max-w-2xl md:mb-12">
-            Where Metablify has been recognized
-          </h2>
-        </Reveal>
-        <ol className="news-list">
-          {newsItems.map((item, i) => (
-            <Reveal key={item.slug} delay={i * 70}>
-              <li className="news-item">
-                <p className="news-year">{item.year}</p>
-                <div>
-                  <h3 className="news-title">{item.title}</h3>
-                  <p className="news-body">{item.body}</p>
-                </div>
-              </li>
-            </Reveal>
-          ))}
-        </ol>
-      </section>
-
-      {}
       <section className="section">
-        <Reveal>
-          <p className="eyebrow mb-4">What to expect</p>
-          <h2 className="display display-md mb-8 max-w-2xl md:mb-12">
-            The kinds of updates we will share
-          </h2>
-        </Reveal>
-        <div className="grid gap-6 md:grid-cols-3">
-          {topics.map((topic, i) => (
-            <Reveal key={topic.title} delay={i * 70}>
-              <div className="card flex h-full flex-col">
-                <h3
-                  className="mb-3 text-lg text-ink"
-                  style={{ fontFamily: "var(--font-display)" }}
-                >
-                  {topic.title}
-                </h3>
-                <p className="text-sm leading-relaxed text-muted">
-                  {topic.body}
-                </p>
-              </div>
+        <div className="news-grid">
+          {newsItems.map((item, i) => (
+            <Reveal key={item.slug} delay={i * 80}>
+              <article className="news-card">
+                <div className="news-card-media">
+                  <ImagePlaceholder ratio="3/2" label={item.image} />
+                </div>
+                <div className="news-card-body">
+                  <h2 className="news-card-title">
+                    {item.href ? (
+                      <a href={item.href} target="_blank" rel="noopener noreferrer">
+                        {item.title}
+                      </a>
+                    ) : (
+                      item.title
+                    )}
+                  </h2>
+                  <p className="news-card-date">{item.date ?? item.year}</p>
+                  <p className="news-card-excerpt">{item.body}</p>
+                  {item.href ? (
+                    <a
+                      className="arrow-link news-card-link"
+                      href={item.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Read article <span className="arrow-ne">↗</span>
+                      <span className="sr-only"> (opens in a new tab)</span>
+                    </a>
+                  ) : (
+                    <p className="news-card-pending">Article link — to be added</p>
+                  )}
+                </div>
+              </article>
             </Reveal>
           ))}
         </div>
-        <Reveal delay={210}>
-          <div className="mt-10 text-center">
-            <Button href="/discuss">Discuss a Project</Button>
-          </div>
-        </Reveal>
+
       </section>
     </>
   );

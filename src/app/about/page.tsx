@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { BreadcrumbJsonLd } from "@/components/JsonLd";
 import { AboutHero } from "@/components/about/AboutHero";
-import { AdvisorsSection } from "@/components/about/AdvisorsSection";
 import { ArchGrants } from "@/components/about/ArchGrants";
 import { BigIdeas } from "@/components/about/BigIdeas";
 import { CapitalBand } from "@/components/about/CapitalBand";
@@ -9,11 +8,11 @@ import { ClosingBand } from "@/components/about/ClosingBand";
 import { DanforthTechnology } from "@/components/about/DanforthTechnology";
 import { FoundersGrid } from "@/components/about/FoundersGrid";
 import { JourneyTimeline } from "@/components/about/JourneyTimeline";
-import { PeopleSection } from "@/components/about/PeopleSection";
 import { ScaleChallenge } from "@/components/about/ScaleChallenge";
 import { ScientificInsight } from "@/components/about/ScientificInsight";
 import { StartupToWatch } from "@/components/about/StartupToWatch";
 import { SupportersSection } from "@/components/about/SupportersSection";
+import { TeamBand } from "@/components/about/TeamBand";
 import { TodayPlatform } from "@/components/about/TodayPlatform";
 
 export const metadata: Metadata = {
@@ -49,8 +48,7 @@ export default function AboutPage() {
       <StartupToWatch />
       <JourneyTimeline />
       <TodayPlatform />
-      <PeopleSection />
-      <AdvisorsSection />
+      <TeamBand />
       <SupportersSection />
       <ClosingBand />
     </>

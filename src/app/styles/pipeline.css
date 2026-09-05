@@ -1,0 +1,179 @@
+/* Platform page: Align → Pool → Amplify feeding one output panel. */
+
+.pipeline-stages {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 1.25rem;
+}
+
+@media (min-width: 810px) {
+  .pipeline-stages {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+}
+
+.pipeline-stage-wrap {
+  height: 100%;
+}
+
+.pipeline-stage {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  background: var(--color-white);
+  border: 1px solid var(--color-stone);
+  border-radius: 1.5rem;
+  padding: clamp(1.5rem, 3vw, 2.25rem);
+}
+
+.pipeline-badge {
+  display: grid;
+  place-items: center;
+  width: clamp(3rem, 5vw, 4rem);
+  height: clamp(3rem, 5vw, 4rem);
+  border-radius: 999px;
+  background: var(--color-forest);
+  color: var(--color-white);
+  margin-bottom: 1rem;
+}
+
+.pipeline-badge svg {
+  width: 45%;
+  height: 45%;
+}
+
+.pipeline-num {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  color: var(--color-forest);
+  margin: 0;
+}
+
+.pipeline-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  line-height: 1.2;
+  font-size: clamp(1.35rem, 2vw, 1.75rem);
+  color: var(--color-ink);
+  margin: 0 0 0.5rem;
+}
+
+/* Three short vertical lines from the stages into the output, desktop only. */
+.pipeline-feed {
+  display: none;
+}
+
+@media (min-width: 810px) {
+  .pipeline-feed {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    height: 2.5rem;
+  }
+
+  .pipeline-feed-line {
+    justify-self: center;
+    width: 1.5px;
+    height: 100%;
+    background: var(--color-forest);
+    opacity: 0.4;
+  }
+}
+
+.pipeline-output {
+  display: grid;
+  gap: 1.5rem;
+  background: var(--color-forest);
+  color: var(--color-white);
+  border-radius: 1.5rem;
+  padding: clamp(1.5rem, 3vw, 2.5rem);
+  margin-top: 1.25rem;
+}
+
+@media (min-width: 810px) {
+  .pipeline-output {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    align-items: center;
+    gap: clamp(1.5rem, 4vw, 3rem);
+    margin-top: 0;
+  }
+}
+
+.pipeline-output .eyebrow {
+  color: var(--color-lime);
+}
+
+.pipeline-output-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  line-height: 1.2;
+  font-size: clamp(1.35rem, 2.2vw, 1.9rem);
+  color: var(--color-white);
+  margin: 0 0 0.75rem;
+}
+
+.pipeline-output-body {
+  margin: 0 0 1.25rem;
+  max-width: 30rem;
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.pipeline-output .copy-placeholder {
+  background: transparent;
+  color: rgba(255, 255, 255, 0.72);
+  border-color: rgba(255, 255, 255, 0.35);
+}
+
+.pipeline-output .copy-placeholder-tag {
+  background: rgba(255, 255, 255, 0.14);
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.pipeline-output-visual {
+  color: var(--color-white);
+}
+
+.pipeline-output-note {
+  margin: 0;
+  max-width: 30rem;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* The chart has a white ground, so it sits in a white frame on the band. */
+.pipeline-output-figure {
+  margin: 0;
+  padding: clamp(0.75rem, 1.5vw, 1.25rem);
+  background: var(--color-white);
+  border-radius: 1rem;
+}
+
+.pipeline-output-figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 0 !important;
+}
+
+.heatmap {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.heatmap-label {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0.7;
+}

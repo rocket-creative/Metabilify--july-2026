@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ImagePlaceholder } from "./ImagePlaceholder";
 import { Reveal } from "./Reveal";
 
 type Application = {
@@ -7,7 +8,8 @@ type Application = {
   name: string;
   body: string;
   link: string;
-  visual: React.ReactNode;
+  /** Art brief. The CEO wants a real image here, confirmed with the inventors. */
+  image: string;
 };
 
 const APPLICATIONS: Application[] = [
@@ -17,7 +19,7 @@ const APPLICATIONS: Application[] = [
     name: "Metabolomics",
     body: "Turn complex untargeted LC/MS datasets into cleaner, aligned, and quantified mass-feature results.",
     link: "Explore Metabolomics",
-    visual: <MetaboliteField />,
+    image: "Metabolomics — small-molecule LC/MS: sample vials on an autosampler beside an untargeted chromatogram. Confirm with inventors.",
   },
   {
     index: "02",
@@ -25,7 +27,7 @@ const APPLICATIONS: Application[] = [
     name: "Proteomics",
     body: "Reveal and quantify peptide mass features across complex LC/MS datasets with a workflow built for scale, alignment, and signal clarity.",
     link: "Explore Proteomics",
-    visual: <PeptideChain />,
+    image: "Proteomics — peptide LC/MS: digested protein sample and an aligned peptide feature map. Confirm with inventors.",
   },
 ];
 
@@ -51,9 +53,11 @@ export function ApplicationsCarousel() {
           {APPLICATIONS.map((app, i) => (
             <Reveal key={app.href} delay={i * 120} className="h-full">
               <Link href={app.href} className="card card-link media-card group">
-                <div className="media-card-media media-card-media--wide">
-                  {app.visual}
-                </div>
+                <ImagePlaceholder
+                  ratio="16/9"
+                  label={app.image}
+                  className="media-card-media media-card-media--wide"
+                />
                 <div className="media-card-body">
                   <span className="media-card-index">{app.index}</span>
                   <h3
@@ -78,136 +82,5 @@ export function ApplicationsCarousel() {
         </div>
       </div>
     </section>
-  );
-}
-
-function MetaboliteField() {
-  const points: [number, number, number, "f" | "i" | "l"][] = [
-    [40, 60, 3, "f"],
-    [70, 120, 4, "f"],
-    [95, 45, 2.5, "f"],
-    [120, 150, 3, "f"],
-    [150, 90, 5, "i"],
-    [175, 135, 3, "f"],
-    [190, 55, 3.5, "f"],
-    [210, 110, 4.5, "l"],
-    [240, 75, 3, "f"],
-    [255, 160, 2.5, "f"],
-    [275, 100, 5, "i"],
-    [300, 140, 3, "f"],
-    [320, 60, 3.5, "f"],
-    [345, 120, 4.5, "l"],
-    [360, 92, 3, "f"],
-    [130, 38, 2.5, "f"],
-    [205, 178, 3, "f"],
-    [285, 44, 3, "f"],
-    [58, 176, 2.5, "f"],
-    [332, 178, 3, "f"],
-    [158, 52, 3, "i"],
-    [95, 96, 3, "f"],
-  ];
-
-  const fill = (tone: "f" | "i" | "l") =>
-    tone === "i"
-      ? "var(--color-ink)"
-      : tone === "l"
-        ? "var(--color-lime)"
-        : "#b6b6b6";
-
-  return (
-    <svg
-      viewBox="0 0 400 225"
-      className="absolute inset-0 h-full w-full"
-      preserveAspectRatio="xMidYMid slice"
-      role="presentation"
-    >
-      {points.map(([x, y, r, tone], i) => (
-        <circle
-          key={i}
-          cx={x}
-          cy={y}
-          r={r}
-          fill={fill(tone)}
-          opacity={tone === "f" ? 0.65 : 1}
-        />
-      ))}
-      <text
-        x="24"
-        y="30"
-        fill="var(--color-faint)"
-        fontFamily="var(--font-mono)"
-        fontSize="10"
-        letterSpacing="2"
-      >
-        Metabolomics
-      </text>
-    </svg>
-  );
-}
-
-function PeptideChain() {
-  const chain: [number, number][] = [
-    [36, 150],
-    [76, 108],
-    [116, 142],
-    [156, 96],
-    [196, 132],
-    [236, 88],
-    [276, 126],
-    [316, 84],
-    [360, 118],
-  ];
-  const ghost: [number, number][] = chain.map(([x, y]) => [x + 6, y + 40]);
-  const highlight = new Set([3, 6]);
-  const toPoints = (pts: [number, number][]) =>
-    pts.map(([x, y]) => `${x},${y}`).join(" ");
-
-  return (
-    <svg
-      viewBox="0 0 400 225"
-      className="absolute inset-0 h-full w-full"
-      preserveAspectRatio="xMidYMid slice"
-      role="presentation"
-    >
-      <polyline
-        points={toPoints(ghost)}
-        fill="none"
-        stroke="#c4c4c4"
-        strokeWidth="2"
-        strokeOpacity="0.55"
-      />
-      {ghost.map(([x, y], i) => (
-        <circle key={`g-${i}`} cx={x} cy={y} r={3.5} fill="#c4c4c4" />
-      ))}
-
-      <polyline
-        points={toPoints(chain)}
-        fill="none"
-        stroke="var(--color-ink)"
-        strokeWidth="2"
-        strokeOpacity="0.4"
-      />
-      {chain.map(([x, y], i) => (
-        <circle
-          key={i}
-          cx={x}
-          cy={y}
-          r={highlight.has(i) ? 7 : 5}
-          fill={highlight.has(i) ? "var(--color-lime)" : "#ffffff"}
-          stroke="var(--color-ink)"
-          strokeWidth="2"
-        />
-      ))}
-      <text
-        x="24"
-        y="30"
-        fill="var(--color-faint)"
-        fontFamily="var(--font-mono)"
-        fontSize="10"
-        letterSpacing="2"
-      >
-        Proteomics
-      </text>
-    </svg>
   );
 }

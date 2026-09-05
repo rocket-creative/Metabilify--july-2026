@@ -3,58 +3,24 @@ import Link from "next/link";
 import { Button } from "@/components/Button";
 import { BreadcrumbJsonLd } from "@/components/JsonLd";
 import { PageHero, SectionHeading } from "@/components/PageHero";
+import { PlatformPipeline } from "@/components/PlatformPipeline";
 import { Reveal } from "@/components/Reveal";
-import { ChromatogramVisual } from "@/components/ChromatogramVisual";
 import { FeatureCompare } from "@/components/FeatureCompare";
+
 export const metadata: Metadata = {
   title: "The Metablify Platform",
   description:
-    "Where First Principles Find and Amplify Real Mass Features. Metablify puts the law of large numbers to work across complex LC/MS datasets.",
+    "Where first principles and AI find and amplify real mass features. Metablify aligns, pools, and amplifies signal across complex LC/MS datasets.",
   alternates: { canonical: "/platform" },
 };
 
-const principles = [
-  {
-    n: "01",
-    title: "Detect",
-    body: "Surface real mass features buried in background signal that legacy workflows leave behind.",
-  },
-  {
-    n: "02",
-    title: "Amplify",
-    body: "Put the law of large numbers to work, strengthening consistent signal and suppressing random noise.",
-  },
-  {
-    n: "03",
-    title: "Align",
-    body: "Resolve and match mass features across large sample sets so cohorts stay comparable.",
-  },
-  {
-    n: "04",
-    title: "Quantify",
-    body: "Produce cleaner, higher confidence outputs that are ready for downstream analysis.",
-  },
-];
-
-const capabilities = [
-  {
-    title: "Scale without noise tax",
-    body: "Process large, complex LC/MS cohorts while keeping signal clarity intact across every sample.",
-  },
-  {
-    title: "First principles foundation",
-    body: "Detection is grounded in the physics of the measurement, not tuned to a single instrument or study.",
-  },
-  {
-    title: "Cross workflow layer",
-    body: "Metablify works at the mass feature layer shared across metabolomics and proteomics workflows.",
-  },
-  {
-    title: "Less manual review",
-    body: "Cleaner outputs reduce the hours spent curating peaks, so teams move faster from data to discovery.",
-  },
-];
-
+/**
+ * Structure per the 9/1 review: hero, then the Align → Pool → Amplify →
+ * output section, then the Venn diagram, then the omics. The first-principles
+ * band and the "capabilities" cards were removed because their copy was not
+ * the CEO's and he could not vouch for it; they come back when the technical
+ * team writes them.
+ */
 export default function PlatformPage() {
   return (
     <>
@@ -67,8 +33,8 @@ export default function PlatformPage() {
 
       <PageHero
         eyebrow="The Metablify Platform"
-        title="Where First Principles Find and Amplify Real Mass Features"
-        lead="Metablify puts the law of large numbers to work, amplifying consistent signals to detect, align, and quantify mass features across complex LC/MS datasets."
+        title="Where First Principles and AI Find and Amplify Real Mass Features"
+        lead="Metablify combines the first principles of physics with AI to align, pool, and amplify consistent signal across complex LC/MS datasets, so real mass features are detected, resolved, and quantified."
       >
         <div className="flex flex-wrap gap-4">
           <Button href="/discuss">Discuss a Project</Button>
@@ -78,76 +44,8 @@ export default function PlatformPage() {
         </div>
       </PageHero>
 
-      {}
-      <section className="section section-sage">
-        <div className="grid items-center gap-8 md:gap-10 lg:grid-cols-12">
-          <div className="lg:col-span-6">
-            <Reveal>
-              <SectionHeading
-                eyebrow="First principles"
-                title="Built on the first principles of physics"
-                lead="Metablify is an LC/MS platform designed to extract signal from noise at the mass feature layer shared across workflows. Consistent signals are amplified. Spurious noise is suppressed."
-              />
-              <ul className="space-y-4 text-muted">
-                {[
-                  "Detect mass features other workflows miss",
-                  "Align features across large, noisy sample sets",
-                  "Quantify with cleaner, higher confidence outputs",
-                ].map((item) => (
-                  <li key={item} className="flex gap-3">
-                    <span
-                      className="mt-2 h-2 w-2 shrink-0 bg-ink"
-                      aria-hidden="true"
-                    />
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </Reveal>
-          </div>
-          <div className="lg:col-span-6">
-            <Reveal delay={100}>
-              <ChromatogramVisual />
-            </Reveal>
-          </div>
-        </div>
-      </section>
+      <PlatformPipeline />
 
-      {}
-      <section className="section-forest section-wide band-y">
-        <div className="gutter-x mx-auto max-w-[80rem]">
-          <Reveal>
-            <p className="eyebrow mb-4">How it works</p>
-            <h2 className="display display-lg mb-4 max-w-2xl">
-              From raw signal to results you can trust
-            </h2>
-            <p className="lead mb-8 md:mb-14">
-              Every dataset moves through four stages. Each one is grounded in the
-              physics of the measurement rather than tuned to a single instrument.
-            </p>
-          </Reveal>
-
-          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
-            {principles.map((p, i) => (
-              <Reveal key={p.n} delay={i * 90}>
-                <div className="capability">
-                  <p className="eyebrow mb-4" style={{ color: "var(--color-lime)" }}>
-                    {p.n}
-                  </p>
-                  <h3 className="capability-title mb-3 text-xl md:text-2xl">
-                    {p.title}
-                  </h3>
-                  <p className="capability-body text-sm leading-relaxed md:text-base">
-                    {p.body}
-                  </p>
-                </div>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {}
       <section className="section">
         <Reveal>
           <SectionHeading
@@ -159,33 +57,7 @@ export default function PlatformPage() {
         <FeatureCompare />
       </section>
 
-      {}
       <section className="section section-sage">
-        <Reveal>
-          <SectionHeading
-            eyebrow="Capabilities"
-            title="Engineered for large, noisy datasets"
-          />
-        </Reveal>
-        <div className="grid gap-5 md:grid-cols-2">
-          {capabilities.map((cap, i) => (
-            <Reveal key={cap.title} delay={i * 70}>
-              <div className="card flex h-full flex-col">
-                <h3
-                  className="mb-3 text-xl text-ink"
-                  style={{ fontFamily: "var(--font-display)" }}
-                >
-                  {cap.title}
-                </h3>
-                <p className="text-sm leading-relaxed text-muted">{cap.body}</p>
-              </div>
-            </Reveal>
-          ))}
-        </div>
-      </section>
-
-      {}
-      <section className="section">
         <Reveal>
           <SectionHeading
             eyebrow="Outcome"
@@ -229,7 +101,6 @@ export default function PlatformPage() {
         </div>
       </section>
 
-      {}
       <section className="section-forest section-wide band-y text-center">
         <Reveal>
           <h2 className="display display-lg mx-auto mb-5 max-w-3xl text-white">

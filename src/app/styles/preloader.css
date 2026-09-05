@@ -11,7 +11,27 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1rem;
+  gap: 1.25rem;
+}
+
+/* The noise-to-peak drawing. Grey noise, one lime-deep real feature. */
+.preloader-signal {
+  width: clamp(12rem, 30vw, 17rem);
+  height: auto;
+  color: var(--color-faint);
+  overflow: visible;
+}
+
+.preloader-real {
+  stroke: var(--color-lime-deep);
+  stroke-width: 2.25;
+}
+
+.preloader-brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
 }
 
 /* Sized here because the global img rule is unlayered and wins over utilities. */
@@ -20,23 +40,8 @@
   height: auto;
 }
 
-/* Matches the track below it, so the three elements share one optical width. */
 .preloader-word img {
   width: 8.75rem;
-}
-
-.preloader-track {
-  width: 140px;
-  height: 2px;
-  background: #e6e6e6;
-  overflow: hidden;
-}
-
-.preloader-bar {
-  height: 100%;
-  width: 100%;
-  background: var(--color-ink);
-  transform-origin: left center;
 }
 
 .grain-overlay {

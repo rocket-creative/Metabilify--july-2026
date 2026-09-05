@@ -3,7 +3,10 @@ import { Button } from "./Button";
 import { ImagePlaceholder } from "./ImagePlaceholder";
 
 const credibility = [
-  "Developed at the Donald Danforth Plant Science Center",
+  // Wording pending the CEO: DTC spun the company out and needs the credit
+  // alongside the Center. Both names stay on the page as text for now and
+  // become live links once the partner pages that link back exist.
+  "A Danforth Technology Company spinout · Developed at the Donald Danforth Plant Science Center",
   "Metabolomics · Proteomics · Multi-omics",
 ];
 

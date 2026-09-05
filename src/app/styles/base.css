@@ -29,6 +29,15 @@
   --color-forest: #123227;
   --color-forest-deep: #0d2620;
   --color-lime: #c4e86b;
+  /* Lime that holds up on white — diagrams on light backgrounds. */
+  --color-lime-deep: #7fae1e;
+  /* Venn diagram sets: sky for Metablify, a yellow for legacy workflows. */
+  --color-sky: #6aa6d6;
+  --color-sky-soft: #dceaf6;
+  --color-sky-ink: #2f6f9f;
+  --color-legacy: #d7cc4a;
+  --color-legacy-soft: #f3eeba;
+  --color-legacy-ink: #8a8320;
   --color-lime-soft: #e3f2b4;
   --color-hero-green: #eef4e6;
 

@@ -1,0 +1,180 @@
+/* Sample-to-mass-feature journey on the home page. A sticky heading and stage
+   index on the left, the five stages scrolling on the right beside a rail
+   that fills as the reader moves down. Below the tablet breakpoint the aside
+   sits above the stages and the index is hidden. */
+
+.journey {
+  background: var(--color-grey-soft);
+  border-block: 1px solid var(--color-stone);
+}
+
+.journey-layout {
+  display: grid;
+  gap: clamp(2.5rem, 5vw, 4rem);
+}
+
+@media (min-width: 1024px) {
+  .journey-layout {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    align-items: start;
+  }
+
+  .journey-aside-inner {
+    position: sticky;
+    top: clamp(6rem, 14vh, 9rem);
+  }
+}
+
+.journey-index {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: none;
+  border-top: 1px solid var(--color-stone);
+}
+
+@media (min-width: 1024px) {
+  .journey-index {
+    display: block;
+  }
+}
+
+.journey-index-item {
+  display: flex;
+  gap: 1rem;
+  align-items: baseline;
+  padding: 0.85rem 0;
+  border-bottom: 1px solid var(--color-stone);
+  color: var(--color-faint);
+  transition: color 240ms ease;
+}
+
+.journey-index-item.is-active {
+  color: var(--color-ink);
+}
+
+.journey-index-num {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  flex: none;
+  width: 2rem;
+}
+
+.journey-index-item.is-active .journey-index-num {
+  color: var(--color-forest);
+}
+
+.journey-index-title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1rem;
+  letter-spacing: -0.01em;
+}
+
+.journey-stages-wrap {
+  position: relative;
+  padding-left: 2.25rem;
+}
+
+.journey-rail {
+  position: absolute;
+  left: 0.5rem;
+  top: 1rem;
+  bottom: 1rem;
+  width: 2px;
+  background: var(--color-stone);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.journey-rail-fill {
+  position: absolute;
+  inset: 0;
+  background: var(--color-forest);
+  transform-origin: top center;
+}
+
+.journey-stages {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: clamp(2.5rem, 5vw, 4.5rem);
+}
+
+.journey-stage {
+  position: relative;
+  display: grid;
+  gap: 1.25rem;
+}
+
+/* The dot on the rail for this stage. */
+.journey-stage::before {
+  content: "";
+  position: absolute;
+  left: calc(-2.25rem + 0.5rem + 1px - 0.4rem);
+  top: 1.1rem;
+  width: 0.8rem;
+  height: 0.8rem;
+  border-radius: 999px;
+  background: var(--color-white);
+  border: 1.75px solid var(--color-stone);
+  transition: border-color 240ms ease, background 240ms ease;
+}
+
+.journey-stage.is-active::before {
+  border-color: var(--color-forest);
+  background: var(--color-forest);
+}
+
+.journey-visual {
+  color: var(--color-forest);
+  background: var(--color-white);
+  border: 1px solid var(--color-stone);
+  border-radius: 1.5rem;
+  padding: clamp(1rem, 2vw, 1.5rem);
+  will-change: transform;
+}
+
+.journey-visual svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 480 / 280;
+  overflow: visible;
+}
+
+.journey-svg-label {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+
+.journey-num {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  color: var(--color-forest);
+  margin: 0 0 0.5rem;
+}
+
+.journey-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  line-height: 1.2;
+  font-size: clamp(1.25rem, 1.9vw, 1.6rem);
+  color: var(--color-ink);
+  margin: 0 0 0.6rem;
+}
+
+.journey-body {
+  margin: 0;
+  max-width: 34rem;
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--color-muted);
+}
