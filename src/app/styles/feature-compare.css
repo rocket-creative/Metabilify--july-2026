@@ -38,11 +38,11 @@
 }
 
 .fc-set-label--real {
-  fill: var(--color-sky-ink);
+  fill: var(--color-forest);
 }
 
 .fc-set-label--legacy {
-  fill: var(--color-legacy-ink);
+  fill: var(--color-muted);
 }
 
 .fc-leader {
@@ -54,12 +54,12 @@
 
 .fc-leader-group--real .fc-leader,
 .fc-leader-group--real .fc-anchor {
-  stroke: var(--color-sky-ink);
+  stroke: var(--color-forest);
 }
 
 .fc-leader-group--legacy .fc-leader,
 .fc-leader-group--legacy .fc-anchor {
-  stroke: var(--color-legacy-ink);
+  stroke: var(--color-muted);
 }
 
 .fc-anchor {
@@ -68,11 +68,11 @@
 }
 
 .fc-leader-group--real .fc-anchor {
-  fill: var(--color-sky-ink);
+  fill: var(--color-forest);
 }
 
 .fc-leader-group--legacy .fc-anchor {
-  fill: var(--color-legacy-ink);
+  fill: var(--color-muted);
 }
 
 /* Callouts. Stacked with a colour swatch below the tablet breakpoint, where
@@ -109,11 +109,11 @@
 }
 
 .fc-callout--real .fc-swatch {
-  background: var(--color-sky);
+  background: var(--color-forest);
 }
 
 .fc-callout--legacy .fc-swatch {
-  background: var(--color-legacy);
+  background: var(--color-faint);
 }
 
 @media (max-width: 809px) {

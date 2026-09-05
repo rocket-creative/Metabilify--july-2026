@@ -63,7 +63,7 @@ export default async function TeamMemberPage({
             <div className="team-bio-media">
               {person.photo ? (
                 <Image
-                  className="team-photo"
+                  className="team-photo photo"
                   src={person.photo}
                   alt={person.name}
                   width={600}

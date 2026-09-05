@@ -8,7 +8,7 @@ function Icon({ children }: { children: React.ReactNode }) {
       viewBox="0 0 64 64"
       fill="none"
       stroke="currentColor"
-      strokeWidth="1.5"
+      strokeWidth="1.75"
       strokeLinecap="round"
       strokeLinejoin="round"
       aria-hidden="true"
@@ -18,44 +18,43 @@ function Icon({ children }: { children: React.ReactNode }) {
   );
 }
 
-/** Three traces whose peaks line up on one vertical guide. */
+/** Two traces whose peaks sit on one vertical guide. */
 export function AlignIcon() {
   return (
     <Icon>
-      <path d="M32 8v48" strokeDasharray="2 4" opacity="0.6" />
-      <path d="M10 22h14l4-8 4 8h4l4-6 4 6h10" />
-      <path d="M10 36h12l6-8 4 8h4l4-6 4 6h10" />
-      <path d="M10 50h13l5-9 4 9h4l4-6 4 6h10" />
+      <path d="M32 6v52" strokeDasharray="3 4" opacity="0.6" />
+      <path d="M8 26h12c4 0 6-12 12-12s8 12 12 12h12" />
+      <path d="M8 48h12c4 0 6-12 12-12s8 12 12 12h12" />
     </Icon>
   );
 }
 
-/** Several small signals gathered into one. */
+/** Four signals gathered into one. */
 export function PoolIcon() {
   return (
     <Icon>
-      <circle cx="16" cy="16" r="4" />
-      <circle cx="48" cy="16" r="4" />
-      <circle cx="12" cy="36" r="4" />
-      <circle cx="52" cy="36" r="4" />
-      <circle cx="32" cy="46" r="9" />
-      <path d="M19 19l7 15" />
-      <path d="M45 19l-7 15" />
-      <path d="M16 37l8 5" />
-      <path d="M48 37l-8 5" />
+      <circle cx="12" cy="14" r="4" />
+      <circle cx="52" cy="14" r="4" />
+      <circle cx="12" cy="34" r="4" />
+      <circle cx="52" cy="34" r="4" />
+      <circle cx="32" cy="48" r="8" />
+      <path d="M15 17l12 24" />
+      <path d="M49 17l-12 24" />
+      <path d="M16 35l9 9" />
+      <path d="M48 35l-9 9" />
     </Icon>
   );
 }
 
-/** A small peak growing into a tall one. */
+/** A small peak becoming a tall one. */
 export function AmplifyIcon() {
   return (
     <Icon>
-      <path d="M8 50h48" />
-      <path d="M10 50c4 0 5-10 8-10s4 10 8 10" opacity="0.55" />
-      <path d="M28 50c5 0 7-34 10-34s5 34 10 34" />
-      <path d="M38 8v6" />
-      <path d="M35 11l3-3 3 3" />
+      <path d="M6 52h52" />
+      <path d="M8 52c5 0 6-12 10-12s5 12 10 12" opacity="0.5" />
+      <path d="M28 52c6 0 8-38 12-38s6 38 12 38" />
+      <path d="M40 6v8" />
+      <path d="M36 10l4-4 4 4" />
     </Icon>
   );
 }

@@ -31,13 +31,9 @@
   --color-lime: #c4e86b;
   /* Lime that holds up on white — diagrams on light backgrounds. */
   --color-lime-deep: #7fae1e;
-  /* Venn diagram sets: sky for Metablify, a yellow for legacy workflows. */
-  --color-sky: #6aa6d6;
-  --color-sky-soft: #dceaf6;
-  --color-sky-ink: #2f6f9f;
-  --color-legacy: #d7cc4a;
-  --color-legacy-soft: #f3eeba;
-  --color-legacy-ink: #8a8320;
+  /* Venn diagram: Metablify is forest on a sage wash, legacy is neutral. */
+  --color-sage-mid: #cfe0c6;
+  --color-forest-soft: #3d6b57;
   --color-lime-soft: #e3f2b4;
   --color-hero-green: #eef4e6;
 
@@ -173,4 +169,13 @@ img.no-round,
   background: var(--color-white);
   min-height: 100vh;
   box-shadow: none;
+}
+
+/* One look for every photograph on the site: same corners, a hairline, and
+   the colour pulled back a touch so stock, headshots and the team photo read
+   as one set rather than five different shoots. */
+.photo {
+  border-radius: 1.5rem;
+  border: 1px solid var(--color-stone);
+  filter: saturate(0.82) contrast(1.03);
 }

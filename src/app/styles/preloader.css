@@ -16,7 +16,7 @@
 
 /* The noise-to-peak drawing. Grey noise, one lime-deep real feature. */
 .preloader-signal {
-  width: clamp(12rem, 30vw, 17rem);
+  width: clamp(16rem, 36vw, 24rem);
   height: auto;
   color: var(--color-faint);
   overflow: visible;
@@ -24,7 +24,8 @@
 
 .preloader-real {
   stroke: var(--color-lime-deep);
-  stroke-width: 2.25;
+  stroke-width: 2.5;
+  filter: drop-shadow(0 0 6px rgba(127, 174, 30, 0.55));
 }
 
 .preloader-brand {

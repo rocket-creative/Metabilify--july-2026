@@ -1,7 +1,7 @@
 .process-flow {
   /* Shared by the badge, the rail offset and the mobile connector, so the three
      stay locked together when the clamp resolves at a different viewport. */
-  --process-badge: clamp(3rem, 5vw, 4rem);
+  --process-badge: clamp(3.5rem, 5vw, 4.5rem);
   border-top: 1px solid var(--color-stone);
   border-bottom: 1px solid var(--color-stone);
 }
@@ -80,8 +80,8 @@
 }
 
 .process-flow-badge svg {
-  width: 45%;
-  height: 45%;
+  width: 56%;
+  height: 56%;
 }
 
 /* Mobile only: the horizontal rail becomes a vertical run between badges. */

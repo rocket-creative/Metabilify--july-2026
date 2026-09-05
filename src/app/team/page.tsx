@@ -27,7 +27,7 @@ function PersonCard({ person }: { person: Person }) {
       <Link href={`/team/${person.slug}`} className="team-card-media">
         {person.photo ? (
           <Image
-            className="team-photo"
+            className="team-photo photo"
             src={person.photo}
             alt={person.name}
             width={600}

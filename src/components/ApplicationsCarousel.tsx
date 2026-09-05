@@ -19,7 +19,7 @@ const APPLICATIONS: Application[] = [
     name: "Metabolomics",
     body: "Turn complex untargeted LC/MS datasets into cleaner, aligned, and quantified mass-feature results.",
     link: "Explore Metabolomics",
-    image: "Metabolomics — small-molecule LC/MS: sample vials on an autosampler beside an untargeted chromatogram. Confirm with inventors.",
+    image: "LC/MS instrument — liquid chromatography stack coupled to a mass spectrometer",
   },
   {
     index: "02",
@@ -27,7 +27,7 @@ const APPLICATIONS: Application[] = [
     name: "Proteomics",
     body: "Reveal and quantify peptide mass features across complex LC/MS datasets with a workflow built for scale, alignment, and signal clarity.",
     link: "Explore Proteomics",
-    image: "Proteomics — peptide LC/MS: digested protein sample and an aligned peptide feature map. Confirm with inventors.",
+    image: "Mass spectrometer ion source, close-up",
   },
 ];
 

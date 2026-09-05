@@ -33,8 +33,8 @@
 .pipeline-badge {
   display: grid;
   place-items: center;
-  width: clamp(3rem, 5vw, 4rem);
-  height: clamp(3rem, 5vw, 4rem);
+  width: clamp(3.5rem, 5vw, 4.5rem);
+  height: clamp(3.5rem, 5vw, 4.5rem);
   border-radius: 999px;
   background: var(--color-forest);
   color: var(--color-white);
@@ -42,8 +42,8 @@
 }
 
 .pipeline-badge svg {
-  width: 45%;
-  height: 45%;
+  width: 56%;
+  height: 56%;
 }
 
 .pipeline-num {

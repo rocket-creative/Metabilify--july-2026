@@ -22,7 +22,7 @@ const services = [
     body: "Turn complex LC/MS datasets into cleaner, aligned, and quantified mass-feature results.",
     link: "Explore Services",
     icon: <VialIcon />,
-    image: "Amber LC/MS sample vials loaded in an autosampler tray",
+    image: "Rack of capped amber HPLC vials, close-up",
   },
   {
     href: "/work-with-us/platform-development",
@@ -31,7 +31,7 @@ const services = [
     link: "Explore Platform Development",
     icon: <CodeBracketsIcon />,
     image:
-      "Scientist writing analysis code beside a chromatogram on a second monitor",
+      "Analyst at dual monitors showing peak traces, dim lab",
   },
   {
     href: "/work-with-us/collaborations",
@@ -40,7 +40,7 @@ const services = [
     link: "Explore Strategic Collaborations",
     icon: <PartnershipIcon />,
     image:
-      "Two researchers reviewing LC/MS results together at a lab bench workstation",
+      "Two researchers reviewing results on a laptop at a lab bench",
   },
 ];
 
@@ -82,7 +82,7 @@ export default function HomePage() {
               </div>
               <div className="work-band-media">
                 <Image
-                  className="work-band-photo"
+                  className="work-band-photo photo"
                   src="/images/team-whiteboard.jpg"
                   alt="Ivan Baxter, Louis Connelly, and Allen Hubbard working through a chromatogram at a whiteboard"
                   width={1800}
@@ -129,7 +129,7 @@ export default function HomePage() {
         <Reveal className="mx-auto mb-10 w-full md:mb-14 md:w-4/5">
           <ImagePlaceholder
             ratio="16/9"
-            label="96-well microplate being prepared for LC/MS analysis on an autosampler deck"
+            label="Multichannel pipette filling a 96-well plate, close-up"
           />
         </Reveal>
 

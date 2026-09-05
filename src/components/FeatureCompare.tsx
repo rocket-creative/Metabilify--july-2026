@@ -212,13 +212,13 @@ export function FeatureCompare() {
           >
             <defs>
               <radialGradient id="fc-real-fill" cx="42%" cy="40%" r="65%">
-                <stop offset="0%" stopColor="var(--color-sky-soft)" stopOpacity="1" />
-                <stop offset="70%" stopColor="var(--color-sky-soft)" stopOpacity="0.8" />
-                <stop offset="100%" stopColor="var(--color-sky-soft)" stopOpacity="0.35" />
+                <stop offset="0%" stopColor="var(--color-sage-mid)" stopOpacity="1" />
+                <stop offset="70%" stopColor="var(--color-hero-green)" stopOpacity="0.85" />
+                <stop offset="100%" stopColor="var(--color-hero-green)" stopOpacity="0.4" />
               </radialGradient>
               <radialGradient id="fc-legacy-fill" cx="55%" cy="55%" r="60%">
-                <stop offset="0%" stopColor="var(--color-legacy-soft)" stopOpacity="0.95" />
-                <stop offset="100%" stopColor="var(--color-legacy-soft)" stopOpacity="0.55" />
+                <stop offset="0%" stopColor="var(--color-neutral)" stopOpacity="0.62" />
+                <stop offset="100%" stopColor="var(--color-neutral)" stopOpacity="0.5" />
               </radialGradient>
             </defs>
 
@@ -228,15 +228,15 @@ export function FeatureCompare() {
                 cy={REAL.cy}
                 r={REAL.r}
                 fill="url(#fc-real-fill)"
-                stroke="var(--color-sky)"
+                stroke="var(--color-forest)"
                 strokeWidth="1.25"
               />
-              <g fill="var(--color-sky)">
+              <g fill="var(--color-forest)">
                 {REAL_DOTS.map(([x, y, r, o], i) => (
                   <circle key={i} cx={x} cy={y} r={r} opacity={o} />
                 ))}
               </g>
-              <g fill="var(--color-sky)">
+              <g fill="var(--color-forest-soft)">
                 {OVERLAP_DOTS.map(([x, y, r, o], i) => (
                   <circle key={i} cx={x} cy={y} r={r} opacity={o} />
                 ))}
@@ -256,10 +256,10 @@ export function FeatureCompare() {
                 cy={LEGACY.cy}
                 r={LEGACY.r}
                 fill="url(#fc-legacy-fill)"
-                stroke="var(--color-legacy)"
+                stroke="var(--color-faint)"
                 strokeWidth="1.25"
               />
-              <g fill="var(--color-legacy-ink)">
+              <g fill="var(--color-muted)">
                 {LEGACY_DOTS.map(([x, y, r, o], i) => (
                   <circle key={i} cx={x} cy={y} r={r} opacity={o} />
                 ))}
@@ -267,7 +267,7 @@ export function FeatureCompare() {
               <text
                 className="fc-set-label fc-set-label--legacy"
                 x={LEGACY.cx + 6}
-                y={LEGACY.cy + 74}
+                y={LEGACY.cy + LEGACY.r + 18}
                 textAnchor="middle"
               >
                 <tspan x={LEGACY.cx + 6}>Legacy</tspan>

@@ -39,7 +39,7 @@ export function StaticHero(): JSX.Element {
         <div className="hero-static-media">
           <ImagePlaceholder
             ratio="4/3"
-            label="Gloved hands loading a 96-well microplate into an LC/MS autosampler"
+            label="Scientist placing a sample vial into an LC/MS autosampler tray"
           />
         </div>
       </div>

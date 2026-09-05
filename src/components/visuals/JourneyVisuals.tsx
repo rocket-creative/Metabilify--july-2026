@@ -178,55 +178,82 @@ export function WellPlateVisual() {
 
 /* ---------- 03 · LC/MS ---------- */
 
-const ION_PATH = [206, 222, 238, 254, 270, 286];
+const ION_PATH = [214, 228, 242, 256, 270, 284];
+const SPRAY: ReadonlyArray<readonly [number, number, number]> = [
+  [300, 132, 0.9], [306, 140, 0.7], [304, 150, 0.8], [310, 158, 0.6], [298, 156, 0.7], [312, 146, 0.5],
+];
 
 export function LcmsVisual() {
   return (
     <svg {...panel}>
-      {/* Solvent bottles */}
-      {[86, 108, 130].map((x) => (
+      {/* Solvent bottles feeding the pumps */}
+      {[70, 94, 118].map((x) => (
         <g key={x}>
-          <rect x={x - 6} y="36" width="12" height="8" rx="2" />
-          <path d={`M${x - 8} 44v20a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V44`} />
+          <rect x={x - 6} y="30" width="12" height="7" rx="2" />
+          <path d={`M${x - 9} 37v20a3 3 0 0 0 3 3h12a3 3 0 0 0 3-3V37`} />
+          <rect x={x - 6} y="48" width="12" height="9" fill="currentColor" opacity="0.15" stroke="none" />
         </g>
       ))}
-      <path d="M92 44v-8h44v8" opacity="0.5" />
+      <path d="M70 37v-8h48v8" opacity="0.45" />
+      <line x1="94" y1="29" x2="94" y2="22" opacity="0.45" />
 
-      {/* LC stack */}
-      <rect x="60" y="74" width="100" height="140" rx="8" />
-      <line x1="60" y1="118" x2="160" y2="118" opacity="0.6" />
-      <line x1="60" y1="162" x2="160" y2="162" opacity="0.6" />
-      <rect x="72" y="86" width="40" height="18" rx="3" opacity="0.5" />
-      <rect x="72" y="130" width="40" height="18" rx="3" opacity="0.5" />
-      <rect x="72" y="174" width="40" height="18" rx="3" opacity="0.5" />
-      <text x="60" y="234" className="journey-svg-label" fill="currentColor" stroke="none">
+      {/* LC stack: degasser, binary pump, autosampler, column oven */}
+      <rect x="44" y="68" width="112" height="150" rx="8" />
+      {[68, 105, 142, 180].map((y, i) => (
+        <g key={y}>
+          {i > 0 ? <line x1="44" y1={y} x2="156" y2={y} opacity="0.5" /> : null}
+          <rect x="56" y={y + 10} width="34" height="16" rx="3" opacity="0.55" />
+          <circle cx="132" cy={y + 18} r="2.2" fill={LIME} stroke="none" />
+          <line x1="100" y1={y + 18} x2="120" y2={y + 18} opacity="0.35" />
+        </g>
+      ))}
+      {/* Autosampler vials in the third module */}
+      {[62, 72, 82].map((x) => (
+        <rect key={x} x={x} y="149" width="6" height="8" rx="1" opacity="0.8" />
+      ))}
+      <text x="44" y="238" className="journey-svg-label" fill="currentColor" stroke="none">
         Liquid chromatography
       </text>
 
-      {/* Column */}
-      <line x1="160" y1="144" x2="182" y2="144" />
-      <rect x="182" y="136" width="56" height="16" rx="8" />
-      <line x1="238" y1="144" x2="300" y2="144" />
+      {/* Column with packed bed */}
+      <line x1="156" y1="144" x2="176" y2="144" />
+      <rect x="176" y="136" width="56" height="16" rx="8" />
+      {[186, 196, 206, 216].map((x) => (
+        <line key={x} x1={x} y1="139" x2={x} y2="149" opacity="0.4" />
+      ))}
+      <line x1="232" y1="144" x2="292" y2="144" />
       {ION_PATH.map((x, i) => (
         <circle
           key={x}
-          cx={x + 10}
+          cx={x + 8}
           cy="144"
-          r="2.6"
+          r="2.4"
           fill={i % 2 ? LIME : "currentColor"}
           stroke="none"
           opacity={i % 2 ? 1 : 0.5}
         />
       ))}
 
-      {/* Mass spectrometer */}
-      <rect x="300" y="74" width="130" height="140" rx="8" />
-      <circle cx="365" cy="144" r="34" />
-      <circle cx="365" cy="144" r="22" opacity="0.6" />
-      <circle cx="365" cy="144" r="10" opacity="0.4" />
-      <path d="M340 144h50" opacity="0.5" />
-      <circle cx="384" cy="144" r="3" fill={LIME} stroke="none" />
-      <text x="300" y="234" className="journey-svg-label" fill="currentColor" stroke="none">
+      {/* Electrospray at the inlet */}
+      <path d="M292 140l10-4M292 148l10 4" opacity="0.5" />
+      {SPRAY.map(([x, y, o]) => (
+        <circle key={`${x}-${y}`} cx={x} cy={y} r="1.6" fill={LIME} stroke="none" opacity={o} />
+      ))}
+
+      {/* Mass spectrometer: inlet, quadrupole rods, detector */}
+      <rect x="316" y="68" width="122" height="150" rx="8" />
+      <path d="M316 132h14v24h-14" opacity="0.6" />
+      <line x1="330" y1="144" x2="344" y2="144" opacity="0.6" />
+      {[130, 138, 150, 158].map((y) => (
+        <line key={y} x1="346" y1={y} x2="404" y2={y} strokeWidth="2.5" opacity={y === 130 || y === 158 ? 0.45 : 0.85} />
+      ))}
+      {[352, 364, 376, 388, 400].map((x, i) => (
+        <circle key={x} cx={x} cy="144" r="2" fill={LIME} stroke="none" opacity={0.4 + i * 0.15} />
+      ))}
+      <path d="M408 136h16a4 4 0 0 1 4 4v8a4 4 0 0 1-4 4h-16z" fill={LIME} fillOpacity="0.25" stroke={LIME} />
+      <path d="M338 96h24M338 104h16" opacity="0.35" />
+      <rect x="338" y="182" width="78" height="18" rx="3" opacity="0.45" />
+      <text x="316" y="238" className="journey-svg-label" fill="currentColor" stroke="none">
         Mass spectrometer
       </text>
     </svg>
