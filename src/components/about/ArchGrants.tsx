@@ -1,3 +1,4 @@
+import { ImagePlaceholder } from "@/components/ImagePlaceholder";
 import { Reveal } from "@/components/Reveal";
 import { AboutProse, AboutSection } from "./AboutSection";
 
@@ -12,6 +13,11 @@ export function ArchGrants() {
             "The award provided another source of early support as Metablify began building relationships and validating the technology outside the Danforth Center.",
           ]}
         />
+      </Reveal>
+      <Reveal delay={80}>
+        <div className="mt-8 md:w-2/3">
+          <ImagePlaceholder ratio="3/2" label="Arch Grants 2024 cohort — award event photo" />
+        </div>
       </Reveal>
     </AboutSection>
   );

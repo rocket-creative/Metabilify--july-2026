@@ -1,3 +1,4 @@
+import { ImagePlaceholder } from "@/components/ImagePlaceholder";
 import { Reveal } from "@/components/Reveal";
 
 export function AboutHero() {
@@ -9,6 +10,14 @@ export function AboutHero() {
           <h1 className="display display-xl max-w-4xl">
             Built at Danforth. Created to Solve a Real LC/MS Problem.
           </h1>
+        </Reveal>
+        <Reveal delay={60}>
+          <div className="mt-8 md:mt-10">
+            <ImagePlaceholder
+              ratio="16/9"
+              label="Donald Danforth Plant Science Center — exterior or atrium, wide"
+            />
+          </div>
         </Reveal>
         <Reveal delay={80}>
           <div className="about-prose mt-8 md:mt-10">

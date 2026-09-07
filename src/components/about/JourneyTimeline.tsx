@@ -36,7 +36,7 @@ const milestones: { when: string; title: string; body: string }[] = [
   {
     when: "2024",
     title: "Initial Investment",
-    body: "DTC and QRM Capital become initial investors, with public reporting identifying a $500,000 investment from DTC.",
+    body: "DTC and QRM Capital become initial investors.",
   },
   {
     when: "2024",

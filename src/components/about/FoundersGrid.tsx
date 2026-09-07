@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { Reveal } from "@/components/Reveal";
 import { founders } from "@/lib/site";
 import { AboutProse, AboutSection } from "./AboutSection";
@@ -10,6 +11,14 @@ export function FoundersGrid() {
       title="Scientists + Technologists + Entrepreneurship"
     >
       <Reveal>
+        <Image
+          className="photo mb-10"
+          src="/images/team-whiteboard.jpg"
+          alt="Ivan Baxter, Louis Connelly, and Allen Hubbard working through a chromatogram at a whiteboard"
+          width={1800}
+          height={1202}
+          sizes="(min-width: 1024px) 80rem, 90vw"
+        />
         <h3 className="about-subhead">
           Four Co-Founders. Complementary Strengths.
         </h3>

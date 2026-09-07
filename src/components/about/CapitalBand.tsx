@@ -12,7 +12,7 @@ export function CapitalBand() {
         <AboutProse
           paragraphs={[
             "DTC did more than help organize the spinout. It invested capital alongside outside investors to help Metablify move from technology development toward commercialization.",
-            "Danforth Technology Company and QRM Capital were announced as Metablify's initial investors, with public reporting identifying a $500,000 investment from DTC.",
+            "Danforth Technology Company and QRM Capital were announced as Metablify's initial investors.",
             "Together with the Big Ideas award and Danforth proof-of-concept funding, that support created a continuum from early scientific exploration to company formation.",
           ]}
         />

@@ -1,3 +1,4 @@
+import { ImagePlaceholder } from "@/components/ImagePlaceholder";
 import { Reveal } from "@/components/Reveal";
 import { AboutProse, AboutSection } from "./AboutSection";
 
@@ -75,6 +76,12 @@ export function ScaleChallenge() {
               </div>
             </div>
             <ChromatogramPanel />
+            <div className="mt-6">
+              <ImagePlaceholder
+                ratio="3/2"
+                label="Baxter lab at the Danforth Center — LC/MS instrument bay or growth chambers"
+              />
+            </div>
           </Reveal>
         </div>
       </div>

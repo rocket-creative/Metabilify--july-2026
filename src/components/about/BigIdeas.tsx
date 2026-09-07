@@ -1,3 +1,4 @@
+import { ImagePlaceholder } from "@/components/ImagePlaceholder";
 import { Reveal } from "@/components/Reveal";
 import { AboutProse, AboutSection } from "./AboutSection";
 
@@ -8,13 +9,20 @@ export function BigIdeas() {
       eyebrow="From Big Idea to Company"
       title="2023 | Metablify Wins Big Ideas 3.0."
     >
-      <div className="grid gap-10 lg:grid-cols-2 lg:gap-8">
+      <div className="grid gap-10 lg:grid-cols-3 lg:gap-8">
         <Reveal>
           <AboutProse
             paragraphs={[
               "The idea moved beyond the lab when Team Metablify from the Baxter lab won the Donald Danforth Plant Science Center's Big Ideas 3.0 competition in 2023.",
-              "More than 600 people participated in the event in person and online. Team Metablify, represented by Britney Millman, Allen Hubbard, and Louis Connelly, won the audience vote and a $10,000 grant to advance the idea.",
+              "More than 600 people participated in the event in person and online. Team Metablify, represented by Allen Hubbard and Louis Connelly, won the audience vote and a $10,000 grant to advance the idea.",
             ]}
+          />
+        </Reveal>
+
+        <Reveal delay={60}>
+          <ImagePlaceholder
+            ratio="3/2"
+            label="Big Ideas 3.0 — Team Metablify on stage, Danforth Center auditorium"
           />
         </Reveal>
 
