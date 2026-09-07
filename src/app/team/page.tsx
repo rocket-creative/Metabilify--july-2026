@@ -80,7 +80,7 @@ export default function TeamPage() {
       />
 
       <PageHero
-        eyebrow="People & advisors"
+        eyebrow="Team"
         title="Our Team"
         lead="Scientific discovery, computational technology, entrepreneurship, and commercialization — brought together at the Danforth Center and built into a company."
       />

@@ -2,6 +2,7 @@ import { ApplicationsCarousel } from "@/components/ApplicationsCarousel";
 import { Button } from "@/components/Button";
 import { CapabilitiesBand } from "@/components/CapabilitiesBand";
 import { FeatureCompare } from "@/components/FeatureCompare";
+import { FieldsGrid } from "@/components/FieldsGrid";
 import { ImagePlaceholder } from "@/components/ImagePlaceholder";
 import { ProcessFlow } from "@/components/ProcessFlow";
 import { Reveal } from "@/components/Reveal";
@@ -63,8 +64,33 @@ export default function HomePage() {
 
       <ApplicationsCarousel />
 
+      {/* Applications — the six fields, per the 9/7 call. */}
+      <section className="section-wide band-y section-grey">
+        <div className="gutter-x mx-auto max-w-[80rem]">
+          <Reveal>
+            <p className="eyebrow mb-4">Applications</p>
+            <h2 className="display display-lg mb-4 max-w-3xl">
+              Where Metablify Can Be Applied
+            </h2>
+            <p className="lead mb-10 md:mb-14">
+              Our platform supports companies across diverse industries,
+              applying metabolomics and proteomics workflows to solve
+              real-world challenges.
+            </p>
+          </Reveal>
+          <FieldsGrid />
+          <Reveal delay={420}>
+            <div className="mt-10 text-center md:mt-14">
+              <Button href="/applications" variant="secondary">
+                Explore All Applications
+              </Button>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
       {/* Work with us: split band, then the three engagement routes. */}
-      <section className="section-wide section-grey band-y">
+      <section className="section-wide band-y">
         <div className="gutter-x mx-auto max-w-[80rem]">
           <Reveal className="mb-10 md:mb-14">
             <div className="work-band">

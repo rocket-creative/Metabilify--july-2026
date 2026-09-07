@@ -83,33 +83,44 @@ export function AppleIcon() {
   );
 }
 
-/** Small molecule — hexagon with substituents, for the metabolomics card. */
+/**
+ * Isoleucine, drawn as a skeletal formula: the compound the CEO uses as the
+ * metabolomics mark. Ethyl chain from the left, hashed bond up to the methyl,
+ * wedge down to the amine, carboxyl on the right.
+ */
 export function MoleculeIcon() {
   return (
     <Icon>
-      <path d="M32 18l12 7v14l-12 7-12-7V25z" />
-      <path d="M32 18v-8" />
-      <path d="M44 25l7-4" />
-      <path d="M20 39l-7 4" />
-      <circle cx="32" cy="8" r="2.5" />
-      <circle cx="53" cy="19" r="2.5" />
-      <circle cx="11" cy="45" r="2.5" />
+      {/* Backbone: ethyl → C3 → C2 (alpha) → carboxyl carbon */}
+      <path d="M6 34l9 5 9-5 9 5 9-5" strokeWidth="2.25" />
+      {/* Hashed bond up from C3 to the methyl */}
+      <path d="M23.5 31.5h1M23 29h2M22.5 26.5h3M22 24h4" strokeWidth="1.5" />
+      {/* Wedge down from the alpha carbon to NH2 */}
+      <path d="M32 40l-2.4 7h4.8z" fill="currentColor" stroke="none" />
+      {/* C=O up, C–OH right */}
+      <path d="M41 33l.8-8M43.4 33.4l.8-8" strokeWidth="2" />
+      <path d="M42 34l7 4" strokeWidth="2.25" />
+      <text x="38" y="21" fontSize="8" fontWeight="700" fill="currentColor" stroke="none" fontFamily="var(--font-body)">O</text>
+      <text x="49" y="41" fontSize="8" fontWeight="700" fill="currentColor" stroke="none" fontFamily="var(--font-body)">OH</text>
+      <text x="25" y="58" fontSize="8" fontWeight="700" fill="currentColor" stroke="none" fontFamily="var(--font-body)">NH</text>
+      <text x="37" y="60" fontSize="5.5" fontWeight="700" fill="currentColor" stroke="none" fontFamily="var(--font-body)">2</text>
     </Icon>
   );
 }
 
-/** Peptide chain — beads on a folded line, for the proteomics card. */
+/**
+ * Three interlocking loops around a small core: the folded-protein mark from
+ * the CEO's brochure, for the proteomics card.
+ */
 export function PeptideIcon() {
   return (
     <Icon>
-      <path d="M12 44c6-14 12-14 18 0s12 14 18 0" />
-      <circle cx="12" cy="44" r="3.5" />
-      <circle cx="21" cy="30" r="3.5" />
-      <circle cx="30" cy="44" r="3.5" />
-      <circle cx="39" cy="30" r="3.5" />
-      <circle cx="48" cy="44" r="3.5" />
-      <circle cx="21" cy="17" r="3" opacity="0.6" />
-      <path d="M21 20.5v6" opacity="0.6" />
+      <g strokeWidth="2.5">
+        <ellipse cx="32" cy="32" rx="8" ry="24" />
+        <ellipse cx="32" cy="32" rx="8" ry="24" transform="rotate(60 32 32)" />
+        <ellipse cx="32" cy="32" rx="8" ry="24" transform="rotate(-60 32 32)" />
+      </g>
+      <path d="M32 26l5.2 3v6l-5.2 3-5.2-3v-6z" fill="var(--color-white)" strokeWidth="1.5" />
     </Icon>
   );
 }

@@ -94,8 +94,8 @@
 .omics-card-badge {
   display: grid;
   place-items: center;
-  width: clamp(3.5rem, 5vw, 4.5rem);
-  height: clamp(3.5rem, 5vw, 4.5rem);
+  width: clamp(4.5rem, 6vw, 5.5rem);
+  height: clamp(4.5rem, 6vw, 5.5rem);
   border-radius: 999px;
   background: var(--color-white);
   color: var(--color-forest);
@@ -104,8 +104,8 @@
 }
 
 .omics-card-badge svg {
-  width: 56%;
-  height: 56%;
+  width: 72%;
+  height: 72%;
 }
 
 .omics-card-title {
