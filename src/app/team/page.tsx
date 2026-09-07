@@ -6,7 +6,6 @@ import { BreadcrumbJsonLd } from "@/components/JsonLd";
 import { PageHero } from "@/components/PageHero";
 import { Reveal } from "@/components/Reveal";
 import {
-  advisors,
   supporters,
   teamPage,
   teamPending,
@@ -17,7 +16,7 @@ import {
 export const metadata: Metadata = {
   title: "Team",
   description:
-    "The people building Metablify: the founders, the advisory board, and the partners and investors behind the company.",
+    "The people building Metablify: the team, and the partners and investors behind the company.",
   alternates: { canonical: "/team" },
 };
 
@@ -91,7 +90,7 @@ export default function TeamPage() {
         <Reveal>
           <p className="eyebrow mb-4">Metablify team</p>
           <h2 className="display display-md mb-8 md:mb-12">
-            Founders and leadership
+            Team
           </h2>
         </Reveal>
         <div className="team-grid">
@@ -108,34 +107,6 @@ export default function TeamPage() {
               </div>
             </Reveal>
           ))}
-        </div>
-      </section>
-
-      {/* Advisory board */}
-      <section className="section-wide band-y section-grey">
-        <div className="gutter-x mx-auto max-w-[80rem]">
-          <Reveal>
-            <p className="eyebrow mb-4">Science &amp; strategy advisory board</p>
-            <h2 className="display display-md mb-8 md:mb-12">
-              Guided by leaders in science and industry.
-            </h2>
-          </Reveal>
-          {advisors.length ? (
-            <div className="team-grid">
-              {advisors.map((person, i) => (
-                <Reveal key={person.slug} delay={i * 70} className="h-full">
-                  <PersonCard person={person} />
-                </Reveal>
-              ))}
-            </div>
-          ) : (
-            <Reveal>
-              <div className="team-card team-card--pending">
-                <p className="about-slot-index">Advisory board — in formation</p>
-                <CopyPlaceholder label="Advisory board members — names, credentials, affiliations, and headshots as they are confirmed" />
-              </div>
-            </Reveal>
-          )}
         </div>
       </section>
 

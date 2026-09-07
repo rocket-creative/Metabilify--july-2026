@@ -20,7 +20,9 @@
 
 .apps-hero-title {
   color: var(--color-ink);
-  font-size: clamp(2.5rem, 5vw, 4rem);
+  /* Sized so the longest line, "Many Applications.", stays one line in the
+     half-width hero column without wrapping or overflowing the gutter. */
+  font-size: clamp(1.85rem, 4.2vw, 3.5rem);
 }
 
 .apps-hero-art {

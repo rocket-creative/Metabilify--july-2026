@@ -5,7 +5,6 @@ import { FeatureCompare } from "@/components/FeatureCompare";
 import { ImagePlaceholder } from "@/components/ImagePlaceholder";
 import { ProcessFlow } from "@/components/ProcessFlow";
 import { Reveal } from "@/components/Reveal";
-import { SampleJourney } from "@/components/SampleJourney";
 import { StaticHero } from "@/components/StaticHero";
 import {
   CodeBracketsIcon,
@@ -48,8 +47,6 @@ export default function HomePage() {
   return (
     <>
       <StaticHero />
-
-      <SampleJourney />
 
       {/* The Venn message the pinned dive used to carry. */}
       <section className="section">

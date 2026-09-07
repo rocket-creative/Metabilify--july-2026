@@ -1,5 +1,5 @@
 /**
- * Line art for the sample-to-mass-feature journey on the home page. Every
+ * Line art for the sample-to-mass-feature journey on Work With Us. Every
  * panel is 480x280, stroke 1.75, colour from the parent (forest on white),
  * with lime reserved for the signal Metablify keeps. Nothing here is a
  * screenshot of a real readout; it is a diagram, and it says so in the

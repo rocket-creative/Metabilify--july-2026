@@ -52,7 +52,9 @@ export default function NewsPage() {
                       item.title
                     )}
                   </h2>
-                  <p className="news-card-date">{item.date ?? item.year}</p>
+                  <p className="news-card-date">
+                    {item.date ?? item.year} · {item.source}
+                  </p>
                   <p className="news-card-excerpt">{item.body}</p>
                   {item.href ? (
                     <a

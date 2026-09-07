@@ -112,7 +112,7 @@ export default function ApplicationsPage() {
               <h1 className="display apps-hero-title">
                 <span className="block">One Platform.</span>
                 <span className="block">Multiple Omics.</span>
-                <span className="block">Many Applications.</span>
+                <span className="block whitespace-nowrap">Many Applications.</span>
               </h1>
               <p className="lead mt-6 max-w-[36rem]">
                 Metablify applies its LC/MS mass-feature analysis platform

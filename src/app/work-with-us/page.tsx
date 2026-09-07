@@ -4,6 +4,7 @@ import { Button } from "@/components/Button";
 import { BreadcrumbJsonLd } from "@/components/JsonLd";
 import { PageHero, SectionHeading } from "@/components/PageHero";
 import { Reveal } from "@/components/Reveal";
+import { SampleJourney } from "@/components/SampleJourney";
 
 export const metadata: Metadata = {
   title: "Work With Us",
@@ -107,6 +108,8 @@ export default function WorkWithUsPage() {
           ))}
         </div>
       </section>
+
+      <SampleJourney />
 
       {}
       <section className="section-wide band-y wash-white">
