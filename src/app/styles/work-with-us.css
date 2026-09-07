@@ -1,0 +1,145 @@
+/* /work-with-us, built to the CEO's 9/7 mockup. Reuses the field-card and
+   hero-tag primitives from applications.css. */
+
+.wwu-hero {
+  background: var(--color-white);
+  padding-block: clamp(3rem, 7vw, 6.5rem);
+}
+
+.wwu-hero-grid {
+  display: grid;
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: center;
+}
+
+@media (min-width: 1024px) {
+  .wwu-hero-grid {
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  }
+}
+
+.wwu-hero-art {
+  position: relative;
+}
+
+.wwu-hero-tag {
+  top: auto;
+  bottom: 1.25rem;
+  right: 1.25rem;
+  background: var(--color-white);
+  padding: 0.75rem 1rem;
+  border-radius: 0.75rem;
+  border: 1px solid var(--color-stone);
+}
+
+.wwu-detail {
+  margin: -0.75rem 0 1.5rem;
+  font-size: 0.8rem;
+  line-height: 1.6;
+  color: var(--color-faint);
+}
+
+/* Getting-started cards: number, round badge, title, body. */
+
+.wwu-step {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  background: var(--color-white);
+  border: 1px solid var(--color-stone);
+  border-radius: 1.5rem;
+  padding: clamp(1.5rem, 3vw, 2rem);
+}
+
+.wwu-step-num {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  color: var(--color-faint);
+  margin: 0;
+}
+
+.wwu-step-badge {
+  display: grid;
+  place-items: center;
+  width: clamp(3.5rem, 5vw, 4rem);
+  height: clamp(3.5rem, 5vw, 4rem);
+  border-radius: 999px;
+  background: var(--color-hero-green);
+  color: var(--color-forest);
+  margin: 0.25rem 0 0.75rem;
+}
+
+.wwu-step-badge svg {
+  width: 56%;
+  height: 56%;
+}
+
+.wwu-step-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  font-size: 1.1rem;
+  line-height: 1.3;
+  color: var(--color-ink);
+  margin: 0;
+}
+
+.wwu-step-body {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.65;
+  color: var(--color-muted);
+}
+
+/* Closing band: copy left, three reasons right. */
+
+.wwu-cta {
+  display: grid;
+  gap: 2.5rem;
+  align-items: center;
+  background: var(--color-hero-green);
+  border: 1px solid var(--color-stone);
+  border-radius: 1.5rem;
+  padding: clamp(1.75rem, 4vw, 3rem);
+}
+
+@media (min-width: 810px) {
+  .wwu-cta {
+    grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+  }
+}
+
+.wwu-reasons {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 1.25rem;
+}
+
+.wwu-reason {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-weight: 500;
+  color: var(--color-ink);
+}
+
+.wwu-reason-icon {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 999px;
+  background: var(--color-white);
+  border: 1px solid var(--color-stone);
+  color: var(--color-forest);
+}
+
+.wwu-reason-icon svg {
+  width: 56%;
+  height: 56%;
+}
