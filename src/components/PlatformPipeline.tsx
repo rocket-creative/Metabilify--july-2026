@@ -1,31 +1,31 @@
-import { CopyPlaceholder } from "./ImagePlaceholder";
+import { CopyPlaceholder, ImagePlaceholder } from "./ImagePlaceholder";
 import { Reveal } from "./Reveal";
 import { AlignIcon, AmplifyIcon, PoolIcon } from "./visuals/PipelineIcons";
-import Image from "next/image";
 
 /**
  * The CEO's sketch for the top of the platform page: three boxes — Align,
- * Pool, Amplify — feeding one Metablify output. Stage copy is a placeholder
- * until the technical team writes it; the heading and lead are his own draft.
+ * Pool, Amplify — feeding one Metablify output. Copy is his, from the 9/7
+ * deck. The output visual stays a placeholder until the technical team
+ * decides what to show.
  */
 const STAGES = [
   {
     n: "01",
     title: "Align",
     icon: <AlignIcon />,
-    placeholder: "Align — one or two sentences on aligning signals across every sample in the dataset",
+    body: "Bring corresponding signals into alignment across samples.",
   },
   {
     n: "02",
     title: "Pool",
     icon: <PoolIcon />,
-    placeholder: "Pool — one or two sentences on pooling consistent evidence across samples",
+    body: "Pool information across samples to strengthen consistent signal.",
   },
   {
     n: "03",
     title: "Amplify",
     icon: <AmplifyIcon />,
-    placeholder: "Amplify — one or two sentences on amplifying real signal and suppressing noise",
+    body: "Make consistent signal more prominent relative to background noise.",
   },
 ] as const;
 
@@ -38,14 +38,10 @@ export function PlatformPipeline() {
           <h2 className="display display-lg mb-5 max-w-3xl">
             From Noisy LC/MS Data to Quantified Mass Features
           </h2>
-          <p className="lead mb-4">
-            Metablify analyzes complex LC/MS datasets as a whole, aligning
-            signals across samples and pooling consistent evidence to amplify
-            what is real.
-          </p>
           <p className="lead mb-10 md:mb-14">
-            The Metablify platform then detects, resolves, and quantifies mass
-            features for downstream analysis.
+            Metablify analyzes complex LC/MS datasets as a whole, using
+            information across samples to align signals and amplify what is
+            real.
           </p>
         </Reveal>
 
@@ -56,7 +52,7 @@ export function PlatformPipeline() {
                 <span className="pipeline-badge">{s.icon}</span>
                 <p className="pipeline-num">{s.n}</p>
                 <h3 className="pipeline-title">{s.title}</h3>
-                <CopyPlaceholder label={s.placeholder} />
+                <p className="pipeline-body">{s.body}</p>
               </article>
             </Reveal>
           ))}
@@ -76,25 +72,17 @@ export function PlatformPipeline() {
                 Cleaner, aligned, quantified mass features.
               </h3>
               <p className="pipeline-output-body">
-                A dataset-wide mass-feature matrix, aligned across every
-                sample and ready for downstream analysis.
+                A structured, dataset-wide view of mass features ready for
+                downstream analysis.
               </p>
-              <p className="pipeline-output-note">
-                Same region of the same dataset. A legacy workflow reports no
-                mass features; Metablify resolves one real signal across 598
-                samples and flags a probable artifact.
-              </p>
+              <CopyPlaceholder label="Output caption — pending what the technical team decides to show" />
             </div>
             <div className="pipeline-output-visual">
-              <figure className="pipeline-output-figure">
-                <Image
-                  src="/images/competitor-vs-metablify.png"
-                  alt="Two mass versus retention-time plots of the same region. Competitor: no mass features detected. Metablify: a single real signal detected in 598 samples, with a probable artifact identified below it."
-                  width={2000}
-                  height={691}
-                  sizes="(min-width: 810px) 46rem, 90vw"
-                />
-              </figure>
+              <ImagePlaceholder
+                ratio="16/9"
+                tone="dark"
+                label="Representative Metablify output — pending technical team"
+              />
             </div>
           </div>
         </Reveal>

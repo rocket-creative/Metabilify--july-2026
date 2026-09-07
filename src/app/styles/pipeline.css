@@ -64,6 +64,13 @@
   margin: 0 0 0.5rem;
 }
 
+.pipeline-body {
+  margin: 0;
+  font-size: 0.9375rem;
+  line-height: 1.65;
+  color: var(--color-muted);
+}
+
 /* Three short vertical lines from the stages into the output, desktop only. */
 .pipeline-feed {
   display: none;

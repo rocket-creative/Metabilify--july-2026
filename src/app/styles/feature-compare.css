@@ -37,8 +37,15 @@
   text-transform: uppercase;
 }
 
+/* The Metablify label sits above its set in display weight so the diagram
+   reads "Metablify" first, then the legacy footnote. */
 .fc-set-label--real {
   fill: var(--color-forest);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 22px;
+  letter-spacing: -0.01em;
+  text-transform: none;
 }
 
 .fc-set-label--legacy {

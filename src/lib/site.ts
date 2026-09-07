@@ -12,7 +12,7 @@ export const siteConfig = {
 // Team is its own page, per the 9/1 review: board members, investors, and
 // partners look for it first, and it was buried at the bottom of About.
 export const navLinks = [
-  { href: "/platform", label: "Platform" },
+  { href: "/technology", label: "Technology" },
   { href: "/applications", label: "Applications" },
   { href: "/work-with-us", label: "Work With Us" },
   { href: "/about", label: "About" },
@@ -22,8 +22,8 @@ export const navLinks = [
 
 export const footerGroups = [
   {
-    title: "Platform",
-    links: [{ href: "/platform", label: "The Metablify Platform" }],
+    title: "Technology",
+    links: [{ href: "/technology", label: "The Metablify Technology" }],
   },
   {
     title: "Applications",

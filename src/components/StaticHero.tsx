@@ -26,7 +26,7 @@ export function StaticHero(): JSX.Element {
           </p>
 
           <div className="hero-static-cta">
-            <Button href="/platform">Explore Metablify</Button>
+            <Button href="/technology">Explore Metablify</Button>
           </div>
 
           <ul className="hero-credibility">

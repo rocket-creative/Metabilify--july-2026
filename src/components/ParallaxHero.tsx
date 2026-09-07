@@ -348,7 +348,7 @@ export function ParallaxHero() {
             physics.
           </p>
           <div className="mt-12 flex flex-wrap gap-4 hero-anim hero-cta">
-            <Button href="/platform">Explore Metablify</Button>
+            <Button href="/technology">Explore Metablify</Button>
           </div>
         </div>
 

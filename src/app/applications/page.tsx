@@ -1,113 +1,97 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Button } from "@/components/Button";
+import { ImagePlaceholder } from "@/components/ImagePlaceholder";
 import { BreadcrumbJsonLd } from "@/components/JsonLd";
-import { PageHero, SectionHeading } from "@/components/PageHero";
 import { Reveal } from "@/components/Reveal";
-import { byFamily } from "@/content/registry";
-import { pageHref } from "@/types/content";
+import {
+  AppleIcon,
+  BarsIcon,
+  DropIcon,
+  FlaskIcon,
+  LeafIcon,
+  MoleculeIcon,
+  PeptideIcon,
+  PillIcon,
+} from "@/components/visuals/FieldIcons";
+import { RidgelineVisual } from "@/components/visuals/RidgelineVisual";
 
 export const metadata: Metadata = {
   title: "Applications",
   description:
-    "What the Metablify platform enables, the omics it serves, and the fields it supports, from drug discovery and environmental analysis to lipidomics and agricultural science.",
+    "One platform, multiple omics, many applications. Metablify applies LC/MS mass-feature analysis across metabolomics and proteomics, from drug discovery to environmental and PFAS research.",
   alternates: { canonical: "/applications" },
 };
 
-const enables = [
-  {
-    title: "Recover real features",
-    body: "Mass features sitting in background signal are surfaced from data you have already acquired, with no change to the instrument method.",
-  },
-  {
-    title: "Keep large sample sets comparable",
-    body: "Features are matched across hundreds of injections, so retention drift and batch structure stop standing in for real differences.",
-  },
-  {
-    title: "Quantify on a cleaner table",
-    body: "Outputs are more complete and ready for the statistics and annotation tools your group already uses.",
-  },
-];
-
+/**
+ * Built to the CEO's 9/7 Applications mockup: hero with ridgeline art, two
+ * omics cards, six field cards under "Where Metablify Can Be Applied", and a
+ * closing CTA. Copy is his. Fields with a live page link to it; the rest go
+ * to the discuss form until their pages exist.
+ */
 const omics = [
   {
     href: "/applications/metabolomics",
     title: "Metabolomics",
-    body: "Turn complex untargeted LC/MS datasets into cleaner, aligned, and quantified mass feature results.",
-    points: [
-      "Detect features buried in background signal",
-      "Align across large sample cohorts",
-      "Quantify with confidence for discovery",
-    ],
+    body: "Analyze complex untargeted LC/MS datasets to generate cleaner, aligned, and quantified mass-feature data.",
+    icon: <MoleculeIcon />,
+    image: "Metabolomics — macro of small-molecule sample vials or an abstract molecular texture, cool green tones",
+    tone: "sage",
   },
   {
     href: "/applications/proteomics",
     title: "Proteomics",
-    body: "Reveal and quantify peptide mass features across complex LC/MS datasets with a workflow built for scale.",
-    points: [
-      "Scale across complex peptide datasets",
-      "Align features for comparative analysis",
-      "Clarify signal for confident quantification",
-    ],
+    body: "Apply the same platform principles to complex peptide LC/MS datasets for improved feature detection, alignment, and quantification.",
+    icon: <PeptideIcon />,
+    image: "Proteomics — protein structure render or peptide chain, cool grey tones",
+    tone: "grey",
   },
-];
+] as const;
 
-// Explicit ordering so breadth leads and no single field reads as the headline.
-const verticalOrder = [
-  "drug-discovery",
-  "pfas-environmental",
-  "lipidomics",
-  "plant-agricultural-science",
-];
-
-function orderedVerticals() {
-  const rank = (slug: string) => {
-    const i = verticalOrder.indexOf(slug);
-    return i === -1 ? verticalOrder.length : i;
-  };
-  return byFamily("application")
-    .filter((p) => p.status !== "draft")
-    .sort((a, b) => rank(a.slug) - rank(b.slug));
-}
-
-function SpecificApplications() {
-  const pages = orderedVerticals();
-  if (pages.length === 0) return null;
-  return (
-    <section className="section section-sage">
-      <Reveal>
-        <SectionHeading
-          eyebrow="Specific applications"
-          title="Fields where recovery and alignment decide the result"
-          lead="LC/MS carries work across many industries. These are the areas where feature level recovery at cohort scale is the limiting step."
-        />
-      </Reveal>
-      <div className="grid gap-6 md:grid-cols-2">
-        {pages.map((page, i) => (
-          <Reveal key={page.slug} delay={i * 70}>
-            <Link
-              href={pageHref(page)}
-              className="card card-link group flex h-full flex-col"
-            >
-              <h3
-                className="mb-3 text-lg text-ink"
-                style={{ fontFamily: "var(--font-display)" }}
-              >
-                {page.title}
-              </h3>
-              <p className="mb-6 text-sm leading-relaxed text-muted">
-                {page.metaDescription}
-              </p>
-              <span className="arrow-link mt-auto">
-                Explore <span className="arrow-ne">↗</span>
-              </span>
-            </Link>
-          </Reveal>
-        ))}
-      </div>
-    </section>
-  );
-}
+const fields = [
+  {
+    href: "/applications/drug-discovery",
+    title: "Drug Discovery & Development",
+    body: "Use metabolomic and proteomic data to support target discovery, compound profiling, mechanism-of-action research, and other discovery stage workflows.",
+    icon: <PillIcon />,
+    image: "Capsules and a pipette on a lab bench, cool blue tones",
+  },
+  {
+    href: "/applications/plant-agricultural-science",
+    title: "Agriculture & Crop Science",
+    body: "Apply large-scale metabolomics and proteomics to crop diversity, trait discovery, plant biology, breeding populations, and agricultural research.",
+    icon: <LeafIcon />,
+    image: "Young crop seedlings in rows, field soil",
+  },
+  {
+    href: "/discuss",
+    title: "Toxicology & Anti-Doping",
+    body: "Detect and characterize exogenous compounds, metabolites, and biomarkers for safety, compliance, and performance testing.",
+    icon: <FlaskIcon />,
+    image: "Pipette dropping into a test tube, clinical lab",
+  },
+  {
+    href: "/discuss",
+    title: "Biomarker Discovery",
+    body: "Apply metabolomics and proteomics to discover and validate biomarkers across biological systems.",
+    icon: <BarsIcon />,
+    image: "Cells or molecular structures under fluorescence, teal tones",
+  },
+  {
+    href: "/applications/pfas-environmental",
+    title: "Environmental & PFAS Research",
+    body: "Analyze complex environmental samples to investigate known and unknown chemical features, contaminant exposure signatures, and emerging compounds of concern.",
+    icon: <DropIcon />,
+    image: "Lake and forest landscape, clear water",
+  },
+  {
+    href: "/discuss",
+    title: "Food, Nutrition & Natural Products",
+    body: "Apply LC/MS omics to food composition, nutrition research, natural-product discovery, authenticity, and complex biological or chemical profiling.",
+    icon: <AppleIcon />,
+    image: "Fresh produce close-up: tomatoes, berries, herbs",
+  },
+] as const;
 
 export default function ApplicationsPage() {
   return (
@@ -119,124 +103,122 @@ export default function ApplicationsPage() {
         ]}
       />
 
-      <PageHero
-        eyebrow="Applications"
-        title="One Metablify platform. Multiple omics."
-        lead="Metablify analyzes the mass feature layer shared across LC/MS workflows, with leading applications in metabolomics and proteomics and use across drug discovery, environmental, and agricultural science."
-      >
-        <Button href="/discuss">Discuss Your Project</Button>
-      </PageHero>
-
-      {}
-      <section className="section section-sage">
-        <div className="grid gap-8 md:gap-10 lg:grid-cols-12 lg:items-start">
-          <div className="lg:col-span-5">
+      {/* Hero */}
+      <section className="apps-hero section-wide border-b border-stone">
+        <div className="gutter-x mx-auto max-w-[80rem]">
+          <div className="apps-hero-grid">
             <Reveal>
-              <SectionHeading
-                eyebrow="What we enable"
-                title="Three gains that carry across every workflow"
-                lead="Metablify works at the mass feature layer shared by all LC/MS analysis, so the same benefits apply whatever the samples are."
-              />
+              <p className="eyebrow mb-4">Applications</p>
+              <h1 className="display apps-hero-title">
+                <span className="block">One Platform.</span>
+                <span className="block">Multiple Omics.</span>
+                <span className="block">Many Applications.</span>
+              </h1>
+              <p className="lead mt-6 max-w-[36rem]">
+                Metablify applies its LC/MS mass-feature analysis platform
+                across metabolomics and proteomics, helping companies extract
+                more usable information from complex datasets across a wide
+                range of commercial applications.
+              </p>
+              <div className="mt-8">
+                <Button href="/discuss">Discuss a Project</Button>
+              </div>
             </Reveal>
-          </div>
-          <div className="lg:col-span-7">
-            <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3">
-              {enables.map((item, i) => (
-                <Reveal key={item.title} delay={i * 80}>
-                  <div className="card flex h-full flex-col">
-                    <h3
-                      className="mb-3 text-lg text-ink"
-                      style={{ fontFamily: "var(--font-display)" }}
-                    >
-                      {item.title}
-                    </h3>
-                    <p className="text-sm leading-relaxed text-muted">
-                      {item.body}
-                    </p>
-                  </div>
-                </Reveal>
-              ))}
-            </div>
+            <Reveal delay={120} className="apps-hero-art">
+              <RidgelineVisual />
+              <p className="apps-hero-tag">
+                Same data.
+                <br />
+                More to discover.
+                <span className="apps-hero-rule" aria-hidden="true" />
+              </p>
+            </Reveal>
           </div>
         </div>
       </section>
 
-      {}
+      {/* The omics */}
       <section className="section">
-        <Reveal>
-          <SectionHeading
-            eyebrow="The omics"
-            title="Two leading applications, one measurement layer"
-            lead="Different omics ask different questions of the same underlying LC/MS measurement, which is where Metablify does its work."
-          />
-        </Reveal>
         <div className="grid gap-6 md:grid-cols-2">
           {omics.map((app, i) => (
-            <Reveal key={app.href} delay={i * 90}>
+            <Reveal key={app.href} delay={i * 90} className="h-full">
               <Link
                 href={app.href}
-                className="card card-link group flex h-full flex-col"
+                className={`omics-card omics-card--${app.tone} group`}
               >
-                <h3
-                  className="mb-4 text-2xl text-ink md:text-3xl"
-                  style={{ fontFamily: "var(--font-display)" }}
-                >
-                  {app.title}
-                </h3>
-                <p className="mb-6 text-muted leading-relaxed">{app.body}</p>
-                <ul className="mb-8 space-y-3 text-sm text-muted">
-                  {app.points.map((point) => (
-                    <li key={point} className="flex gap-3">
-                      <span
-                        className="mt-2 h-1.5 w-1.5 shrink-0 bg-ink"
-                        aria-hidden="true"
-                      />
-                      <span>{point}</span>
-                    </li>
-                  ))}
-                </ul>
-                <span className="arrow-link mt-auto">
-                  Explore {app.title} <span className="arrow-ne">↗</span>
-                </span>
+                <div className="omics-card-copy">
+                  <span className="omics-card-badge">{app.icon}</span>
+                  <h2 className="omics-card-title">{app.title}</h2>
+                  <p className="omics-card-body">{app.body}</p>
+                  <span className="arrow-link mt-auto">
+                    Explore {app.title} <span className="arrow-ne">→</span>
+                  </span>
+                </div>
+                <div className="omics-card-media">
+                  <ImagePlaceholder ratio="1/1" label={app.image} />
+                </div>
               </Link>
             </Reveal>
           ))}
         </div>
-        <Reveal delay={180}>
-          <div className="card card-provisional mt-6">
-            <p className="eyebrow mb-3">Under evaluation</p>
-            <h3
-              className="mb-3 text-lg text-ink"
-              style={{ fontFamily: "var(--font-display)" }}
-            >
-              Other omics
-            </h3>
-            <p className="max-w-2xl text-sm leading-relaxed text-muted">
-              The mass feature layer is not specific to metabolites or peptides.
-              Other omics are under evaluation and are not offered today. If your
-              work sits outside these two, tell us what you measure and we will
-              say plainly whether the platform applies.
-            </p>
-          </div>
-        </Reveal>
       </section>
 
-      {}
-      <SpecificApplications />
+      {/* Where Metablify can be applied */}
+      <section className="section-wide band-y section-grey">
+        <div className="gutter-x mx-auto max-w-[80rem]">
+          <Reveal>
+            <p className="eyebrow mb-4">Real-world impact</p>
+            <h2 className="display display-lg mb-4 max-w-3xl">
+              Where Metablify Can Be Applied
+            </h2>
+            <p className="lead mb-10 md:mb-14">
+              Our platform supports companies across diverse industries,
+              applying metabolomics and proteomics workflows to solve
+              real-world challenges.
+            </p>
+          </Reveal>
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {fields.map((f, i) => (
+              <Reveal key={f.title} delay={i * 70} className="h-full">
+                <Link href={f.href} className="field-card group">
+                  <div className="field-card-media">
+                    <ImagePlaceholder ratio="3/2" label={f.image} />
+                    <span className="field-card-badge">{f.icon}</span>
+                  </div>
+                  <div className="field-card-body">
+                    <h3 className="field-card-title">{f.title}</h3>
+                    <p className="field-card-text">{f.body}</p>
+                    <span className="arrow-link mt-auto" aria-hidden="true">
+                      <span className="arrow-ne">→</span>
+                    </span>
+                  </div>
+                </Link>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
 
-      {}
-      <section className="section-forest section-wide band-y text-center">
+      {/* Closing CTA */}
+      <section className="section">
         <Reveal>
-          <h2 className="display display-lg mx-auto mb-5 max-w-3xl text-white">
-            Not sure which fits your data?
-          </h2>
-          <p className="lead mx-auto mb-10 !text-white/75">
-            Tell us about your samples and objective. We will help find the right
-            approach.
+          <div className="apps-cta">
+            <div>
+              <p className="eyebrow mb-4">Let’s advance your research</p>
+              <h2 className="display display-lg mb-4">Discuss Your Project</h2>
+              <p className="lead">
+                Tell us about your LC/MS dataset and research goals. We’ll help
+                you explore how Metablify can add value to your work.
+              </p>
+            </div>
+            <div className="apps-cta-action">
+              <Button href="/discuss">Discuss a Project</Button>
+            </div>
+          </div>
+          <p className="apps-tagline">
+            More signal. Greater discovery.
+            <span className="apps-hero-rule" aria-hidden="true" />
           </p>
-          <Button href="/discuss" variant="on-green">
-            Discuss Your Project
-          </Button>
         </Reveal>
       </section>
     </>

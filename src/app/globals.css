@@ -28,6 +28,7 @@
 @import "./styles/journey.css";
 @import "./styles/pipeline.css";
 @import "./styles/team.css";
+@import "./styles/applications.css";
 
 /* Cross-cutting reduced-motion overrides. Loads after every domain that
    declares an animation, so it can switch them off. */

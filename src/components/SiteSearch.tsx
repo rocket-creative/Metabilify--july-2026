@@ -30,7 +30,7 @@ const GROUP_LABEL: Record<PageFamily, string> = {
 // Blurbs for the marketing routes, which carry no registry entry of their own.
 const ROUTE_BLURBS: Record<string, string> = {
   "/": "Metablify — see more in your LC/MS data.",
-  "/platform": "The Metablify platform.",
+  "/technology": "The Metablify technology.",
   "/applications": "Where the platform is applied.",
   "/work-with-us":
     "Analytical services, platform development, and collaborations.",

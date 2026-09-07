@@ -1,0 +1,245 @@
+/* /applications, built to the CEO's 9/7 mockup. */
+
+.apps-hero {
+  background: var(--color-white);
+  padding-block: clamp(3rem, 7vw, 6.5rem);
+  overflow: hidden;
+}
+
+.apps-hero-grid {
+  display: grid;
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: center;
+}
+
+@media (min-width: 1024px) {
+  .apps-hero-grid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+}
+
+.apps-hero-title {
+  color: var(--color-ink);
+  font-size: clamp(2.5rem, 5vw, 4rem);
+}
+
+.apps-hero-art {
+  position: relative;
+  color: var(--color-forest);
+}
+
+.ridgeline {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.apps-hero-tag {
+  position: absolute;
+  top: 0.5rem;
+  right: 0;
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  line-height: 1.8;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+.apps-hero-rule {
+  display: block;
+  width: 3rem;
+  height: 2px;
+  margin-top: 0.75rem;
+  background: var(--color-forest);
+}
+
+/* Omics cards: copy left, image right, one wash per omics. */
+
+.omics-card {
+  height: 100%;
+  display: grid;
+  grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+  border: 1px solid var(--color-stone);
+  border-radius: 1.5rem;
+  overflow: hidden;
+  color: inherit;
+  text-decoration: none;
+  transition: border-color 240ms ease, transform 240ms ease;
+}
+
+.omics-card:hover {
+  border-color: rgba(26, 26, 26, 0.35);
+  transform: translateY(-3px);
+}
+
+.omics-card--sage {
+  background: var(--color-hero-green);
+}
+
+.omics-card--grey {
+  background: var(--color-neutral);
+}
+
+.omics-card-copy {
+  display: flex;
+  flex-direction: column;
+  padding: clamp(1.5rem, 3vw, 2.25rem);
+}
+
+.omics-card-badge {
+  display: grid;
+  place-items: center;
+  width: clamp(3.5rem, 5vw, 4.5rem);
+  height: clamp(3.5rem, 5vw, 4.5rem);
+  border-radius: 999px;
+  background: var(--color-white);
+  color: var(--color-forest);
+  border: 1px solid var(--color-stone);
+  margin-bottom: 1.25rem;
+}
+
+.omics-card-badge svg {
+  width: 56%;
+  height: 56%;
+}
+
+.omics-card-title {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-ink);
+  margin: 0 0 0.75rem;
+}
+
+.omics-card-body {
+  margin: 0 0 1.5rem;
+  max-width: 26rem;
+  font-size: 0.9375rem;
+  line-height: 1.65;
+  color: var(--color-muted);
+}
+
+.omics-card-media .image-placeholder {
+  height: 100%;
+  border-radius: 0;
+  border-width: 0 0 0 1px;
+}
+
+@media (max-width: 639px) {
+  .omics-card {
+    grid-template-columns: 1fr;
+  }
+
+  .omics-card-media .image-placeholder {
+    border-width: 1px 0 0;
+  }
+}
+
+/* Field cards: image on top, a round badge overlapping the seam. */
+
+.field-card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: var(--color-white);
+  border: 1px solid var(--color-stone);
+  border-radius: 1.5rem;
+  overflow: hidden;
+  color: inherit;
+  text-decoration: none;
+  transition: border-color 240ms ease, transform 240ms ease;
+}
+
+.field-card:hover {
+  border-color: rgba(26, 26, 26, 0.35);
+  transform: translateY(-3px);
+}
+
+.field-card-media {
+  position: relative;
+}
+
+.field-card-media .image-placeholder {
+  border-radius: 0;
+  border-width: 0 0 1px;
+}
+
+.field-card-badge {
+  position: absolute;
+  left: 1.25rem;
+  bottom: -1.5rem;
+  display: grid;
+  place-items: center;
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 999px;
+  background: var(--color-white);
+  color: var(--color-forest);
+  border: 1px solid var(--color-stone);
+  box-shadow: 0 6px 18px rgba(18, 50, 39, 0.12);
+}
+
+.field-card-badge svg {
+  width: 56%;
+  height: 56%;
+}
+
+.field-card-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 2.5rem clamp(1.25rem, 2.5vw, 1.75rem) clamp(1.25rem, 2.5vw, 1.75rem);
+}
+
+.field-card-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  font-size: 1.15rem;
+  line-height: 1.3;
+  color: var(--color-ink);
+  margin: 0 0 0.6rem;
+}
+
+.field-card-text {
+  margin: 0 0 1.5rem;
+  font-size: 0.9rem;
+  line-height: 1.65;
+  color: var(--color-muted);
+}
+
+/* Closing CTA */
+
+.apps-cta {
+  display: grid;
+  gap: 2rem;
+  align-items: center;
+  background: var(--color-hero-green);
+  border: 1px solid var(--color-stone);
+  border-radius: 1.5rem;
+  padding: clamp(1.75rem, 4vw, 3rem);
+}
+
+@media (min-width: 810px) {
+  .apps-cta {
+    grid-template-columns: minmax(0, 2fr) auto;
+  }
+}
+
+.apps-tagline {
+  margin: 2.5rem 0 0;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+.apps-tagline .apps-hero-rule {
+  margin-inline: auto;
+}

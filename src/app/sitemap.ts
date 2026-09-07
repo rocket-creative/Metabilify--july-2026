@@ -7,7 +7,7 @@ import type { PageFamily } from "@/types/content";
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticRoutes = [
     "",
-    "/platform",
+    "/technology",
     "/applications",
     "/applications/metabolomics",
     "/applications/proteomics",

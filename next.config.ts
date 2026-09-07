@@ -13,6 +13,7 @@ const securityHeaders = [
       "frame-ancestors 'none'",
       "base-uri 'self'",
       "form-action 'self'",
+      "frame-src https://www.youtube-nocookie.com",
     ].join("; "),
   },
   { key: "X-Frame-Options", value: "DENY" },
@@ -26,6 +27,12 @@ const securityHeaders = [
 
 const nextConfig: NextConfig = {
   poweredByHeader: false,
+  async redirects() {
+    return [
+      // The page was renamed from Platform to Technology on 9/7.
+      { source: "/platform", destination: "/technology", permanent: true },
+    ];
+  },
   async headers() {
     return [
       {

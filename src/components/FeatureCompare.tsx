@@ -42,7 +42,7 @@ const CALLOUTS: readonly Callout[] = [
   },
   {
     key: "shared",
-    anchor: [336, 306],
+    anchor: [372, 292],
     exitY: 236,
     tone: "legacy",
     body: "Legacy workflows detect only a subset of real mass features.",
@@ -52,7 +52,7 @@ const CALLOUTS: readonly Callout[] = [
     anchor: [452, 372],
     exitY: 386,
     tone: "legacy",
-    body: "A subset of mass features detected by legacy workflows are noise or artifacts.",
+    body: "A subset of signals reported by legacy workflows as mass features may be noise or artifacts.",
   },
 ];
 
@@ -118,9 +118,8 @@ const LEGACY_DOTS = stipple(LEGACY, 420, 37).filter(
 
 function leaderPath({ anchor, exitY }: Callout) {
   const [x, y] = anchor;
-  // Short diagonal off the anchor, then a straight run to the edge.
-  const kneeX = x + 42;
-  return `M${x} ${y} L${kneeX} ${exitY} L${VB_W} ${exitY}`;
+  // One straight line from the region to the callout, as the CEO drew it.
+  return `M${x} ${y} L${VB_W} ${exitY}`;
 }
 
 export function FeatureCompare() {
@@ -243,8 +242,8 @@ export function FeatureCompare() {
               </g>
               <text
                 className="fc-set-label fc-set-label--real"
-                x={REAL.cx - 60}
-                y={REAL.cy - 130}
+                x={REAL.cx - REAL.r + 8}
+                y={REAL.cy - REAL.r - 14}
               >
                 Metablify
               </text>
@@ -256,8 +255,9 @@ export function FeatureCompare() {
                 cy={LEGACY.cy}
                 r={LEGACY.r}
                 fill="url(#fc-legacy-fill)"
-                stroke="var(--color-faint)"
-                strokeWidth="1.25"
+                stroke="var(--color-muted)"
+                strokeWidth="1.5"
+                strokeDasharray="5 4"
               />
               <g fill="var(--color-muted)">
                 {LEGACY_DOTS.map(([x, y, r, o], i) => (
