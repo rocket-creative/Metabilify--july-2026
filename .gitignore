@@ -25,6 +25,9 @@
 ._*
 *.pem
 
+# Affinity Designer session lockfiles (keep the .af source in LOGO FILES)
+*.af~lock~
+
 # local scratch scripts
 /_to_delete/
 

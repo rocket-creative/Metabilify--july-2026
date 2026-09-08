@@ -25,6 +25,22 @@
   transition: padding-block 260ms var(--ease-out-expo);
 }
 
+/* Full lockup from LOGO FILES. The global img rule is unlayered, so height
+   and max-width have to be forced here. */
+.brand-logo {
+  display: block;
+  height: 2.15rem !important;
+  width: auto;
+  max-width: min(13.75rem, 52vw) !important;
+}
+
+@media (min-width: 768px) {
+  .brand-logo {
+    height: 2.55rem !important;
+    max-width: none !important;
+  }
+}
+
 /* Nav sits inline with the bar, pushed right so it reads as one row with the
    logo and the CTA rather than a detached strip beneath them. */
 .site-nav {

@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Image from "next/image";
 import gsap from "gsap";
+import { siteConfig } from "@/lib/site";
 
 /**
  * The opening animation the CEO described: a field of noisy peaks that
@@ -114,26 +114,15 @@ export function Preloader() {
           <path className="preloader-real" d={bell(120, 54, 12)} />
         </svg>
         <div className="preloader-brand">
-          <div className="preloader-mark">
-            <Image
-              className="no-round"
-              src="/images/logo-icon.png"
-              alt=""
-              width={333}
-              height={333}
-              priority
-            />
-          </div>
-          <div className="preloader-word">
-            <Image
-              className="no-round"
-              src="/images/logo-wordmark.png"
-              alt=""
-              width={1270}
-              height={308}
-              priority
-            />
-          </div>
+          <img
+            className="preloader-logo no-round"
+            src={siteConfig.logo.src}
+            alt=""
+            width={siteConfig.logo.width}
+            height={siteConfig.logo.height}
+            decoding="async"
+            fetchPriority="high"
+          />
         </div>
       </div>
     </div>

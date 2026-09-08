@@ -6,6 +6,12 @@ export const siteConfig = {
   email: "hello@metablify.com",
   notifyEmail: process.env.NOTIFY_EMAIL ?? "hello@metablify.com",
   origin: "Donald Danforth Plant Science Center",
+  // Served copy of LOGO FILES/metab-logo-final.svg. Intrinsic size from the SVG viewBox.
+  logo: {
+    src: "/images/metab-logo-final.svg",
+    width: 1605,
+    height: 329,
+  },
 } as const;
 
 // No "Home" entry: the logo is the home link, which is where people look for it.

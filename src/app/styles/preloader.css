@@ -32,17 +32,11 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.75rem;
 }
 
-/* Sized here because the global img rule is unlayered and wins over utilities. */
-.preloader-mark img {
-  width: 3rem;
-  height: auto;
-}
-
-.preloader-word img {
-  width: 8.75rem;
+.preloader-logo {
+  width: min(18rem, 72vw);
+  height: auto !important;
 }
 
 .grain-overlay {

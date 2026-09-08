@@ -1,36 +1,31 @@
-import Image from "next/image";
 import Link from "next/link";
+import { siteConfig } from "@/lib/site";
 
 type LogoProps = {
   className?: string;
   priority?: boolean;
 };
 
+/**
+ * Site mark. The canonical brand files live in /LOGO FILES and must not be
+ * deleted — that folder is the source for clones and future exports. The
+ * served file is public/images/metab-logo-final.svg.
+ */
 export function Logo({ className = "", priority = false }: LogoProps) {
   return (
     <Link
       href="/"
-      className={`inline-flex shrink-0 items-center gap-2.5 ${className}`}
+      className={`inline-flex shrink-0 items-center ${className}`}
       aria-label="Metablify home"
     >
-      <Image
-        src="/images/logo-icon.png"
+      <img
+        src={siteConfig.logo.src}
         alt=""
-        width={333}
-        height={333}
-        // Important: the global img rule is unlayered, so it outranks plain
-        // height utilities and would leave this at height auto.
-        className="no-round !h-11 w-auto !max-w-none md:!h-12"
-        priority={priority}
-      />
-      <Image
-        src="/images/logo-wordmark.png"
-        alt=""
-        width={1270}
-        height={308}
-        // Wordmark sits below the icon’s optical weight — a bit over half its height.
-        className="no-round !h-7 w-auto !max-w-none md:!h-8"
-        priority={priority}
+        width={siteConfig.logo.width}
+        height={siteConfig.logo.height}
+        className="brand-logo no-round"
+        decoding="async"
+        fetchPriority={priority ? "high" : "auto"}
       />
     </Link>
   );

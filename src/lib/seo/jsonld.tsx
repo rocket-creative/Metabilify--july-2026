@@ -92,6 +92,6 @@ export function organizationSchema() {
     url: siteConfig.url,
     description: siteConfig.description,
     email: siteConfig.email,
-    logo: `${siteConfig.url}/images/logo-lockup.png`,
+    logo: `${siteConfig.url}${siteConfig.logo.src}`,
   };
 }
