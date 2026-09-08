@@ -194,7 +194,8 @@ export default function WorkWithUsPage() {
         </div>
       </section>
 
-      <SampleJourney />
+      {/* Hidden for now — restore by rendering <SampleJourney /> */}
+      {false && <SampleJourney />}
 
       {/* Closing CTA */}
       <section className="section">
