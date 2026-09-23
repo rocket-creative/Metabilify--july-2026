@@ -293,10 +293,6 @@
 }
 
 .work-band-photo {
-  display: block;
   width: 100%;
   height: 100%;
-  aspect-ratio: 3 / 2;
-  object-fit: cover;
-  border-radius: 1.5rem;
 }

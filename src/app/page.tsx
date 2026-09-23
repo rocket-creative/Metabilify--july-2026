@@ -1,19 +1,19 @@
 import { ApplicationsCarousel } from "@/components/ApplicationsCarousel";
 import { Button } from "@/components/Button";
 import { CapabilitiesBand } from "@/components/CapabilitiesBand";
-import { FeatureCompare } from "@/components/FeatureCompare";
+import MassFeatureCircle from "@/components/visuals/MassFeatureCircle";
 import { FieldsGrid } from "@/components/FieldsGrid";
 import { ImagePlaceholder } from "@/components/ImagePlaceholder";
 import { ProcessFlow } from "@/components/ProcessFlow";
 import { Reveal } from "@/components/Reveal";
-import { StaticHero } from "@/components/StaticHero";
+import MetablifyHero from "@/components/MetablifyHero";
 import {
   CodeBracketsIcon,
   PartnershipIcon,
   VialIcon,
 } from "@/components/visuals/ServiceIcons";
-import Image from "next/image";
 import Link from "next/link";
+import { Photo } from "@/components/Photo";
 
 const services = [
   {
@@ -47,9 +47,9 @@ const services = [
 export default function HomePage() {
   return (
     <>
-      <StaticHero />
+      <MetablifyHero />
 
-      {/* The Venn message the pinned dive used to carry. */}
+      {/* Legacy workflows versus the broader set Metablify recovers. */}
       <section className="section">
         <Reveal>
           <p className="eyebrow mb-4">Why Metablify</p>
@@ -57,7 +57,7 @@ export default function HomePage() {
             Don’t leave real mass features in the noise.
           </h2>
         </Reveal>
-        <FeatureCompare />
+        <MassFeatureCircle className="mt-2" />
       </section>
 
       <CapabilitiesBand />
@@ -104,8 +104,9 @@ export default function HomePage() {
                 </p>
               </div>
               <div className="work-band-media">
-                <Image
-                  className="work-band-photo photo"
+                <Photo
+                  shape="card"
+                  className="work-band-photo"
                   src="/images/team-whiteboard.jpg"
                   alt="Ivan Baxter, Louis Connelly, and Allen Hubbard working through a chromatogram at a whiteboard"
                   width={1800}

@@ -4,7 +4,7 @@ import { BreadcrumbJsonLd } from "@/components/JsonLd";
 import { PageHero, SectionHeading } from "@/components/PageHero";
 import { PlatformPipeline } from "@/components/PlatformPipeline";
 import { Reveal } from "@/components/Reveal";
-import { FeatureCompare } from "@/components/FeatureCompare";
+import MassFeatureCircle from "@/components/visuals/MassFeatureCircle";
 import { ScaleBand } from "@/components/ScaleBand";
 
 export const metadata: Metadata = {
@@ -16,8 +16,9 @@ export const metadata: Metadata = {
 
 /**
  * Structure per the 9/7 review: hero, Align → Pool → Amplify → output, the
- * Venn diagram, then a built-for-scale band in place of the omics cards. The
- * page was /platform until the CEO renamed it; /platform redirects here.
+ * mass-feature comparison, then a built-for-scale band in place of the omics
+ * cards. The page was /platform until the CEO renamed it; /platform redirects
+ * here.
  */
 export default function TechnologyPage() {
   return (
@@ -52,7 +53,7 @@ export default function TechnologyPage() {
             lead="Legacy workflows may recover only a subset of real mass features. Metablify reveals a broader set from the same LC/MS dataset."
           />
         </Reveal>
-        <FeatureCompare />
+        <MassFeatureCircle className="mt-2" />
       </section>
 
       <ScaleBand />

@@ -5,7 +5,6 @@ import { AnnouncementRibbon } from "@/components/AnnouncementRibbon";
 import { Footer } from "@/components/Footer";
 import { OrganizationJsonLd, WebsiteJsonLd } from "@/components/JsonLd";
 import { SmoothScroll } from "@/components/SmoothScroll";
-import { Preloader } from "@/components/Preloader";
 import { siteConfig } from "@/lib/site";
 import "./globals.css";
 
@@ -69,7 +68,6 @@ export default function RootLayout({
         <OrganizationJsonLd />
         <WebsiteJsonLd />
         <SmoothScroll>
-          <Preloader />
           <div className="magazine">
             <div className="magazine-inner flex min-h-screen flex-col">
               {/* Above the header and outside it, so it scrolls away while the

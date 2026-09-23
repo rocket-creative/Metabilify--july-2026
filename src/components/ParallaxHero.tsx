@@ -267,19 +267,9 @@ export function ParallaxHero() {
       };
     };
 
-    let cleanup: (() => void) | undefined;
-    const onReady = () => {
-      cleanup = start();
-    };
-
-    window.addEventListener("metablify:ready", onReady, { once: true });
-    const fallback = window.setTimeout(() => {
-      if (!cleanup) cleanup = start();
-    }, 3200);
+    const cleanup = start();
 
     return () => {
-      window.clearTimeout(fallback);
-      window.removeEventListener("metablify:ready", onReady);
       cleanup?.();
     };
   }, []);

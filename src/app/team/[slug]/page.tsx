@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
+import { Photo } from "@/components/Photo";
 import { notFound } from "next/navigation";
 import { CopyPlaceholder, ImagePlaceholder } from "@/components/ImagePlaceholder";
 import { BreadcrumbJsonLd } from "@/components/JsonLd";
@@ -62,8 +62,9 @@ export default async function TeamMemberPage({
           <Reveal>
             <div className="team-bio-media">
               {person.photo ? (
-                <Image
-                  className="team-photo photo"
+                <Photo
+                  shape="circle"
+                  className="team-photo"
                   src={person.photo}
                   alt={person.name}
                   width={600}

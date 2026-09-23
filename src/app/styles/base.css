@@ -171,11 +171,74 @@ img.no-round,
   box-shadow: none;
 }
 
-/* One look for every photograph on the site: same corners, a hairline, and
-   the colour pulled back a touch so stock, headshots and the team photo read
-   as one set rather than five different shoots. */
+/* One look for every photograph on the site. Real images render through
+   src/components/Photo.tsx, which wraps them in .photo-frame: a fixed crop
+   per slot shape, one colour grade, and a faint forest tint over the frame so
+   stock, headshots and the team's own photos read as one set. Adjust the
+   grade here and nowhere else. */
+.photo-frame {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  border-radius: 1.5rem;
+  border: 1px solid var(--color-stone);
+  background: var(--color-neutral);
+  isolation: isolate;
+}
+
+.photo-frame > img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 0;
+  filter: saturate(0.78) contrast(1.04);
+}
+
+/* The tint: forest laid over the photo in colour blend mode, so highlights
+   stay clean and the midtones lean toward the brand green. */
+.photo-frame::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--color-forest);
+  mix-blend-mode: color;
+  opacity: 0.16;
+  pointer-events: none;
+}
+
+.photo-frame--card {
+  aspect-ratio: 3 / 2;
+}
+
+.photo-frame--wide {
+  aspect-ratio: 16 / 9;
+}
+
+.photo-frame--circle {
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+}
+
+/* Flat: no crop, no radius — logos and charts that must not be recoloured. */
+.photo-frame--flat {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+.photo-frame--flat > img {
+  filter: none;
+  object-fit: contain;
+}
+
+.photo-frame--flat::after {
+  display: none;
+}
+
+/* Kept for anything still carrying the old class. */
 .photo {
   border-radius: 1.5rem;
   border: 1px solid var(--color-stone);
-  filter: saturate(0.82) contrast(1.03);
+  filter: saturate(0.78) contrast(1.04);
 }
