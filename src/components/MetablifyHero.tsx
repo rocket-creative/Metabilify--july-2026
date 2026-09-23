@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import {
-  animate,
   motion,
   useMotionValue,
   useMotionValueEvent,
@@ -117,7 +116,9 @@ function mulberry32(seed: number) {
 }
 
 // ---------- placeholder data ----------
-type ScatterPt = { x0: number; x1: number; y: number; color: string; file: number };
+type ScatterPt = { x0: number; x1: number; y: number; file: number };
+
+const r1 = (n: number) => Math.round(n * 10) / 10;
 
 function buildScatter(): ScatterPt[] {
   const rand = mulberry32(4401);
@@ -129,12 +130,13 @@ function buildScatter(): ScatterPt[] {
       const v = 3.5 + 4 * Math.pow(rand(), 0.8);
       const spread = 0.00035 * (1 + (7.5 - v) / 4);
       const j = (rand() - 0.5) * spread;
-      pts.push({ x0: mzX(center + off + j), x1: mzX(center + j * 0.55), y: aY(v), color: C.files[f], file: f });
+      pts.push({ x0: r1(mzX(center + off + j)), x1: r1(mzX(center + j * 0.55)), y: r1(aY(v)), file: f });
     }
   });
   for (let i = 0; i < 36; i++) {
     const x = mzX(176.1013 + rand() * 0.0034);
-    pts.push({ x0: x, x1: x, y: aY(3.8 + rand()), color: C.noise, file: -1 });
+    const px = r1(x);
+    pts.push({ x0: px, x1: px, y: r1(aY(3.8 + rand())), file: -1 });
   }
   return pts;
 }
@@ -148,7 +150,7 @@ function buildRT() {
     for (let rt = 8.03; rt <= 8.58; rt += 0.009) {
       const sigma = rt < mu ? 0.06 : 0.1; // tailing peak
       const v = 4.6 + (h - 4.6) * Math.exp(-((rt - mu) ** 2) / (2 * sigma ** 2)) + (rand() - 0.5) * 0.24;
-      pts.push({ x: rtX(rt), y: rtY(v) });
+      pts.push({ x: r1(rtX(rt)), y: r1(rtY(v)) });
     }
     return { color, pts };
   });
@@ -194,21 +196,32 @@ function useAttrTransform(p: MotionValue<number>, fn: (v: number) => string) {
 const moveScale = (cx: number, cy: number, dx: number, dy: number, s: number) =>
   `translate(${cx + dx} ${cy + dy}) scale(${s}) translate(${-cx} ${-cy})`;
 
-// ---------- small animated pieces (each owns its hooks) ----------
-function Well({ p, cx, cy, start, color }: { p: MotionValue<number>; cx: number; cy: number; start: number; color: string }) {
-  const t = useTransform(p, [start, start + 0.012], [0, 1]);
-  return (
-    <g>
-      <circle cx={cx} cy={cy} r={PLATE.r} fill={C.wellEmpty} stroke={C.wellStroke} />
-      <motion.circle cx={cx} cy={cy} r={PLATE.r - 2} fill={color} style={{ opacity: t, scale: t }} />
-    </g>
-  );
+/** One filled circle, as a path subcommand. A cloud of these is a single paint. */
+function circleCmd(x: number, y: number, r: number) {
+  const d = r * 2;
+  return `M${x.toFixed(1)} ${y.toFixed(1)}m-${r} 0a${r} ${r} 0 1 1 ${d} 0a${r} ${r} 0 1 1 -${d} 0`;
 }
 
-function ScatterDot({ p, pt, appear }: { p: MotionValue<number>; pt: ScatterPt; appear: number }) {
-  const cx = useTransform(p, [P.align[0], P.align[1]], [pt.x0, pt.x1]);
-  const opacity = useTransform(p, [appear, appear + 0.015], [0, 0.85]);
-  return <motion.circle cx={cx} cy={pt.y} r={2.4} fill={pt.color} style={{ opacity }} />;
+function scatterPath(pts: ScatterPt[], u: number, r = 2.4) {
+  let d = "";
+  for (let i = 0; i < pts.length; i++) {
+    const pt = pts[i];
+    d += circleCmd(pt.x0 + (pt.x1 - pt.x0) * u, pt.y, r);
+  }
+  return d;
+}
+
+function cloudPath(pts: { x: number; y: number }[], r: number) {
+  let d = "";
+  for (let i = 0; i < pts.length; i++) d += circleCmd(pts[i].x, pts[i].y, r);
+  return d;
+}
+
+function setShown(el: SVGElement | null, on: boolean) {
+  if (!el) return;
+  const next = on ? "inline" : "none";
+  if (el.style.display === next) return;
+  el.style.display = next;
 }
 
 function Caption({ p, range, text }: { p: MotionValue<number>; range: [number, number]; text: string }) {
@@ -326,7 +339,12 @@ const HERO_CSS = `
 .mh-cta:hover{filter:brightness(1.08)}
 .mh-meta{list-style:none;padding:0;margin:clamp(16px,3.5vh,32px) 0 0;display:grid;gap:0.5rem;font-family:var(--font-mono);font-size:0.68rem;line-height:1.6;letter-spacing:0.12em;text-transform:uppercase;font-weight:500;color:${C.muted};max-width:48ch}
 .mh-visual{height:100%;min-height:0;display:flex;flex-direction:column;justify-content:center}
-.mh-visual svg{display:block;width:100%;height:auto;flex:0 1 auto;min-height:0;font-family:var(--font-mono)}
+.mh-visual svg{display:block;width:100%;height:auto;flex:0 1 auto;min-height:0;font-family:var(--font-mono);pointer-events:none}
+.mh-later{display:none}
+.mh-well{opacity:0;transform-box:fill-box;transform-origin:center}
+.mh-plate[data-on="1"] .mh-well{animation:mh-well .38s linear forwards;animation-delay:calc(var(--i) * 29.3ms)}
+@keyframes mh-well{from{opacity:0;transform:scale(0)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.mh-well{opacity:1;animation:none;transform:none}}
 .mh-ui{font-family:var(--font-body)}
 .mh-caption{position:relative;flex:0 0 auto;min-height:2.8em;margin-top:clamp(8px,2vh,20px);font-family:var(--font-display);font-size:clamp(1.125rem,1.9vw,1.75rem);text-align:center}
 .mh-cap{position:absolute;left:50%;top:0;width:max-content;max-width:min(36ch,100%);margin:0;line-height:1.3;font-weight:500;letter-spacing:-0.015em;color:${C.text};text-align:center}
@@ -341,34 +359,15 @@ export default function MetablifyHero({ images, className }: Props) {
   const p = useMotionValue(0);
   const stageOpacity = useMotionValue(1);
   const reduce = useReducedMotion();
-
-  useEffect(() => {
-    if (reduce) {
-      p.set(1);
-      return;
-    }
-    let alive = true;
-    (async () => {
-      while (alive) {
-        p.set(0);
-        await animate(stageOpacity, 1, { duration: 0.5 });
-        if (!alive) break;
-        await animate(p, 1, { duration: LOOP_SECONDS, ease: "linear" });
-        if (!alive) break;
-        await new Promise((r) => setTimeout(r, HOLD_MS));
-        if (!alive) break;
-        await animate(stageOpacity, 0, { duration: 0.5 });
-      }
-    })();
-    return () => {
-      alive = false;
-      p.stop();
-      stageOpacity.stop();
-    };
-  }, [reduce, p, stageOpacity]);
+  const rootRef = useRef<HTMLElement>(null);
   const uid = useId().replace(/:/g, "");
-  const scatter = useMemo(buildScatter, []);
-  const rt = useMemo(buildRT, []);
+  const scatterGroups = useMemo(() => {
+    const groups: ScatterPt[][] = [[], [], [], [], [], []];
+    for (const pt of buildScatter()) groups[pt.file < 0 ? 5 : pt.file].push(pt);
+    return groups;
+  }, []);
+  const scatterStart = useMemo(() => scatterGroups.map((g) => scatterPath(g, 0)), [scatterGroups]);
+  const rtClouds = useMemo(() => buildRT().map((f) => ({ color: f.color, d: cloudPath(f.pts, 2.2) })), []);
   const wellColors = useMemo(() => {
     const rand = mulberry32(96);
     return Array.from({ length: 96 }, () => C.soil[Math.floor(rand() * C.soil.length)]);
@@ -422,7 +421,6 @@ export default function MetablifyHero({ images, className }: Props) {
   const titleBefore = useTransform(p, [P.align[0], P.align[0] + 0.03], [1, 0]);
   const titleAfter = useTransform(p, [P.align[1] - 0.03, P.align[1]], [0, 1]);
   const rtOpacity = useTransform(p, [...P.rtIn], [0, 1]);
-  const rtClip = useTransform(p, [...P.rtReveal], [0, RT.right - RT.left + 10]);
   const tablesOpacity = useTransform(p, [...P.tables], [0, 1]);
   const tablesY = useTransform(p, [...P.tables], [30, 0]);
 
@@ -431,8 +429,164 @@ export default function MetablifyHero({ images, className }: Props) {
   const wellX0 = plateLeft + 42;
   const wellY0 = plateTop + 42;
 
+  const plantRef = useRef<SVGGElement>(null);
+  const bloodRef = useRef<SVGGElement>(null);
+  const instRef = useRef<SVGGElement>(null);
+  const rtRef = useRef<SVGGElement>(null);
+  const tablesRef = useRef<SVGGElement>(null);
+  const clipRef = useRef<SVGRectElement>(null);
+  const scatterPaths = useRef<(SVGPathElement | null)[]>([]);
+  const scatterState = useRef({ u: -1, opacity: ["", "", "", "", "", ""] });
+
+  // One clock for the whole story. Hidden scenes are taken out of paint, and the
+  // point clouds are single paths updated only while they are actually moving.
+  useEffect(() => {
+    const groups = scatterGroups;
+    const fullClip = RT.right - RT.left + 10;
+    let clipW = -1;
+
+    const apply = (v: number) => {
+      setShown(plantRef.current, v < P.cardsOut[1]);
+      setShown(bloodRef.current, v < P.cardsOut[1]);
+      setShown(soilRef.current, v < P.soilOut[1]);
+      setShown(plateRef.current, v >= P.plateIn[0] && v < P.plateOut[1]);
+      setShown(instRef.current, v >= P.instIn[0] && v < P.instOut[1]);
+      setShown(panelARef.current, v >= P.scatterIn[0]);
+      setShown(rtRef.current, v >= P.rtIn[0]);
+      setShown(tablesRef.current, v >= P.tables[0]);
+
+      const plate = plateRef.current;
+      if (plate) {
+        const on = v >= P.wells[0] && v < P.plateOut[1];
+        if ((plate.getAttribute("data-on") === "1") !== on) {
+          if (on) plate.setAttribute("data-on", "1");
+          else plate.removeAttribute("data-on");
+        }
+      }
+
+      const clip = clipRef.current;
+      if (clip) {
+        const w =
+          v <= P.rtReveal[0] ? 0 : v >= P.rtReveal[1] ? fullClip : ((v - P.rtReveal[0]) / (P.rtReveal[1] - P.rtReveal[0])) * fullClip;
+        const rw = Math.round(w);
+        if (rw !== clipW) {
+          clip.setAttribute("width", String(rw));
+          clipW = rw;
+        }
+      }
+
+      const st = scatterState.current;
+      if (v < P.points[0]) {
+        if (st.u !== 0) {
+          const nodes = scatterPaths.current;
+          for (let g = 0; g < 6; g++) {
+            const node = nodes[g];
+            if (!node) continue;
+            node.setAttribute("d", scatterStart[g]);
+            node.setAttribute("opacity", "0");
+            st.opacity[g] = "0";
+          }
+          st.u = 0;
+        }
+        return;
+      }
+
+      const u = v <= P.align[0] ? 0 : v >= P.align[1] ? 1 : (v - P.align[0]) / (P.align[1] - P.align[0]);
+      const moved = Math.abs(u - st.u) > 0.004;
+      const nodes = scatterPaths.current;
+      for (let g = 0; g < 6; g++) {
+        const node = nodes[g];
+        if (!node) continue;
+        const file = g === 5 ? -1 : g;
+        const appear = file < 0 ? P.points[0] : P.points[0] + (file / 5) * (P.points[1] - P.points[0] - 0.015);
+        const o = Math.min(0.85, Math.max(0, ((v - appear) / 0.015) * 0.85));
+        const oStr = o.toFixed(2);
+        if (st.opacity[g] !== oStr) {
+          node.setAttribute("opacity", oStr);
+          st.opacity[g] = oStr;
+        }
+        if (moved && g < 5) node.setAttribute("d", scatterPath(groups[g], u));
+      }
+      if (moved) st.u = u;
+    };
+
+    if (reduce) {
+      p.set(1);
+      stageOpacity.set(1);
+      apply(1);
+      return;
+    }
+
+    let raf = 0;
+    let playing = false;
+    let last = 0;
+    let acc = 500;
+    const FADE = 500;
+    const PLAY = LOOP_SECONDS * 1000;
+    const CYCLE = FADE + PLAY + HOLD_MS + FADE;
+    const seen = { current: false };
+
+    const step = (now: number) => {
+      if (!playing) return;
+      acc += Math.min(50, now - last);
+      last = now;
+      if (acc >= CYCLE) acc = 0;
+      const t = acc;
+      if (t < FADE) {
+        stageOpacity.set(t / FADE);
+        p.set(0);
+        apply(0);
+      } else if (t < FADE + PLAY) {
+        if (stageOpacity.get() !== 1) stageOpacity.set(1);
+        const v = (t - FADE) / PLAY;
+        p.set(v);
+        apply(v);
+      } else if (t < FADE + PLAY + HOLD_MS) {
+        if (p.get() !== 1) {
+          stageOpacity.set(1);
+          p.set(1);
+          apply(1);
+        }
+      } else {
+        stageOpacity.set(1 - (t - FADE - PLAY - HOLD_MS) / FADE);
+      }
+      raf = requestAnimationFrame(step);
+    };
+
+    const start = () => {
+      if (playing) return;
+      playing = true;
+      last = performance.now();
+      raf = requestAnimationFrame(step);
+    };
+    const stop = () => {
+      playing = false;
+      cancelAnimationFrame(raf);
+    };
+    const sync = () => {
+      if (!document.hidden && seen.current) start();
+      else stop();
+    };
+
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        seen.current = entry.isIntersecting;
+        sync();
+      },
+      { threshold: 0.08 },
+    );
+    if (rootRef.current) io.observe(rootRef.current);
+    document.addEventListener("visibilitychange", sync);
+
+    return () => {
+      stop();
+      io.disconnect();
+      document.removeEventListener("visibilitychange", sync);
+    };
+  }, [reduce, p, stageOpacity, scatterGroups, scatterStart]);
+
   return (
-    <section className={`mh ${className ?? ""}`}>
+    <section ref={rootRef} className={`mh ${className ?? ""}`}>
       <style>{HERO_CSS}</style>
       <div className="mh-copy">
         <h1>See more in your LC/MS data.</h1>
@@ -455,7 +609,7 @@ export default function MetablifyHero({ images, className }: Props) {
               </clipPath>
             ))}
             <clipPath id={`${uid}-rt`}>
-              <motion.rect x={RT.left - 5} y={RT.top - 22} height={RT.bottom - RT.top + 32} style={{ width: rtClip }} />
+              <rect ref={clipRef} x={RT.left - 5} y={RT.top - 22} height={RT.bottom - RT.top + 32} width={0} />
             </clipPath>
           </defs>
 
@@ -465,7 +619,11 @@ export default function MetablifyHero({ images, className }: Props) {
             const img = images?.[c.key];
             const top = CARD.cy - CARD.h / 2;
             return (
-              <motion.g key={c.key} ref={isSoil ? soilRef : undefined} style={{ opacity: isSoil ? soilOpacity : sideOut }}>
+              <motion.g
+                key={c.key}
+                ref={isSoil ? soilRef : c.key === "plant" ? plantRef : bloodRef}
+                style={{ opacity: isSoil ? soilOpacity : sideOut }}
+              >
                 <rect x={c.cx - CARD.w / 2} y={top} width={CARD.w} height={CARD.h} rx={18} fill={C.card} stroke={C.cardStroke} />
                 {img ? (
                   <image href={img} x={c.cx - CARD.w / 2 + 12} y={top + 12} width={CARD.w - 24} height={170} preserveAspectRatio="xMidYMid slice" clipPath={`url(#${uid}-${c.key})`} />
@@ -480,7 +638,7 @@ export default function MetablifyHero({ images, className }: Props) {
           })}
 
           {/* Scene 2: 96-well plate */}
-          <motion.g ref={plateRef} style={{ opacity: plateOpacity }}>
+          <motion.g ref={plateRef} className="mh-plate mh-later" style={{ opacity: plateOpacity }}>
             <rect x={plateLeft} y={plateTop} width={PLATE.w} height={PLATE.h} rx={16} fill="#e9efe9" opacity={0.08} stroke={C.muted} />
             {"ABCDEFGH".split("").map((row, r) => (
               <text key={row} x={plateLeft + 20} y={wellY0 + r * PLATE.pitch + 4} fontSize={10} fill={C.muted} textAnchor="middle">
@@ -495,13 +653,19 @@ export default function MetablifyHero({ images, className }: Props) {
             {Array.from({ length: 96 }, (_, k) => {
               const r = Math.floor(k / 12);
               const c = k % 12;
-              const start = P.wells[0] + (k / 96) * (P.wells[1] - P.wells[0] - 0.012);
-              return <Well key={k} p={p} cx={wellX0 + c * PLATE.pitch} cy={wellY0 + r * PLATE.pitch} start={start} color={wellColors[k]} />;
+              const cx = wellX0 + c * PLATE.pitch;
+              const cy = wellY0 + r * PLATE.pitch;
+              return (
+                <g key={k}>
+                  <circle cx={cx} cy={cy} r={PLATE.r} fill={C.wellEmpty} stroke={C.wellStroke} />
+                  <circle className="mh-well" cx={cx} cy={cy} r={PLATE.r - 2} fill={wellColors[k]} style={{ ["--i" as string]: k }} />
+                </g>
+              );
             })}
           </motion.g>
 
           {/* Scene 3: LC/MS instrument */}
-          <motion.g style={{ opacity: instOpacity }}>
+          <motion.g ref={instRef} className="mh-later" style={{ opacity: instOpacity }}>
             <rect x={INST.cx - 100} y={INST.cy - 150} width={200} height={300} rx={16} fill={C.card} stroke="#3d6b56" />
             <rect x={INST.cx - 80} y={INST.cy - 125} width={160} height={95} rx={8} fill="#0b1a13" />
             <motion.path
@@ -518,7 +682,7 @@ export default function MetablifyHero({ images, className }: Props) {
           </motion.g>
 
           {/* Scene 4-5: panel A, mass before/after alignment */}
-          <motion.g ref={panelARef} style={{ opacity: panelA }}>
+          <motion.g ref={panelARef} className="mh-later" style={{ opacity: panelA }}>
             <rect x={A.x0} y={A.y0} width={A.w} height={A.h} rx={12} fill={C.card} stroke={C.cardStroke} />
             <motion.text className="mh-ui" x={A.x0} y={A.y0 - 14} fontSize={16} fill={C.text} style={{ opacity: titleBefore }}>
               Before mass adjustment
@@ -556,14 +720,21 @@ export default function MetablifyHero({ images, className }: Props) {
             >
               log10(intensity)
             </text>
-            {scatter.map((pt, i) => {
-              const appear = pt.file < 0 ? P.points[0] : P.points[0] + (pt.file / 5) * (P.points[1] - P.points[0] - 0.015);
-              return <ScatterDot key={i} p={p} pt={pt} appear={appear} />;
-            })}
+            {scatterStart.map((d, g) => (
+              <path
+                key={g}
+                ref={(el) => {
+                  scatterPaths.current[g] = el;
+                }}
+                d={d}
+                fill={g === 5 ? C.noise : C.files[g]}
+                opacity={0}
+              />
+            ))}
           </motion.g>
 
           {/* Scene 5: panel C, retention-time peak */}
-          <motion.g style={{ opacity: rtOpacity }}>
+          <motion.g ref={rtRef} className="mh-later" style={{ opacity: rtOpacity }}>
             <rect x={RT.x0} y={RT.y0} width={RT.w} height={RT.h} rx={12} fill={C.card} stroke={C.cardStroke} />
             <text className="mh-ui" x={RT.x0} y={RT.y0 - 14} fontSize={16} fill={C.text}>
               Retention-time peak with consensus center
@@ -603,19 +774,15 @@ export default function MetablifyHero({ images, className }: Props) {
               8.28
             </text>
             <g clipPath={`url(#${uid}-rt)`}>
-              {rt.map((f, i) => (
-                <g key={i}>
-                  {f.pts.map((pt, j) => (
-                    <circle key={j} cx={pt.x} cy={pt.y} r={2.2} fill={f.color} opacity={0.8} />
-                  ))}
-                </g>
+              {rtClouds.map((f, i) => (
+                <path key={i} d={f.d} fill={f.color} opacity={0.8} />
               ))}
               <line x1={rtX(8.28)} x2={rtX(8.28)} y1={RT.top} y2={RT.bottom} stroke={C.text} strokeDasharray="3 3" opacity={0.7} />
             </g>
           </motion.g>
 
           {/* Scene 6: tables */}
-          <motion.g style={{ opacity: tablesOpacity, y: tablesY }}>
+          <motion.g ref={tablesRef} className="mh-later" style={{ opacity: tablesOpacity, y: tablesY }}>
             <Table x={A.x0} y={410} w={A.w} data={TABLES.meta} />
             <Table x={RT.x0} y={410} w={RT.w} data={TABLES.feature} />
           </motion.g>
