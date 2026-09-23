@@ -28,8 +28,17 @@ const LEGACY = { cx: 338, cy: 322, r: 80 };
 const GRAY_COUNT = 44;
 const GREEN_COUNT = 720;
 
+/** Playback rate. 2 plays the same sequence in half the time. */
+const SPEED = 2;
+const sec = (n: number) => n / SPEED;
+
 // Timeline in ms from the moment the figure enters the viewport.
-const T = { arrow: 1300, fill: 2100, legacyRing: 4700, labels: 5400 };
+const T = {
+  arrow: 1300 / SPEED,
+  fill: 2100 / SPEED,
+  legacyRing: 4700 / SPEED,
+  labels: 5400 / SPEED,
+};
 
 const LABELS = [
   {
@@ -86,7 +95,7 @@ function buildDots() {
       r: round(2.2 + rand() * 1.2, 2),
       o: round(0.55 + rand() * 0.35, 2),
       fill: COLORS.gray,
-      delay: round(rand() * 0.6, 2),
+      delay: round(sec(rand() * 0.6), 2),
     });
   }
 
@@ -106,7 +115,7 @@ function buildDots() {
       r: round(1.3 + rand() * 1.5, 2),
       o: round(0.3 + 0.65 * Math.min(1, centerWeight + rand() * 0.5), 2),
       fill: rand() < centerWeight + 0.2 ? COLORS.greenDark : COLORS.greenLight,
-      delay: round(norm * 1.1 + rand() * 0.9, 2),
+      delay: round(sec(norm * 1.1 + rand() * 0.9), 2),
     });
   }
 
@@ -143,13 +152,13 @@ export default function MassFeatureCircle({ className }: { className?: string })
     transformOrigin: "center",
     transition: reduceMotion
       ? "none"
-      : `opacity 0.5s ease ${d.delay}s, transform 0.5s cubic-bezier(.2,.8,.2,1) ${d.delay}s`,
+      : `opacity ${sec(0.5)}s ease ${d.delay}s, transform ${sec(0.5)}s cubic-bezier(.2,.8,.2,1) ${d.delay}s`,
   });
 
   const fade = (show: boolean, delay = 0) => ({
     initial: { opacity: 0 },
     animate: { opacity: show ? 1 : 0 },
-    transition: { duration: reduceMotion ? 0 : 0.6, delay: reduceMotion ? 0 : delay },
+    transition: { duration: reduceMotion ? 0 : sec(0.6), delay: reduceMotion ? 0 : delay },
   });
 
   return (
@@ -162,7 +171,7 @@ export default function MassFeatureCircle({ className }: { className?: string })
         <motion.span
           initial={{ opacity: 0, x: -8 }}
           animate={{ opacity: phase >= 2 ? 1 : 0, x: phase >= 2 ? 0 : -8 }}
-          transition={{ duration: reduceMotion ? 0 : 0.5 }}
+          transition={{ duration: reduceMotion ? 0 : sec(0.5) }}
           aria-hidden
         >
           →
@@ -171,7 +180,7 @@ export default function MassFeatureCircle({ className }: { className?: string })
           style={{ color: COLORS.heading }}
           initial={{ opacity: 0, x: -8 }}
           animate={{ opacity: phase >= 2 ? 1 : 0, x: phase >= 2 ? 0 : -8 }}
-          transition={{ duration: reduceMotion ? 0 : 0.5, delay: reduceMotion ? 0 : 0.2 }}
+          transition={{ duration: reduceMotion ? 0 : sec(0.5), delay: reduceMotion ? 0 : sec(0.2) }}
         >
           Metablify
         </motion.span>
@@ -208,7 +217,7 @@ export default function MassFeatureCircle({ className }: { className?: string })
         <motion.g
           initial={{ opacity: 0, scale: 0.85 }}
           animate={{ opacity: phase >= 4 ? 1 : 0, scale: phase >= 4 ? 1 : 0.85 }}
-          transition={{ duration: reduceMotion ? 0 : 0.6, ease: "easeOut" }}
+          transition={{ duration: reduceMotion ? 0 : sec(0.6), ease: "easeOut" }}
           style={{ transformBox: "fill-box", transformOrigin: "center" }}
         >
           <circle
@@ -235,7 +244,7 @@ export default function MassFeatureCircle({ className }: { className?: string })
 
         {LABELS.map((l, i) => {
           const show = phase >= 5;
-          const delay = reduceMotion ? 0 : i * 0.35;
+          const delay = reduceMotion ? 0 : i * sec(0.35);
           const lineEnd = { x: 585, y: l.y - 5 };
           return (
             <g key={i}>
@@ -248,7 +257,7 @@ export default function MassFeatureCircle({ className }: { className?: string })
                 strokeWidth={1}
                 initial={{ pathLength: 0, opacity: 0 }}
                 animate={{ pathLength: show ? 1 : 0, opacity: show ? 1 : 0 }}
-                transition={{ duration: reduceMotion ? 0 : 0.5, delay }}
+                transition={{ duration: reduceMotion ? 0 : sec(0.5), delay }}
               />
               <motion.circle
                 cx={l.anchor.x}
@@ -257,12 +266,12 @@ export default function MassFeatureCircle({ className }: { className?: string })
                 fill={COLORS.anchor}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: show ? 1 : 0 }}
-                transition={{ duration: reduceMotion ? 0 : 0.3, delay }}
+                transition={{ duration: reduceMotion ? 0 : sec(0.3), delay }}
               />
               <motion.g
                 initial={{ opacity: 0, x: 8 }}
                 animate={{ opacity: show ? 1 : 0, x: show ? 0 : 8 }}
-                transition={{ duration: reduceMotion ? 0 : 0.5, delay: delay + (reduceMotion ? 0 : 0.35) }}
+                transition={{ duration: reduceMotion ? 0 : sec(0.5), delay: delay + (reduceMotion ? 0 : sec(0.35)) }}
               >
                 <text x={600} y={l.y} fontSize={15} fill={COLORS.text}>
                   {l.lines.map((line, j) => (

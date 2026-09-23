@@ -44,8 +44,8 @@ const C = {
 };
 
 /** One loop plays over LOOP_SECONDS, then holds on the tables for HOLD_MS. */
-const LOOP_SECONDS = 32;
-const HOLD_MS = 4500;
+const LOOP_SECONDS = 24;
+const HOLD_MS = 3200;
 
 /** Timeline checkpoints (0 = loop start, 1 = end). */
 const P = {
@@ -342,7 +342,7 @@ const HERO_CSS = `
 .mh-visual svg{display:block;width:100%;height:auto;flex:0 1 auto;min-height:0;font-family:var(--font-mono);pointer-events:none}
 .mh-later{display:none}
 .mh-well{opacity:0;transform-box:fill-box;transform-origin:center}
-.mh-plate[data-on="1"] .mh-well{animation:mh-well .38s linear forwards;animation-delay:calc(var(--i) * 29.3ms)}
+.mh-plate[data-on="1"] .mh-well{animation:mh-well ${(0.012 * LOOP_SECONDS).toFixed(2)}s linear forwards;animation-delay:calc(var(--i) * ${(((P.wells[1] - P.wells[0] - 0.012) * LOOP_SECONDS * 1000) / 96).toFixed(1)}ms)}
 @keyframes mh-well{from{opacity:0;transform:scale(0)}to{opacity:1;transform:none}}
 @media (prefers-reduced-motion:reduce){.mh-well{opacity:1;animation:none;transform:none}}
 .mh-ui{font-family:var(--font-body)}
