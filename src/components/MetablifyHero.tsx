@@ -28,7 +28,6 @@ type Props = {
 };
 
 const C = {
-  bg: "#12291f",
   card: "#1c3a2f",
   cardStroke: "rgba(200,245,96,0.25)",
   text: "#f2f6f3",
@@ -309,24 +308,11 @@ function SampleIcon({ kind, cx, cy }: { kind: string; cx: number; cy: number }) 
 }
 
 // ---------- hero layout ----------
-// Background: shades and tints of the base green #12291f only (same hue/saturation,
-// lightness varied), layered as soft light pools.
-// Tints:  #19392b  #214a38  #2a6048  #35785b   Shades: #0c1c15  #08120d
-const HERO_BG = [
-  "radial-gradient(ellipse 55% 60% at 80% 18%, #2a6048cc 0%, #214a3866 40%, transparent 72%)",
-  "radial-gradient(ellipse 40% 45% at 62% 55%, #35785b40 0%, transparent 70%)",
-  "radial-gradient(ellipse 50% 55% at 8% 88%, #214a38b3 0%, transparent 70%)",
-  "radial-gradient(ellipse 35% 40% at 28% 8%, #19392bcc 0%, transparent 70%)",
-  "radial-gradient(ellipse 60% 40% at 50% 110%, #35785b55 0%, transparent 70%)",
-  "radial-gradient(ellipse 45% 50% at 100% 100%, #08120dcc 0%, transparent 70%)",
-  "linear-gradient(160deg, #12291f 0%, #0c1c15 55%, #08120d 100%)",
-].join(",");
-
 /* The site header is sticky and sits above this section, so this is breathing
    room, not clearance for an overlay. */
 const NAV_OFFSET = "clamp(24px, 4vh, 48px)";
 const HERO_CSS = `
-.mh{box-sizing:border-box;height:100svh;min-height:560px;overflow:hidden;background-color:${C.bg};background-image:${HERO_BG};color:${C.text};
+.mh{box-sizing:border-box;height:100svh;min-height:560px;overflow:hidden;background-color:#12291f;background-image:var(--forest-field);color:${C.text};
   font-family:var(--font-body);
   display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);grid-template-rows:minmax(0,1fr);
   gap:clamp(24px,4vw,64px);align-items:center;

@@ -9,7 +9,8 @@
 .ribbon {
   width: 100%;
   max-width: none;
-  background: var(--color-forest);
+  background-color: #12291f;
+  background-image: var(--forest-field);
   color: rgba(255, 255, 255, 0.82);
   padding: 0.5rem clamp(1.25rem, 5vw, 2.5rem);
 }

@@ -117,9 +117,9 @@ export default function HomePage() {
             </div>
           </Reveal>
 
-          <div className="grid gap-6 md:grid-cols-3">
+          <div className="work-routes">
             {services.map((item, i) => (
-              <Reveal key={item.href} delay={i * 80}>
+              <Reveal key={item.href} delay={i * 80} className="min-w-0">
                 <Link
                   href={item.href}
                   className="card card-link service-card group"
@@ -144,6 +144,11 @@ export default function HomePage() {
                 </Link>
               </Reveal>
             ))}
+            <ImagePlaceholder
+              ratio="16/9"
+              label="Wide view of a collaboration session in the lab"
+              className="work-routes-photo"
+            />
           </div>
         </div>
       </section>

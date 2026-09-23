@@ -74,7 +74,7 @@
   display: grid;
   place-items: center;
   border-radius: 999px;
-  background: var(--color-white);
+  background: var(--badge-sage);
   border: 1.5px solid var(--color-stone);
   color: var(--color-forest);
 }

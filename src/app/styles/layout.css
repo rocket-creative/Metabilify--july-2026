@@ -40,7 +40,8 @@
 }
 
 .section-forest {
-  background: var(--color-forest);
+  background-color: #12291f;
+  background-image: var(--forest-field);
   color: #ffffff;
   max-width: none;
 }

@@ -36,7 +36,7 @@
   width: clamp(3.5rem, 5vw, 4.5rem);
   height: clamp(3.5rem, 5vw, 4.5rem);
   border-radius: 999px;
-  background: var(--color-forest);
+  background: var(--badge-forest);
   color: var(--color-white);
   margin-bottom: 1rem;
 }
@@ -96,7 +96,8 @@
 .pipeline-output {
   display: grid;
   gap: 1.5rem;
-  background: var(--color-forest);
+  background-color: #12291f;
+  background-image: var(--forest-field);
   color: var(--color-white);
   border-radius: 1.5rem;
   padding: clamp(1.5rem, 3vw, 2.5rem);

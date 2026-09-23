@@ -66,7 +66,7 @@
   width: clamp(3.5rem, 5vw, 4rem);
   height: clamp(3.5rem, 5vw, 4rem);
   border-radius: 999px;
-  background: var(--color-hero-green);
+  background: var(--badge-sage);
   color: var(--color-forest);
   margin: 0.25rem 0 0.75rem;
 }
@@ -134,7 +134,7 @@
   width: 3rem;
   height: 3rem;
   border-radius: 999px;
-  background: var(--color-white);
+  background: var(--badge-sage);
   border: 1px solid var(--color-stone);
   color: var(--color-forest);
 }

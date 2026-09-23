@@ -35,7 +35,8 @@
 
 .image-placeholder-label {
   margin: 0;
-  max-width: 26rem;
+  max-width: min(26rem, 100%);
+  overflow-wrap: break-word;
   font-family: var(--font-mono);
   font-size: 0.72rem;
   line-height: 1.5;
@@ -54,8 +55,17 @@
 /* Small slots (headshots, card thumbnails) hide the secondary metadata so the
    box does not turn into a wall of mono text. */
 @container (max-width: 18rem) {
+  .image-placeholder {
+    padding: 0.75rem;
+  }
+
   .image-placeholder-ratio {
     display: none;
+  }
+
+  .image-placeholder-label {
+    font-size: 0.62rem;
+    letter-spacing: 0.04em;
   }
 }
 
