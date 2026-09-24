@@ -12,7 +12,7 @@ import {
   ReviewIcon,
 } from "@/components/visuals/ProcessIcons";
 import type { ReactNode } from "react";
-import { stock, type StockShot } from "@/lib/stock";
+import { stock, type StockShot, photoSizes } from "@/lib/stock";
 import { Photo } from "@/components/Photo";
 import {
   CodeBracketsIcon,
@@ -63,6 +63,7 @@ const paths: {
     detail: "Best when off the shelf workflows are not enough.",
     icon: <CodeBracketsIcon />,
     image: "Peak traces on a dark monitor, data workspace",
+    photo: stock.peakTraces,
   },
   {
     href: "/work-with-us/collaborations",
@@ -71,6 +72,7 @@ const paths: {
     detail: "Best when the opportunity calls for a deeper partnership and shared path to commercialization.",
     icon: <PartnershipIcon />,
     image: "Two researchers reviewing results on a laptop at a lab bench",
+    photo: stock.laptopBench,
   },
 ];
 
@@ -174,7 +176,7 @@ export default function WorkWithUsPage() {
                       width={p.photo.width}
                       height={p.photo.height}
                       objectPosition={p.photo.objectPosition}
-                      sizes="(min-width: 768px) 22rem, 90vw"
+                      sizes={photoSizes.wwuCard}
                     />
                   ) : (
                     <ImagePlaceholder ratio="3/2" label={p.image} />

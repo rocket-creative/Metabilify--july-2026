@@ -2,38 +2,19 @@
 
 Slots that are still placeholders. The description is the art brief on the page.
 
-One stock photo was not placed: `stock-photos/raspberries-and-blueberries-with-sugar-in-spoons-2026-03-26-07-58-10-utc.jpg`. The food card already uses the bowls of berries. Swap them if the tighter crop is better.
-
-## Home
-
-| Slot | Description |
-|---|---|
-| Proteomics card | Mass spectrometer ion source, close-up. 16:9. |
-| Platform Development | Analyst at dual monitors showing peak traces, dim lab. 4:3. |
-| Strategic Collaborations | Two researchers reviewing results on a laptop at a lab bench. 4:3. |
-| Under the three work routes | Wide view of a collaboration session in the lab. 16:9. |
-
 ## Applications
 
 | Slot | Description |
 |---|---|
 | Proteomics card | Proteomics — protein structure render or peptide chain, cool grey tones. 1:1. |
-| Biomarker Discovery | Cells or molecular structures under fluorescence, teal tones. 3:2. Also on the home page. |
-
-## Work With Us
-
-| Slot | Description |
-|---|---|
-| Platform Development | Peak traces on a dark monitor, data workspace. 3:2. |
-| Strategic Collaborations | Two researchers reviewing results on a laptop at a lab bench. 3:2. |
 
 ## About
 
 | Slot | Description |
 |---|---|
-| Hero | Donald Danforth Plant Science Center — exterior or atrium, wide. 16:9. |
-| Scale section | Baxter lab at the Danforth Center — LC/MS instrument bay or growth chambers. 3:2. |
-| Today | Metablify team at work — lab or data workspace, candid. 16:9. |
+| Hero | Donald Danforth Plant Science Center — exterior or atrium, wide. 16:9. Needs a real photo of the Center. |
+| Scale section | Baxter lab at the Danforth Center — LC/MS instrument bay or growth chambers. 3:2. Needs a real photo of that lab. |
+| Today | Metablify team at work — lab or data workspace, candid. 16:9. Needs the actual team. |
 | Big Ideas | Big Ideas 3.0 — Team Metablify on stage, Danforth Center auditorium. 3:2. |
 | Arch Grants | Arch Grants 2024 cohort — award event photo. 3:2. |
 | Startup to Watch | St. Louis Inno Startups to Watch 2025 — award or team photo. 3:2. |
@@ -60,3 +41,13 @@ One stock photo was not placed: `stock-photos/raspberries-and-blueberries-with-s
 | Slot | Description |
 |---|---|
 | Partners | Logo — Arch Grants. 3:2. |
+
+## In the repo, not on the site
+
+These files are in `stock-photos/` and were not placed.
+
+- `glass-building.jpg`, `greenhouse-day.jpg`, `greenhouse-night.jpg` — the open building slots are the Danforth Center. These are not that building.
+- `indoor-grow-lights.jpg` — the growth-chamber slot is the Baxter lab. This room is not that lab.
+- `award-stage.jpg`, `stage-applause.jpg` — the open stage slots are specific Metablify events (Big Ideas, Arch Grants, St. Louis Inno). These are not those events.
+- `stock-charts-night.jpg`, `network-financial.jpg` — trading screens and price quotes, not LC/MS data.
+- `scientists-laptop-gesture.jpg` — a third photo of two scientists at a laptop. The home and Work With Us collaboration cards already use the other two.

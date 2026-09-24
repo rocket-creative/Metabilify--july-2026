@@ -255,6 +255,7 @@
 .work-routes-photo {
   min-width: 0;
   margin: 0;
+  width: 100%;
 }
 
 @media (min-width: 810px) and (max-width: 63.99rem) {

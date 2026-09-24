@@ -27,6 +27,11 @@ const securityHeaders = [
 
 const nextConfig: NextConfig = {
   poweredByHeader: false,
+  images: {
+    // Match the layout breakpoints so each photo request is the size on screen.
+    deviceSizes: [640, 768, 810, 1024, 1280, 1440, 1920],
+    imageSizes: [256, 384, 480],
+  },
   async redirects() {
     return [
       // The page was renamed from Platform to Technology on 9/7.

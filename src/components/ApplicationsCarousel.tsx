@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { stock, type StockShot } from "@/lib/stock";
+import { stock, type StockShot, photoSizes } from "@/lib/stock";
 import { ImagePlaceholder } from "./ImagePlaceholder";
 import { Photo } from "./Photo";
 import { Reveal } from "./Reveal";
@@ -32,6 +32,7 @@ const APPLICATIONS: Application[] = [
     body: "Reveal and quantify peptide mass features across complex LC/MS datasets with a workflow built for scale, alignment, and signal clarity.",
     link: "Explore Proteomics",
     image: "Mass spectrometer ion source, close-up",
+    photo: stock.massSpec,
   },
 ];
 
@@ -66,7 +67,7 @@ export function ApplicationsCarousel() {
                     width={app.photo.width}
                     height={app.photo.height}
                     objectPosition={app.photo.objectPosition}
-                    sizes="(min-width: 1024px) 36rem, 90vw"
+                    sizes={photoSizes.carousel}
                   />
                 ) : (
                   <ImagePlaceholder

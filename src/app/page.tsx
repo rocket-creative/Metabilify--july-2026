@@ -14,7 +14,7 @@ import {
 } from "@/components/visuals/ServiceIcons";
 import Link from "next/link";
 import type { ReactNode } from "react";
-import { stock, type StockShot } from "@/lib/stock";
+import { stock, type StockShot, photoSizes } from "@/lib/stock";
 import { Photo } from "@/components/Photo";
 
 const services: {
@@ -43,6 +43,7 @@ const services: {
     icon: <CodeBracketsIcon />,
     image:
       "Analyst at dual monitors showing peak traces, dim lab",
+    photo: stock.peakTraces,
   },
   {
     href: "/work-with-us/collaborations",
@@ -52,6 +53,7 @@ const services: {
     icon: <PartnershipIcon />,
     image:
       "Two researchers reviewing results on a laptop at a lab bench",
+    photo: stock.laptopReview,
   },
 ];
 
@@ -143,7 +145,8 @@ export default function HomePage() {
                       alt={item.photo.alt}
                       width={item.photo.width}
                       height={item.photo.height}
-                      sizes="(min-width: 1024px) 24rem, 90vw"
+                      objectPosition={item.photo.objectPosition}
+                      sizes={photoSizes.card}
                     />
                   ) : (
                     <ImagePlaceholder
@@ -167,10 +170,15 @@ export default function HomePage() {
                 </Link>
               </Reveal>
             ))}
-            <ImagePlaceholder
-              ratio="16/9"
-              label="Wide view of a collaboration session in the lab"
+            <Photo
+              shape="wide"
               className="work-routes-photo"
+              src={stock.labSession.src}
+              alt={stock.labSession.alt}
+              width={stock.labSession.width}
+              height={stock.labSession.height}
+              objectPosition={stock.labSession.objectPosition}
+              sizes={photoSizes.wide}
             />
           </div>
         </div>

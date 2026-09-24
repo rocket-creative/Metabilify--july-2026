@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
-import { stock, type StockShot } from "@/lib/stock";
+import { stock, type StockShot, photoSizes } from "@/lib/stock";
 import { ImagePlaceholder } from "./ImagePlaceholder";
 import { Photo } from "./Photo";
 import { Reveal } from "./Reveal";
@@ -58,6 +58,7 @@ export const FIELDS: {
     body: "Apply metabolomics and proteomics to discover and validate biomarkers across biological systems.",
     icon: <BarsIcon />,
     image: "Cells or molecular structures under fluorescence, teal tones",
+    photo: stock.cells,
   },
   {
     href: "/applications/pfas-environmental",
@@ -77,22 +78,29 @@ export const FIELDS: {
   },
 ];
 
-export function FieldsGrid() {
+export function FieldsGrid({
+  photos,
+}: {
+  /** Swap a field's photo on one page without changing the shared default. */
+  photos?: Partial<Record<(typeof FIELDS)[number]["title"], StockShot>>;
+} = {}) {
   return (
     <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-      {FIELDS.map((f, i) => (
+      {FIELDS.map((f, i) => {
+        const photo = photos?.[f.title] ?? f.photo;
+        return (
         <Reveal key={f.title} delay={i * 70} className="h-full">
           <Link href={f.href} className="field-card group">
             <div className="field-card-media">
-              {f.photo ? (
+              {photo ? (
                 <Photo
                   shape="card"
-                  src={f.photo.src}
-                  alt={f.photo.alt}
-                  width={f.photo.width}
-                  height={f.photo.height}
-                  objectPosition={f.photo.objectPosition}
-                  sizes="(min-width: 1024px) 24rem, (min-width: 640px) 45vw, 90vw"
+                  src={photo.src}
+                  alt={photo.alt}
+                  width={photo.width}
+                  height={photo.height}
+                  objectPosition={photo.objectPosition}
+                  sizes={photoSizes.card}
                 />
               ) : (
                 <ImagePlaceholder ratio="3/2" label={f.image} />
@@ -108,7 +116,8 @@ export function FieldsGrid() {
             </div>
           </Link>
         </Reveal>
-      ))}
+        );
+      })}
     </div>
   );
 }

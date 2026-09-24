@@ -147,7 +147,11 @@ export default function ApplicationsPage() {
               real-world challenges.
             </p>
           </Reveal>
-          <FieldsGrid />
+          <FieldsGrid
+            photos={{
+              "Food, Nutrition & Natural Products": stock.berryCloseup,
+            }}
+          />
         </div>
       </section>
 
