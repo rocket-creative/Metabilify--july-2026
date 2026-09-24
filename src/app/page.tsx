@@ -13,9 +13,19 @@ import {
   VialIcon,
 } from "@/components/visuals/ServiceIcons";
 import Link from "next/link";
+import type { ReactNode } from "react";
+import { stock, type StockShot } from "@/lib/stock";
 import { Photo } from "@/components/Photo";
 
-const services = [
+const services: {
+  href: string;
+  title: string;
+  body: string;
+  link: string;
+  icon: ReactNode;
+  image: string;
+  photo?: StockShot;
+}[] = [
   {
     href: "/work-with-us/services",
     title: "Analytical Services",
@@ -23,6 +33,7 @@ const services = [
     link: "Explore Services",
     icon: <VialIcon />,
     image: "Rack of capped amber HPLC vials, close-up",
+    photo: stock.vialRack,
   },
   {
     href: "/work-with-us/platform-development",
@@ -124,11 +135,23 @@ export default function HomePage() {
                   href={item.href}
                   className="card card-link service-card group"
                 >
-                  <ImagePlaceholder
-                    ratio="4/3"
-                    label={item.image}
-                    className="service-card-media"
-                  />
+                  {item.photo ? (
+                    <Photo
+                      shape="card"
+                      className="service-card-media"
+                      src={item.photo.src}
+                      alt={item.photo.alt}
+                      width={item.photo.width}
+                      height={item.photo.height}
+                      sizes="(min-width: 1024px) 24rem, 90vw"
+                    />
+                  ) : (
+                    <ImagePlaceholder
+                      ratio="4/3"
+                      label={item.image}
+                      className="service-card-media"
+                    />
+                  )}
                   <div className="service-card-body">
                     <div className="service-card-head">
                       <span className="service-badge">{item.icon}</span>
@@ -156,9 +179,13 @@ export default function HomePage() {
       {/* Origin */}
       <section className="section">
         <Reveal className="mx-auto mb-10 w-full md:mb-14 md:w-4/5">
-          <ImagePlaceholder
-            ratio="16/9"
-            label="Multichannel pipette filling a 96-well plate, close-up"
+          <Photo
+            shape="wide"
+            src={stock.greenhouse.src}
+            alt={stock.greenhouse.alt}
+            width={stock.greenhouse.width}
+            height={stock.greenhouse.height}
+            sizes="(min-width: 1024px) 64rem, 90vw"
           />
         </Reveal>
 

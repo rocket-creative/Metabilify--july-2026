@@ -1,5 +1,8 @@
 import Link from "next/link";
+import type { ReactNode } from "react";
+import { stock, type StockShot } from "@/lib/stock";
 import { ImagePlaceholder } from "./ImagePlaceholder";
+import { Photo } from "./Photo";
 import { Reveal } from "./Reveal";
 import {
   AppleIcon,
@@ -16,13 +19,22 @@ import {
  * Fields with a live page link to it; the rest go to the discuss form until
  * their pages exist.
  */
-export const FIELDS = [
+export const FIELDS: {
+  href: string;
+  title: string;
+  body: string;
+  icon: ReactNode;
+  /** Art brief. Shown only while the slot is still a placeholder. */
+  image: string;
+  photo?: StockShot;
+}[] = [
   {
     href: "/applications/drug-discovery",
     title: "Drug Discovery & Development",
     body: "Use metabolomic and proteomic data to support target discovery, compound profiling, mechanism-of-action research, and other discovery stage workflows.",
     icon: <PillIcon />,
     image: "Capsules and a pipette on a lab bench, cool blue tones",
+    photo: stock.capsules,
   },
   {
     href: "/applications/plant-agricultural-science",
@@ -30,6 +42,7 @@ export const FIELDS = [
     body: "Apply large-scale metabolomics and proteomics to crop diversity, trait discovery, plant biology, breeding populations, and agricultural research.",
     icon: <LeafIcon />,
     image: "Young crop seedlings in rows, field soil",
+    photo: stock.plantTubes,
   },
   {
     href: "/discuss",
@@ -37,6 +50,7 @@ export const FIELDS = [
     body: "Detect and characterize exogenous compounds, metabolites, and biomarkers for safety, compliance, and performance testing.",
     icon: <FlaskIcon />,
     image: "Pipette dropping into a test tube, clinical lab",
+    photo: stock.injection,
   },
   {
     href: "/discuss",
@@ -51,6 +65,7 @@ export const FIELDS = [
     body: "Analyze complex environmental samples to investigate known and unknown chemical features, contaminant exposure signatures, and emerging compounds of concern.",
     icon: <DropIcon />,
     image: "Lake and forest landscape, clear water",
+    photo: stock.riverside,
   },
   {
     href: "/discuss",
@@ -58,8 +73,9 @@ export const FIELDS = [
     body: "Apply LC/MS omics to food composition, nutrition research, natural-product discovery, authenticity, and complex biological or chemical profiling.",
     icon: <AppleIcon />,
     image: "Fresh produce close-up: tomatoes, berries, herbs",
+    photo: stock.berries,
   },
-] as const;
+];
 
 export function FieldsGrid() {
   return (
@@ -68,7 +84,19 @@ export function FieldsGrid() {
         <Reveal key={f.title} delay={i * 70} className="h-full">
           <Link href={f.href} className="field-card group">
             <div className="field-card-media">
-              <ImagePlaceholder ratio="3/2" label={f.image} />
+              {f.photo ? (
+                <Photo
+                  shape="card"
+                  src={f.photo.src}
+                  alt={f.photo.alt}
+                  width={f.photo.width}
+                  height={f.photo.height}
+                  objectPosition={f.photo.objectPosition}
+                  sizes="(min-width: 1024px) 24rem, (min-width: 640px) 45vw, 90vw"
+                />
+              ) : (
+                <ImagePlaceholder ratio="3/2" label={f.image} />
+              )}
               <span className="field-card-badge">{f.icon}</span>
             </div>
             <div className="field-card-body">

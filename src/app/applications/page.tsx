@@ -2,11 +2,14 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Button } from "@/components/Button";
 import { ImagePlaceholder } from "@/components/ImagePlaceholder";
+import { Photo } from "@/components/Photo";
 import { BreadcrumbJsonLd } from "@/components/JsonLd";
 import { Reveal } from "@/components/Reveal";
 import { FieldsGrid } from "@/components/FieldsGrid";
 import { MoleculeIcon, PeptideIcon } from "@/components/visuals/FieldIcons";
 import { RidgelineVisual } from "@/components/visuals/RidgelineVisual";
+import type { ReactNode } from "react";
+import { stock, type StockShot } from "@/lib/stock";
 
 export const metadata: Metadata = {
   title: "Applications",
@@ -21,7 +24,15 @@ export const metadata: Metadata = {
  * closing CTA. Copy is his. Fields with a live page link to it; the rest go
  * to the discuss form until their pages exist.
  */
-const omics = [
+const omics: {
+  href: string;
+  title: string;
+  body: string;
+  icon: ReactNode;
+  image: string;
+  tone: string;
+  photo?: StockShot;
+}[] = [
   {
     href: "/applications/metabolomics",
     title: "Metabolomics",
@@ -29,6 +40,7 @@ const omics = [
     icon: <MoleculeIcon />,
     image: "Metabolomics — macro of small-molecule sample vials or an abstract molecular texture, cool green tones",
     tone: "sage",
+    photo: stock.vialRack,
   },
   {
     href: "/applications/proteomics",
@@ -102,7 +114,18 @@ export default function ApplicationsPage() {
                   </span>
                 </div>
                 <div className="omics-card-media">
-                  <ImagePlaceholder ratio="1/1" label={app.image} />
+                  {app.photo ? (
+                    <Photo
+                      shape="card"
+                      src={app.photo.src}
+                      alt={app.photo.alt}
+                      width={app.photo.width}
+                      height={app.photo.height}
+                      sizes="(min-width: 768px) 18rem, 90vw"
+                    />
+                  ) : (
+                    <ImagePlaceholder ratio="1/1" label={app.image} />
+                  )}
                 </div>
               </Link>
             </Reveal>

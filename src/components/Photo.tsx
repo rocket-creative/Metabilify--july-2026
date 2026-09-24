@@ -14,11 +14,22 @@ export function Photo({
   shape = "card",
   className = "",
   alt,
+  objectPosition,
+  style,
   ...img
-}: Omit<ImageProps, "alt"> & { alt: string; shape?: Shape; className?: string }) {
+}: Omit<ImageProps, "alt"> & {
+  alt: string;
+  shape?: Shape;
+  className?: string;
+  objectPosition?: string;
+}) {
   return (
     <span className={`photo-frame photo-frame--${shape} ${className}`}>
-      <Image alt={alt} {...img} />
+      <Image
+        alt={alt}
+        style={objectPosition ? { ...style, objectPosition } : style}
+        {...img}
+      />
     </span>
   );
 }

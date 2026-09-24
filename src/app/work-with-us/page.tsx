@@ -11,6 +11,9 @@ import {
   DiscussIcon,
   ReviewIcon,
 } from "@/components/visuals/ProcessIcons";
+import type { ReactNode } from "react";
+import { stock, type StockShot } from "@/lib/stock";
+import { Photo } from "@/components/Photo";
 import {
   CodeBracketsIcon,
   PartnershipIcon,
@@ -35,7 +38,15 @@ export const metadata: Metadata = {
  * with three reasons. Copy is his. The sample journey stays parked here per
  * the 9/7 call until it becomes the hero animation.
  */
-const paths = [
+const paths: {
+  href: string;
+  title: string;
+  body: string;
+  detail: string;
+  icon: ReactNode;
+  image: string;
+  photo?: StockShot;
+}[] = [
   {
     href: "/work-with-us/services",
     title: "Analytical Services",
@@ -43,6 +54,7 @@ const paths = [
     detail: "Best when you have samples or data and want results.",
     icon: <VialIcon />,
     image: "Blue-cap vials in an HPLC rack",
+    photo: stock.autosampler,
   },
   {
     href: "/work-with-us/platform-development",
@@ -60,7 +72,7 @@ const paths = [
     icon: <PartnershipIcon />,
     image: "Two researchers reviewing results on a laptop at a lab bench",
   },
-] as const;
+];
 
 const steps = [
   {
@@ -121,9 +133,14 @@ export default function WorkWithUsPage() {
               </div>
             </Reveal>
             <Reveal delay={120} className="wwu-hero-art">
-              <ImagePlaceholder
-                ratio="3/2"
-                label="Wide landscape or lab-to-horizon image, cool green tones"
+              <Photo
+                shape="card"
+                src={stock.riverside.src}
+                alt={stock.riverside.alt}
+                width={stock.riverside.width}
+                height={stock.riverside.height}
+                objectPosition={stock.riverside.objectPosition}
+                sizes="(min-width: 1024px) 36rem, 90vw"
               />
               <p className="apps-hero-tag wwu-hero-tag">
                 Deeper insight.
@@ -149,7 +166,19 @@ export default function WorkWithUsPage() {
             <Reveal key={p.href} delay={i * 80} className="h-full">
               <Link href={p.href} className="field-card group">
                 <div className="field-card-media">
-                  <ImagePlaceholder ratio="3/2" label={p.image} />
+                  {p.photo ? (
+                    <Photo
+                      shape="card"
+                      src={p.photo.src}
+                      alt={p.photo.alt}
+                      width={p.photo.width}
+                      height={p.photo.height}
+                      objectPosition={p.photo.objectPosition}
+                      sizes="(min-width: 768px) 22rem, 90vw"
+                    />
+                  ) : (
+                    <ImagePlaceholder ratio="3/2" label={p.image} />
+                  )}
                   <span className="field-card-badge">{p.icon}</span>
                 </div>
                 <div className="field-card-body">

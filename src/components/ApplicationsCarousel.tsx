@@ -1,5 +1,7 @@
 import Link from "next/link";
+import { stock, type StockShot } from "@/lib/stock";
 import { ImagePlaceholder } from "./ImagePlaceholder";
+import { Photo } from "./Photo";
 import { Reveal } from "./Reveal";
 
 type Application = {
@@ -10,6 +12,7 @@ type Application = {
   link: string;
   /** Art brief. The CEO wants a real image here, confirmed with the inventors. */
   image: string;
+  photo?: StockShot;
 };
 
 const APPLICATIONS: Application[] = [
@@ -20,6 +23,7 @@ const APPLICATIONS: Application[] = [
     body: "Turn complex untargeted LC/MS datasets into cleaner, aligned, and quantified mass-feature results.",
     link: "Explore Metabolomics",
     image: "LC/MS instrument — liquid chromatography stack coupled to a mass spectrometer",
+    photo: stock.autosampler,
   },
   {
     index: "02",
@@ -53,11 +57,24 @@ export function ApplicationsCarousel() {
           {APPLICATIONS.map((app, i) => (
             <Reveal key={app.href} delay={i * 120} className="h-full">
               <Link href={app.href} className="card card-link media-card group">
-                <ImagePlaceholder
-                  ratio="16/9"
-                  label={app.image}
-                  className="media-card-media media-card-media--wide"
-                />
+                {app.photo ? (
+                  <Photo
+                    shape="wide"
+                    className="media-card-media media-card-media--wide"
+                    src={app.photo.src}
+                    alt={app.photo.alt}
+                    width={app.photo.width}
+                    height={app.photo.height}
+                    objectPosition={app.photo.objectPosition}
+                    sizes="(min-width: 1024px) 36rem, 90vw"
+                  />
+                ) : (
+                  <ImagePlaceholder
+                    ratio="16/9"
+                    label={app.image}
+                    className="media-card-media media-card-media--wide"
+                  />
+                )}
                 <div className="media-card-body">
                   <span className="media-card-index">{app.index}</span>
                   <h3

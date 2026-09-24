@@ -125,10 +125,15 @@
   color: var(--color-muted);
 }
 
-.omics-card-media .image-placeholder {
+.omics-card-media .image-placeholder,
+.omics-card-media .photo-frame {
   height: 100%;
   border-radius: 0;
   border-width: 0 0 0 1px;
+}
+
+.omics-card-media .photo-frame {
+  aspect-ratio: auto;
 }
 
 @media (max-width: 639px) {
@@ -136,8 +141,10 @@
     grid-template-columns: 1fr;
   }
 
-  .omics-card-media .image-placeholder {
+  .omics-card-media .image-placeholder,
+  .omics-card-media .photo-frame {
     border-width: 1px 0 0;
+    aspect-ratio: 1 / 1;
   }
 }
 
@@ -165,7 +172,8 @@
   position: relative;
 }
 
-.field-card-media .image-placeholder {
+.field-card-media .image-placeholder,
+.field-card-media .photo-frame {
   border-radius: 0;
   border-width: 0 0 1px;
 }

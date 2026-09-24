@@ -361,11 +361,16 @@
   height: 56%;
 }
 
-/* An image placeholder standing in for the card's media strip takes the strip's
-   shape: square bottom corners, no side borders. */
-.media-card .media-card-media.image-placeholder {
+/* An image or its placeholder standing in for the card's media strip takes the
+   strip's shape: square bottom corners, no side borders. */
+.media-card .media-card-media.image-placeholder,
+.media-card .media-card-media.photo-frame {
   border-radius: 1.5rem 1.5rem 0 0;
   border-width: 0 0 1.5px;
   aspect-ratio: 16 / 9;
+}
+
+.service-card-media.photo-frame {
+  aspect-ratio: 4 / 3;
 }
 
