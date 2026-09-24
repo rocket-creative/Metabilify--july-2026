@@ -15,6 +15,7 @@ export function Photo({
   className = "",
   alt,
   objectPosition,
+  objectFit,
   style,
   ...img
 }: Omit<ImageProps, "alt"> & {
@@ -22,12 +23,17 @@ export function Photo({
   shape?: Shape;
   className?: string;
   objectPosition?: string;
+  objectFit?: "cover" | "contain";
 }) {
   return (
     <span className={`photo-frame photo-frame--${shape} ${className}`}>
       <Image
         alt={alt}
-        style={objectPosition ? { ...style, objectPosition } : style}
+        style={{
+          ...style,
+          ...(objectPosition ? { objectPosition } : {}),
+          ...(objectFit ? { objectFit } : {}),
+        }}
         {...img}
       />
     </span>

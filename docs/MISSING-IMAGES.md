@@ -2,12 +2,6 @@
 
 Slots that are still placeholders. The description is the art brief on the page.
 
-## Applications
-
-| Slot | Description |
-|---|---|
-| Proteomics card | Proteomics — protein structure render or peptide chain, cool grey tones. 1:1. |
-
 ## About
 
 | Slot | Description |

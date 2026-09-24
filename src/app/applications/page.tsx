@@ -9,7 +9,7 @@ import { FieldsGrid } from "@/components/FieldsGrid";
 import { MoleculeIcon, PeptideIcon } from "@/components/visuals/FieldIcons";
 import { RidgelineVisual } from "@/components/visuals/RidgelineVisual";
 import type { ReactNode } from "react";
-import { stock, type StockShot } from "@/lib/stock";
+import { stock, type StockShot, photoSizes } from "@/lib/stock";
 
 export const metadata: Metadata = {
   title: "Applications",
@@ -49,8 +49,9 @@ const omics: {
     icon: <PeptideIcon />,
     image: "Proteomics — protein structure render or peptide chain, cool grey tones",
     tone: "grey",
+    photo: stock.peptide,
   },
-] as const;
+];
 
 export default function ApplicationsPage() {
   return (
@@ -121,7 +122,9 @@ export default function ApplicationsPage() {
                       alt={app.photo.alt}
                       width={app.photo.width}
                       height={app.photo.height}
-                      sizes="(min-width: 768px) 18rem, 90vw"
+                      objectPosition={app.photo.objectPosition}
+                      objectFit={app.photo.objectFit}
+                      sizes={photoSizes.omics}
                     />
                   ) : (
                     <ImagePlaceholder ratio="1/1" label={app.image} />

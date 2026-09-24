@@ -9,6 +9,8 @@ export type StockShot = {
   height: number;
   /** Keeps the subject in frame when the slot is a different shape. */
   objectPosition?: string;
+  /** Use "contain" when the whole render has to stay visible. */
+  objectFit?: "cover" | "contain";
 };
 
 export const stock = {
@@ -106,6 +108,13 @@ export const stock = {
     width: 1024,
     height: 1024,
   },
+  peptide: {
+    src: "/images/stock/peptide-render.jpg",
+    alt: "Grey ribbon render of a protein with alpha helices and beta sheets",
+    width: 1024,
+    height: 1024,
+    objectFit: "contain",
+  },
 } as const satisfies Record<string, StockShot>;
 
 /**
@@ -118,4 +127,5 @@ export const photoSizes = {
   carousel: "(min-width: 810px) 38rem, 92vw",
   wide: "(min-width: 64rem) 76rem, (min-width: 810px) 45vw, 92vw",
   wwuCard: "(min-width: 768px) 22rem, 92vw",
+  omics: "(min-width: 640px) 18rem, 92vw",
 } as const;
