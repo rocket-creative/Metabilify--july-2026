@@ -70,6 +70,8 @@ export type Person = {
   credentials?: string;
   /** Headshot under /public/images/team. Omit until one is supplied. */
   photo?: string;
+  /** Full profile copy. Omit while it is still a placeholder. */
+  bio?: readonly string[];
 };
 
 export const founders: Person[] = [
@@ -80,6 +82,13 @@ export const founders: Person[] = [
     photo: "/images/team/michael-bielski.jpg",
     expertise:
       "Entrepreneurship, company formation, commercialization and business development",
+    credentials:
+      "B.S. Biology, Stony Brook University · M.S. Neuroscience, Syracuse University · J.D., Syracuse University College of Law",
+    bio: [
+      "Michael R. Bielski, J.D., M.S., is Co-Founder, President and Chief Executive Officer of Metablify, where he leads the company's strategy, financing, business development, and commercialization activities. He is an entrepreneur and commercialization executive with more than 20 years of experience translating early-stage technologies into products, licenses, and venture-backed companies across research tools, life sciences, agricultural biotechnology, and medical devices. He is an expert in forming and commercializing spinout companies from research institutions and has worked with Cold Spring Harbor Laboratory, Stony Brook University, and the Donald Danforth Plant Science Center.",
+      "Michael was part of the early founding team of NewLeaf Symbiotics, an agricultural biotechnology company developing and commercializing microbial products for crop agriculture. As General Counsel and Vice President of Intellectual Property, he led intellectual property strategy and licensing activities and was a member of the executive team that secured the company's initial venture financing.",
+      "Michael is also the founder and president of DevTech Partners and has co-founded several other technology ventures, including Capseus and Hairpin Technologies. Across his ventures, Michael has led commercialization strategy, intellectual property development, fundraising, licensing, strategic partnerships, product development, manufacturing, and commercial launch. He earned a B.S. in Biology from Stony Brook University, an M.S. in Neuroscience from Syracuse University, and a J.D. from Syracuse University College of Law.",
+    ],
   },
   {
     slug: "ivan-baxter",
@@ -109,7 +118,10 @@ export const founders: Person[] = [
     expertise:
       "Scientific computing, programming and technology development",
     credentials:
-      "MS, Saint Louis University · Bioinformatics and Computational Biology",
+      "Bachelor's, Washington University in Saint Louis · Computational Biology and Genomics · Master's, Saint Louis University · Bioinformatics",
+    bio: [
+      "Before co-founding Metablify, Louis was a Data Scientist in the Baxter Lab at the Danforth Plant Science Center. He has a bachelor's degree in computational biology and genomics from Washington University in Saint Louis, and a master's degree in bioinformatics from Saint Louis University. He is interested in using the power of modern computing to discover novel insights in exceptionally large datasets. In his free time, he enjoys walking his dog, reading fiction, and playing cooperative board and video games with his friends.",
+    ],
   },
 ];
 
@@ -131,19 +143,33 @@ export const scientificFounders = [
   bySlug("louis-connelly"),
 ];
 
+const tomLaurita: Person = {
+  slug: "tom-laurita",
+  name: "Tom Laurita",
+  role: "CEO, Danforth Technology Company",
+  photo: "/images/team/tom-laurita.jpg",
+  expertise:
+    "Bringing early technologies through development to market and to exit",
+  credentials:
+    "Brown University, magna cum laude · MPPM, Yale School of Management · PhD, Russian Peoples' Friendship University",
+  bio: [
+    "Tom Laurita is CEO of the Danforth Technology Company. He is an entrepreneur with over 30 years experience bringing early technologies through development to market and to exit.",
+    "Tom was CEO of DTC startup Peptyde Bio, which was acquired by Invaio in 2023. He also co-founded and was CEO of STL-based NewLeaf Symbiotics, one of the most successful US Ag Biotech companies. Tom led Monsanto's USSR business and co-founded Vitas Corporation.",
+    "Tom holds degrees from Brown University (magna cum laude), Yale School of Management (MPPM), and the Russian Peoples' Friendship University (PhD).",
+  ],
+};
+
 /**
- * The /team page. Order is the CEO's: him, then the scientific founders. One
- * more name (Thomas Laurita) is pending his confirmation, so it renders as an
- * open slot rather than a person.
+ * The /team page. Order is Michael Bielski, then the scientific founders,
+ * then Danforth Technology Company leadership.
  */
 export const teamPage = [
   bySlug("michael-bielski"),
   bySlug("ivan-baxter"),
   bySlug("allen-hubbard"),
   bySlug("louis-connelly"),
+  tomLaurita,
 ];
-
-export const teamPending = ["Thomas Laurita — confirm role and inclusion"] as const;
 
 /** Building the advisory board is on the to-do list; nothing to show yet. */
 export const advisors: Person[] = [];

@@ -148,9 +148,11 @@
 }
 
 .team-bio-creds {
+  max-width: 42rem;
   font-family: var(--font-mono);
   font-size: 0.72rem;
   letter-spacing: 0.1em;
+  line-height: 1.7;
   color: var(--color-faint);
   margin: 0 0 1rem;
 }
@@ -160,6 +162,21 @@
   font-size: 1.05rem;
   line-height: 1.7;
   color: var(--color-muted);
+  margin: 0;
+}
+
+.team-bio-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 1.15rem;
+  max-width: 42rem;
+  margin-top: 1.75rem;
+  font-size: 1.05rem;
+  line-height: 1.75;
+  color: var(--color-muted);
+}
+
+.team-bio-copy > p {
   margin: 0;
 }
 

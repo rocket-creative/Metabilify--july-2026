@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { siteConfig } from "@/lib/site";
+import { siteConfig, teamPage } from "@/lib/site";
 import { liveContent } from "@/content/registry";
 import { familyRoute, pageHref } from "@/types/content";
 import type { PageFamily } from "@/types/content";
@@ -17,10 +17,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/work-with-us/collaborations",
     "/about",
     "/team",
-    "/team/michael-bielski",
-    "/team/ivan-baxter",
-    "/team/allen-hubbard",
-    "/team/louis-connelly",
+    ...teamPage.map((person) => `/team/${person.slug}`),
     "/news",
     "/discuss",
     "/data-assessment",

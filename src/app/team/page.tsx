@@ -9,7 +9,6 @@ import { Reveal } from "@/components/Reveal";
 import {
   supporters,
   teamPage,
-  teamPending,
   type Person,
   type Supporter,
 } from "@/lib/site";
@@ -99,14 +98,6 @@ export default function TeamPage() {
           {teamPage.map((person, i) => (
             <Reveal key={person.slug} delay={i * 70} className="h-full">
               <PersonCard person={person} />
-            </Reveal>
-          ))}
-          {teamPending.map((label, i) => (
-            <Reveal key={label} delay={(teamPage.length + i) * 70} className="h-full">
-              <div className="team-card team-card--pending">
-                <p className="about-slot-index">Team — pending</p>
-                <CopyPlaceholder label={label} />
-              </div>
             </Reveal>
           ))}
         </div>
