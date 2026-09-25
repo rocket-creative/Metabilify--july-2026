@@ -1,4 +1,4 @@
-import { ImagePlaceholder } from "@/components/ImagePlaceholder";
+import { Photo } from "@/components/Photo";
 import { Reveal } from "@/components/Reveal";
 
 export function AboutHero() {
@@ -12,10 +12,24 @@ export function AboutHero() {
           </h1>
         </Reveal>
         <Reveal delay={60}>
-          <div className="mt-8 md:mt-10">
-            <ImagePlaceholder
-              ratio="16/9"
-              label="Donald Danforth Plant Science Center — exterior or atrium, wide"
+          <div className="mt-8 grid gap-4 md:mt-10 md:grid-cols-2">
+            <Photo
+              shape="wide"
+              src="/images/about/danforth-campus.webp"
+              alt="Aerial view of the Donald Danforth Plant Science Center campus"
+              width={900}
+              height={600}
+              sizes="(min-width: 810px) 40rem, 90vw"
+              objectPosition="center 42%"
+            />
+            <Photo
+              shape="wide"
+              src="/images/about/danforth-building.jpg"
+              alt="The Donald Danforth Plant Science Center, with the entrance courtyard and reflecting pools"
+              width={1024}
+              height={768}
+              sizes="(min-width: 810px) 40rem, 90vw"
+              objectPosition="center 38%"
             />
           </div>
         </Reveal>

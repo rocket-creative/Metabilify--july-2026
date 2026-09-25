@@ -1,5 +1,6 @@
-import { ImagePlaceholder } from "@/components/ImagePlaceholder";
+import { Photo } from "@/components/Photo";
 import { Reveal } from "@/components/Reveal";
+import { stock } from "@/lib/stock";
 import { AboutProse, AboutSection } from "./AboutSection";
 
 const paragraphs = [
@@ -76,12 +77,15 @@ export function ScaleChallenge() {
               </div>
             </div>
             <ChromatogramPanel />
-            <div className="mt-6">
-              <ImagePlaceholder
-                ratio="3/2"
-                label="Baxter lab at the Danforth Center — LC/MS instrument bay or growth chambers"
-              />
-            </div>
+            <Photo
+              shape="card"
+              className="mt-6"
+              src={stock.massSpec.src}
+              alt={stock.massSpec.alt}
+              width={stock.massSpec.width}
+              height={stock.massSpec.height}
+              sizes="(min-width: 1024px) 32rem, 90vw"
+            />
           </Reveal>
         </div>
       </div>

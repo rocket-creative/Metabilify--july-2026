@@ -465,12 +465,54 @@ a.about-wordmark:hover {
   border: 1px solid var(--color-stone);
 }
 
-.about-video iframe {
+.about-video iframe,
+.about-video-poster {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   border: 0;
+}
+
+.about-video-poster {
+  display: block;
+  padding: 0;
+  margin: 0;
+  background: var(--color-ink);
+  cursor: pointer;
+  color: var(--color-white);
+}
+
+.about-video-poster:focus-visible {
+  outline-offset: -3px;
+}
+
+.about-video-poster img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.about-video-play {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 3.25rem;
+  height: 3.25rem;
+  border-radius: 999px;
+  background: var(--color-forest);
+  color: var(--color-white);
+  transform: translate(-50%, -50%);
+  box-shadow: 0 10px 28px color-mix(in srgb, var(--color-ink) 40%, transparent);
+  transition: transform 160ms ease;
+}
+
+.about-video-poster:hover .about-video-play,
+.about-video-poster:focus-visible .about-video-play {
+  transform: translate(-50%, -50%) scale(1.06);
 }
 
 .about-video-caption {

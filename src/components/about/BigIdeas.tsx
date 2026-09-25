@@ -1,6 +1,6 @@
-import { ImagePlaceholder } from "@/components/ImagePlaceholder";
 import { Reveal } from "@/components/Reveal";
 import { AboutProse, AboutSection } from "./AboutSection";
+import { BigIdeasVideo } from "./BigIdeasVideo";
 
 export function BigIdeas() {
   return (
@@ -20,10 +20,10 @@ export function BigIdeas() {
         </Reveal>
 
         <Reveal delay={60}>
-          <ImagePlaceholder
-            ratio="3/2"
-            label="Big Ideas 3.0 — Team Metablify on stage, Danforth Center auditorium"
-          />
+          <BigIdeasVideo />
+          <p className="about-video-caption">
+            Big Ideas 3.0 · Metablify pitch begins at 46:50
+          </p>
         </Reveal>
 
         <Reveal delay={80}>
@@ -39,27 +39,7 @@ export function BigIdeas() {
         </Reveal>
       </div>
 
-      {/* The Big Ideas 3.0 pitch, cued to Metablify's slot. youtube-nocookie
-          keeps tracking cookies off the page; ads are YouTube's call, not ours. */}
       <Reveal delay={100}>
-        <div className="mt-10 md:mt-14">
-          <div className="about-video">
-            <iframe
-              src="https://www.youtube-nocookie.com/embed/2VPGF2xUvq4?start=2810&rel=0&modestbranding=1"
-              title="Metablify at the Danforth Center Big Ideas 3.0 competition"
-              loading="lazy"
-              allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              referrerPolicy="strict-origin-when-cross-origin"
-              allowFullScreen
-            />
-          </div>
-          <p className="about-video-caption">
-            Big Ideas 3.0 · Metablify pitch begins at 46:50
-          </p>
-        </div>
-      </Reveal>
-
-      <Reveal delay={120}>
         <div className="about-callout">
           <p>
             Big Ideas created momentum. Danforth proof-of-concept funding helped
