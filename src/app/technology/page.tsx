@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import { Button } from "@/components/Button";
 import { BreadcrumbJsonLd } from "@/components/JsonLd";
-import { PageHero, SectionHeading } from "@/components/PageHero";
+import { SectionHeading } from "@/components/PageHero";
 import { PlatformPipeline } from "@/components/PlatformPipeline";
 import { Reveal } from "@/components/Reveal";
-import MassFeatureCircle from "@/components/visuals/MassFeatureCircle";
 import { ScaleBand } from "@/components/ScaleBand";
+import { TechnologyHero } from "@/components/TechnologyHero";
+import MassFeatureCircle from "@/components/visuals/MassFeatureCircle";
 
 export const metadata: Metadata = {
   title: "The Metablify Technology",
@@ -30,30 +31,21 @@ export default function TechnologyPage() {
         ]}
       />
 
-      <PageHero
-        eyebrow="The Metablify Technology"
-        title="First Principles and AI Find and Amplify Real Mass Features"
-        lead="Metablify combines the first principles of physics with AI to align, pool, and amplify consistent signal across complex LC/MS datasets, so real mass features can be detected with confidence amid the noise."
-      >
-        <div className="flex flex-wrap gap-4">
-          <Button href="/discuss">Discuss a Project</Button>
-          <Button href="/applications" variant="secondary">
-            Explore Applications
-          </Button>
-        </div>
-      </PageHero>
+      <TechnologyHero />
 
       <PlatformPipeline />
 
-      <section className="section">
-        <Reveal>
-          <SectionHeading
-            eyebrow="The difference"
-            title="See more of what is real in your data"
-            lead="Legacy workflows may recover only a subset of real mass features. Metablify reveals a broader set from the same LC/MS dataset."
-          />
-        </Reveal>
-        <MassFeatureCircle className="mt-2" />
+      <section className="section-wide band-y wash-white">
+        <div className="gutter-x mx-auto max-w-[80rem]">
+          <Reveal>
+            <SectionHeading
+              eyebrow="The difference"
+              title="See more of what is real in your data"
+              lead="Legacy workflows may recover only a subset of real mass features. Metablify reveals a broader set from the same LC/MS dataset."
+            />
+          </Reveal>
+          <MassFeatureCircle />
+        </div>
       </section>
 
       <ScaleBand />

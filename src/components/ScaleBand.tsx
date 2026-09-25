@@ -1,4 +1,6 @@
 import { Reveal } from "./Reveal";
+import { BarsIcon } from "./visuals/FieldIcons";
+import { AmplifyIcon, PoolIcon } from "./visuals/PipelineIcons";
 
 /**
  * "Built for scale" on the technology page. Copy is the CEO's from the 9/7
@@ -8,14 +10,17 @@ const PILLARS = [
   {
     title: "Large Datasets",
     body: "Designed to work across large numbers of LC/MS samples as experiments scale.",
+    icon: <BarsIcon />,
   },
   {
     title: "Complex Signal",
     body: "Built for datasets where real mass features can be difficult to distinguish from background noise and variation.",
+    icon: <AmplifyIcon />,
   },
   {
     title: "Dataset-Wide Analysis",
     body: "Uses information across samples to create a clearer view of the experiment as a whole.",
+    icon: <PoolIcon />,
   },
 ] as const;
 
@@ -103,6 +108,7 @@ export function ScaleBand() {
           {PILLARS.map((p, i) => (
             <Reveal key={p.title} delay={i * 80} className="h-full">
               <div className="card flex h-full flex-col">
+                <span className="scale-badge">{p.icon}</span>
                 <h4
                   className="mb-3 text-xl text-ink"
                   style={{ fontFamily: "var(--font-display)" }}

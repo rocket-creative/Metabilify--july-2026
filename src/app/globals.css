@@ -29,6 +29,7 @@
 @import "./styles/team.css";
 @import "./styles/applications.css";
 @import "./styles/work-with-us.css";
+@import "./styles/technology.css";
 
 /* Cross-cutting reduced-motion overrides. Loads after every domain that
    declares an animation, so it can switch them off. */

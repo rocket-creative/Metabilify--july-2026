@@ -13,8 +13,9 @@ import { useEffect, useId, useMemo, useRef } from "react";
 
 /**
  * Metablify above-the-fold hero. Copy on the left; on the right an autoplaying,
- * looping story: samples -> 96-well plate -> LC/MS -> raw mass feature
- * -> aligned feature + retention-time peak -> feature tables.
+ * looping story: samples -> plant tissue into a 96-well plate -> a field of
+ * plates -> LC/MS -> raw mass feature -> aligned feature + retention-time
+ * peak -> feature tables.
  * Large captions sit under the graphic, outside the SVG.
  *
  * Pass real photos via `images`. Without them, drawn icons are used.
@@ -36,44 +37,50 @@ const C = {
   wellEmpty: "#0e2219",
   wellStroke: "rgba(255,255,255,0.18)",
   soil: ["#a47a4f", "#8f6843", "#b48a5d"],
+  plant: ["#c8f560", "#9ed24a", "#6eaf3a", "#d4f08a"],
   axis: "rgba(255,255,255,0.35)",
   files: ["#c8f560", "#5ec8b8", "#7fb2ff", "#e58fc4", "#f2b35e"],
   noise: "rgba(229,143,196,0.55)",
   grade: { gold: "#c9a227", green: "#2e9d57", yellow: "#e8c94a", red: "#c8433a" },
 };
 
-/** One loop plays over LOOP_SECONDS, then holds on the tables for HOLD_MS. */
-const LOOP_SECONDS = 24;
+/** One loop plays over LOOP_SECONDS, then holds on the tables for HOLD_MS.
+ *  Four seconds longer than the original 24s so the plate field can hold
+ *  without shortening the LC/MS and analysis scenes. */
+const LOOP_SECONDS = 28;
 const HOLD_MS = 3200;
 
-/** Timeline checkpoints (0 = loop start, 1 = end). */
+/** Timeline checkpoints (0 = loop start, 1 = end).
+ *  Early beats keep their old wall-clock length. From the instrument onward,
+ *  every beat is shifted later by the plate-field window. */
 const P = {
-  cardsOut: [0.13, 0.18],
-  soilMove: [0.14, 0.21],
-  plateIn: [0.21, 0.26],
-  wells: [0.26, 0.36],
-  soilOut: [0.33, 0.37],
-  instIn: [0.35, 0.4],
-  plateToInst: [0.38, 0.45],
-  plateOut: [0.44, 0.47],
-  instTrace: [0.45, 0.52],
-  instOut: [0.52, 0.56],
-  scatterIn: [0.55, 0.59],
-  points: [0.57, 0.64],
-  align: [0.66, 0.75],
-  panelShift: [0.76, 0.81],
-  rtIn: [0.79, 0.83],
-  rtReveal: [0.81, 0.9],
-  tables: [0.9, 0.97],
+  cardsOut: [0.111, 0.154],
+  plantMove: [0.12, 0.18],
+  plateIn: [0.18, 0.223],
+  wells: [0.223, 0.309],
+  plantOut: [0.283, 0.317],
+  fieldIn: [0.309, 0.375],
+  fieldOut: [0.436, 0.475],
+  instIn: [0.443, 0.486],
+  instTrace: [0.529, 0.589],
+  instOut: [0.589, 0.623],
+  scatterIn: [0.614, 0.649],
+  points: [0.632, 0.691],
+  align: [0.709, 0.786],
+  panelShift: [0.794, 0.837],
+  rtIn: [0.82, 0.854],
+  rtReveal: [0.837, 0.914],
+  tables: [0.914, 0.974],
 } as const;
 
 const CAPTIONS: { range: [number, number]; text: string }[] = [
-  { range: [0, 0.155], text: "Start with any biological sample: plant tissue, soil, or blood." },
-  { range: [0.145, 0.365], text: "Sample extracts are loaded into a 96-well plate." },
-  { range: [0.355, 0.555], text: "Each well runs through LC/MS, producing millions of data points per file." },
-  { range: [0.545, 0.665], text: "Raw data: every file reports the same mass feature at a slightly different mass." },
-  { range: [0.655, 0.895], text: "Metablify aligns them into one feature and quantifies it per file." },
-  { range: [0.885, 1], text: "Every feature lands in a table, graded by confidence." },
+  { range: [0, 0.133], text: "Plant tissue is prepared for analysis. Soil and blood can take the same path." },
+  { range: [0.12, 0.31], text: "The plant extract is loaded into a 96-well plate." },
+  { range: [0.3, 0.45], text: "That plate is one of hundreds — the scale of the dataset." },
+  { range: [0.447, 0.619], text: "Each well runs through LC/MS, producing millions of data points per file." },
+  { range: [0.61, 0.713], text: "Raw data: every file reports the same mass feature at a slightly different mass." },
+  { range: [0.704, 0.91], text: "Metablify aligns them into one feature and quantifies it per file." },
+  { range: [0.901, 1], text: "Every feature lands in a table, graded by confidence." },
 ];
 
 // ---------- geometry ----------
@@ -87,8 +94,37 @@ const CARD = { w: 200, h: 250, cy: 300 };
 
 const PLATE = { cx: 455, cy: 320, w: 480, h: 320, pitch: 36, r: 13 };
 const INST = { cx: 880, cy: 320, w: 200 };
-/** The plate slides toward the instrument and stops short of its left edge. */
-const PLATE_APPROACH = { scale: 0.78, gap: 36 };
+/** Simplified plates. The detailed plate shrinks into HERO_CELL. */
+const FIELD = { cols: 12, rows: 10, gw: 68, gh: 46, gapX: 10, gapY: 8, heroC: 5, heroR: 5 };
+const FIELD_STEP_X = FIELD.gw + FIELD.gapX;
+const FIELD_STEP_Y = FIELD.gh + FIELD.gapY;
+const FIELD_ORIGIN_X = (VIEW.w - (FIELD.cols * FIELD.gw + (FIELD.cols - 1) * FIELD.gapX)) / 2;
+const FIELD_ORIGIN_Y = (VIEW.h - (FIELD.rows * FIELD.gh + (FIELD.rows - 1) * FIELD.gapY)) / 2;
+const FIELD_SCALE = FIELD.gw / PLATE.w;
+const FIELD_CELL = {
+  x: FIELD_ORIGIN_X + FIELD.heroC * FIELD_STEP_X + FIELD.gw / 2,
+  y: FIELD_ORIGIN_Y + FIELD.heroR * FIELD_STEP_Y + FIELD.gh / 2,
+};
+
+type PlateGlyph = { key: string; x: number; y: number; dots: { cx: number; cy: number }[] };
+
+function buildPlateGlyphs(): PlateGlyph[] {
+  const rand = mulberry32(120);
+  const glyphs: PlateGlyph[] = [];
+  for (let r = 0; r < FIELD.rows; r++) {
+    for (let c = 0; c < FIELD.cols; c++) {
+      if (c === FIELD.heroC && r === FIELD.heroR) continue;
+      const x = FIELD_ORIGIN_X + c * FIELD_STEP_X;
+      const y = FIELD_ORIGIN_Y + r * FIELD_STEP_Y;
+      const dots = Array.from({ length: 4 }, () => ({
+        cx: x + 12 + rand() * (FIELD.gw - 24),
+        cy: y + 10 + rand() * (FIELD.gh - 20),
+      }));
+      glyphs.push({ key: `${c}-${r}`, x, y, dots });
+    }
+  }
+  return glyphs;
+}
 
 // Card frame is x0/y0/w/h. The axes (left/right/top/bottom) sit inside it
 // so the larger labels have a gutter and still stay on the card.
@@ -354,39 +390,35 @@ export default function MetablifyHero({ images, className }: Props) {
   }, []);
   const scatterStart = useMemo(() => scatterGroups.map((g) => scatterPath(g, 0)), [scatterGroups]);
   const rtClouds = useMemo(() => buildRT().map((f) => ({ color: f.color, d: cloudPath(f.pts, 2.2) })), []);
+  const plateGlyphs = useMemo(() => buildPlateGlyphs(), []);
   const wellColors = useMemo(() => {
     const rand = mulberry32(96);
-    return Array.from({ length: 96 }, () => C.soil[Math.floor(rand() * C.soil.length)]);
+    return Array.from({ length: 96 }, () => C.plant[Math.floor(rand() * C.plant.length)]);
   }, []);
 
-  // Scene 1-2: the soil card slides left and stops beside the plate.
+  // Scene 1-2: the plant card slides toward the plate. Soil and blood fade.
   const sideOut = useTransform(p, [...P.cardsOut], [1, 0]);
-  const soilCx = CARDS.find((c) => c.key === "soil")!.cx;
-  const soilScale = 0.72;
-  const soilDx =
-    PLATE.cx - PLATE.w / 2 - 28 - (CARD.w / 2) * soilScale - soilCx;
-  const soilRef = useAttrTransform(p, (v) =>
-    moveScale(soilCx, CARD.cy, lerp(v, P.soilMove, 0, soilDx), 0, lerp(v, P.soilMove, 1, soilScale)),
+  const plantCx = CARDS.find((c) => c.key === "plant")!.cx;
+  const plantScale = 0.72;
+  const plantDx =
+    PLATE.cx - PLATE.w / 2 - 28 - (CARD.w / 2) * plantScale - plantCx;
+  const plantRef = useAttrTransform(p, (v) =>
+    moveScale(plantCx, CARD.cy, lerp(v, P.plantMove, 0, plantDx), 0, lerp(v, P.plantMove, 1, plantScale)),
   );
-  const soilOpacity = useTransform(p, [...P.soilOut], [1, 0]);
+  const plantOpacity = useTransform(p, [...P.plantOut], [1, 0]);
 
-  // Scene 2-3: plate. It approaches the instrument, then holds beside it.
-  const plateOpacity = useTransform(p, [P.plateIn[0], P.plateIn[1], P.plateOut[0], P.plateOut[1]], [0, 1, 1, 0]);
-  const plateApproachDx =
-    INST.cx -
-    INST.w / 2 -
-    PLATE_APPROACH.gap -
-    (PLATE.w / 2) * PLATE_APPROACH.scale -
-    PLATE.cx;
+  // Scene 2: the filled plate shrinks into one cell of the plate field.
+  const plateOpacity = useTransform(p, [P.plateIn[0], P.plateIn[1], P.fieldOut[0], P.fieldOut[1]], [0, 1, 1, 0]);
   const plateRef = useAttrTransform(p, (v) =>
     moveScale(
       PLATE.cx,
       PLATE.cy,
-      lerp(v, P.plateToInst, 0, plateApproachDx),
-      0,
-      lerp(v, P.plateToInst, 1, PLATE_APPROACH.scale),
+      lerp(v, P.fieldIn, 0, FIELD_CELL.x - PLATE.cx),
+      lerp(v, P.fieldIn, 0, FIELD_CELL.y - PLATE.cy),
+      lerp(v, P.fieldIn, 1, FIELD_SCALE),
     ),
   );
+  const fieldOpacity = useTransform(p, [P.fieldIn[0], P.fieldIn[1], P.fieldOut[0], P.fieldOut[1]], [0, 1, 1, 0]);
 
   // Scene 3: instrument
   const instOpacity = useTransform(p, [P.instIn[0], P.instIn[1], P.instOut[0], P.instOut[1]], [0, 1, 1, 0]);
@@ -415,8 +447,9 @@ export default function MetablifyHero({ images, className }: Props) {
   const wellX0 = plateLeft + 42;
   const wellY0 = plateTop + 42;
 
-  const plantRef = useRef<SVGGElement>(null);
+  const soilRef = useRef<SVGGElement>(null);
   const bloodRef = useRef<SVGGElement>(null);
+  const fieldRef = useRef<SVGGElement>(null);
   const instRef = useRef<SVGGElement>(null);
   const rtRef = useRef<SVGGElement>(null);
   const tablesRef = useRef<SVGGElement>(null);
@@ -432,10 +465,11 @@ export default function MetablifyHero({ images, className }: Props) {
     let clipW = -1;
 
     const apply = (v: number) => {
-      setShown(plantRef.current, v < P.cardsOut[1]);
+      setShown(plantRef.current, v < P.plantOut[1]);
+      setShown(soilRef.current, v < P.cardsOut[1]);
       setShown(bloodRef.current, v < P.cardsOut[1]);
-      setShown(soilRef.current, v < P.soilOut[1]);
-      setShown(plateRef.current, v >= P.plateIn[0] && v < P.plateOut[1]);
+      setShown(fieldRef.current, v >= P.fieldIn[0] && v < P.fieldOut[1]);
+      setShown(plateRef.current, v >= P.plateIn[0] && v < P.fieldOut[1]);
       setShown(instRef.current, v >= P.instIn[0] && v < P.instOut[1]);
       setShown(panelARef.current, v >= P.scatterIn[0]);
       setShown(rtRef.current, v >= P.rtIn[0]);
@@ -443,7 +477,7 @@ export default function MetablifyHero({ images, className }: Props) {
 
       const plate = plateRef.current;
       if (plate) {
-        const on = v >= P.wells[0] && v < P.plateOut[1];
+        const on = v >= P.wells[0] && v < P.fieldOut[1];
         if ((plate.getAttribute("data-on") === "1") !== on) {
           if (on) plate.setAttribute("data-on", "1");
           else plate.removeAttribute("data-on");
@@ -587,7 +621,7 @@ export default function MetablifyHero({ images, className }: Props) {
       </div>
 
       <motion.div className="mh-visual" style={{ opacity: stageOpacity }}>
-        <svg viewBox={`0 0 ${VIEW.w} ${VIEW.h}`} role="img" aria-label="Plant, soil and blood samples are loaded into a 96-well plate, run through LC/MS, and Metablify aligns the raw data into quantified, confidence-graded mass features.">
+        <svg viewBox={`0 0 ${VIEW.w} ${VIEW.h}`} role="img" aria-label="A plant sample is loaded into a 96-well plate. The plate shrinks into a field of plates, then the samples run through LC/MS, and Metablify aligns the raw data into quantified, confidence-graded mass features.">
           <defs>
             {CARDS.map((c) => (
               <clipPath key={c.key} id={`${uid}-${c.key}`}>
@@ -601,14 +635,14 @@ export default function MetablifyHero({ images, className }: Props) {
 
           {/* Scene 1: sample cards */}
           {CARDS.map((c) => {
-            const isSoil = c.key === "soil";
+            const isPlant = c.key === "plant";
             const img = images?.[c.key];
             const top = CARD.cy - CARD.h / 2;
             return (
               <motion.g
                 key={c.key}
-                ref={isSoil ? soilRef : c.key === "plant" ? plantRef : bloodRef}
-                style={{ opacity: isSoil ? soilOpacity : sideOut }}
+                ref={isPlant ? plantRef : c.key === "soil" ? soilRef : bloodRef}
+                style={{ opacity: isPlant ? plantOpacity : sideOut }}
               >
                 <rect x={c.cx - CARD.w / 2} y={top} width={CARD.w} height={CARD.h} rx={18} fill={C.card} stroke={C.cardStroke} />
                 {img ? (
@@ -622,6 +656,18 @@ export default function MetablifyHero({ images, className }: Props) {
               </motion.g>
             );
           })}
+
+          {/* Scene 2b: a field of plates. The detailed plate occupies the empty cell. */}
+          <motion.g ref={fieldRef} className="mh-later" style={{ opacity: fieldOpacity }}>
+            {plateGlyphs.map((g) => (
+              <g key={g.key}>
+                <rect x={g.x} y={g.y} width={FIELD.gw} height={FIELD.gh} rx={4} fill="#e9efe9" opacity={0.14} stroke={C.muted} strokeWidth={1} />
+                {g.dots.map((d, i) => (
+                  <circle key={i} cx={d.cx} cy={d.cy} r={2.2} fill={C.plant[i % C.plant.length]} opacity={0.9} />
+                ))}
+              </g>
+            ))}
+          </motion.g>
 
           {/* Scene 2: 96-well plate */}
           <motion.g ref={plateRef} className="mh-plate mh-later" style={{ opacity: plateOpacity }}>

@@ -1,12 +1,11 @@
-import { CopyPlaceholder, ImagePlaceholder } from "./ImagePlaceholder";
 import { Reveal } from "./Reveal";
+import AmplificationGraphic from "./visuals/AmplificationGraphic";
 import { AlignIcon, AmplifyIcon, PoolIcon } from "./visuals/PipelineIcons";
 
 /**
  * The CEO's sketch for the top of the platform page: three boxes — Align,
  * Pool, Amplify — feeding one Metablify output. Copy is his, from the 9/7
- * deck. The output visual stays a placeholder until the technical team
- * decides what to show.
+ * deck. The output panel shows the align-and-amplify graphic.
  */
 const STAGES = [
   {
@@ -75,14 +74,9 @@ export function PlatformPipeline() {
                 A structured, dataset-wide view of mass features ready for
                 downstream analysis.
               </p>
-              <CopyPlaceholder label="Output caption — pending what the technical team decides to show" />
             </div>
             <div className="pipeline-output-visual">
-              <ImagePlaceholder
-                ratio="16/9"
-                tone="dark"
-                label="Representative Metablify output — pending technical team"
-              />
+              <AmplificationGraphic />
             </div>
           </div>
         </Reveal>

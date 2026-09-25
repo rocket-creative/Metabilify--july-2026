@@ -128,7 +128,7 @@
 }
 
 .pipeline-output-body {
-  margin: 0 0 1.25rem;
+  margin: 0;
   max-width: 30rem;
   line-height: 1.65;
   color: rgba(255, 255, 255, 0.78);
