@@ -1,6 +1,5 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
-import { press } from "@/lib/press";
 import { stock, type StockShot, photoSizes } from "@/lib/stock";
 import { ImagePlaceholder } from "./ImagePlaceholder";
 import { Photo } from "./Photo";
@@ -43,7 +42,7 @@ export const FIELDS: {
     body: "Apply large-scale metabolomics and proteomics to crop diversity, trait discovery, plant biology, breeding populations, and agricultural research.",
     icon: <LeafIcon />,
     image: "Young crop seedlings in rows, field soil",
-    photo: press.plantSample,
+    photo: stock.greenhouse,
   },
   {
     href: "/discuss",

@@ -12,7 +12,6 @@ import {
   ReviewIcon,
 } from "@/components/visuals/ProcessIcons";
 import type { ReactNode } from "react";
-import { press } from "@/lib/press";
 import { stock, type StockShot, photoSizes } from "@/lib/stock";
 import { Photo } from "@/components/Photo";
 import {
@@ -73,7 +72,7 @@ const paths: {
     detail: "Best when the opportunity calls for a deeper partnership and shared path to commercialization.",
     icon: <PartnershipIcon />,
     image: "Two researchers reviewing results on a laptop at a lab bench",
-    photo: press.labSamples,
+    photo: stock.laptopBench,
   },
 ];
 

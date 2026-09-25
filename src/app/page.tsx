@@ -14,7 +14,6 @@ import {
 } from "@/components/visuals/ServiceIcons";
 import Link from "next/link";
 import type { ReactNode } from "react";
-import { press } from "@/lib/press";
 import { stock, type StockShot, photoSizes } from "@/lib/stock";
 import { Photo } from "@/components/Photo";
 
@@ -174,11 +173,11 @@ export default function HomePage() {
             <Photo
               shape="wide"
               className="work-routes-photo"
-              src={press.labSamples.src}
-              alt={press.labSamples.alt}
-              width={press.labSamples.width}
-              height={press.labSamples.height}
-              objectPosition={press.labSamples.objectPosition}
+              src={stock.labSession.src}
+              alt={stock.labSession.alt}
+              width={stock.labSession.width}
+              height={stock.labSession.height}
+              objectPosition={stock.labSession.objectPosition}
               sizes={photoSizes.wide}
             />
           </div>
@@ -190,11 +189,11 @@ export default function HomePage() {
         <Reveal className="mx-auto mb-10 w-full md:mb-14 md:w-4/5">
           <Photo
             shape="wide"
-            src={press.labGroup.src}
-            alt={press.labGroup.alt}
-            width={press.labGroup.width}
-            height={press.labGroup.height}
-            objectPosition={press.labGroup.objectPosition}
+            src="/images/about/danforth-building.jpg"
+            alt="The Donald Danforth Plant Science Center, with the entrance courtyard and reflecting pools"
+            width={1024}
+            height={768}
+            objectPosition="center 38%"
             sizes="(min-width: 1024px) 64rem, 90vw"
           />
         </Reveal>
