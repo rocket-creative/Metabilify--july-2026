@@ -109,16 +109,8 @@ export function MoleculeIcon() {
 }
 
 /**
- * A small tertiary fold: helix, beta hairpin, helix. Stands in for the
- * proteomics ribbon render.
+ * Proteomics mark: the client's protein ribbon, drawn in the badge color.
  */
 export function PeptideIcon() {
-  return (
-    <Icon>
-      <path d="M16 12c7 3 7 8 0 11s-7 8 0 11 7 8 0 12" />
-      <path d="M30 22l7 5v9l-7 5-7-5v-9z" />
-      <path d="M30 27v10" />
-      <path d="M48 14c-7 4-7 9 0 13s7 9 0 13 7 8 0 12" />
-    </Icon>
-  );
+  return <span className="peptide-icon" aria-hidden="true" />;
 }

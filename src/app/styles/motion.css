@@ -19,7 +19,8 @@ html.lenis body {
   }
 
   .chromatogram-path,
-  .peak-bar {
+  .peak-bar,
+  .ridgeline-trace {
     animation: none;
     stroke-dashoffset: 0;
     transform: none;

@@ -133,7 +133,7 @@ export default function WorkWithUsPage() {
           sizes="100vw"
         />
         <div className="gutter-x wwu-hero-bleed-copy">
-          <Reveal>
+          <Reveal className="wwu-hero-card">
             <p className="eyebrow mb-4">Work with us</p>
             <h1 className="display display-lg max-w-[16ch]">Engage with Metablify</h1>
             <p className="lead mt-6 max-w-[34rem]">

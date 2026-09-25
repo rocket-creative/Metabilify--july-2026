@@ -68,10 +68,6 @@ export function RidgelineVisual() {
       aria-hidden="true"
     >
       <defs>
-        <linearGradient id="ridge-fade" x1="0" x2="1" y1="0" y2="0">
-          <stop offset="0" stopColor="#123227" stopOpacity="1" />
-          <stop offset="0.25" stopColor="#123227" stopOpacity="0" />
-        </linearGradient>
         <filter id="ridge-glow" x="-10%" y="-10%" width="120%" height="120%">
           <feGaussianBlur stdDeviation="2.5" result="b" />
           <feMerge>
@@ -85,14 +81,16 @@ export function RidgelineVisual() {
         .map((t, i) => (
           <path
             key={i}
+            className="ridgeline-trace"
+            pathLength="1"
             d={t.d}
             stroke={i === TRACES.length - 1 ? LIME : "#ffffff"}
             strokeWidth={i === TRACES.length - 1 ? 3.25 : 1.1}
             opacity={i === TRACES.length - 1 ? 1 : 0.42}
             filter={i === TRACES.length - 1 ? "url(#ridge-glow)" : undefined}
+            style={{ animationDelay: `${i * 0.28}s` }}
           />
         ))}
-      <rect x="0" y="0" width="640" height="320" fill="url(#ridge-fade)" />
     </svg>
   );
 }

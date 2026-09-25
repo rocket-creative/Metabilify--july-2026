@@ -29,25 +29,28 @@
   object-fit: cover;
 }
 
-.wwu-hero-bleed::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    90deg,
-    rgba(13, 38, 32, 0.82) 0%,
-    rgba(13, 38, 32, 0.42) 48%,
-    rgba(13, 38, 32, 0.12) 100%
-  );
-  pointer-events: none;
-}
-
 .wwu-hero-bleed-copy {
   position: relative;
   z-index: 1;
   width: min(80rem, 100%);
   margin-inline: auto;
   padding-block: clamp(4.5rem, 12vh, 7.5rem);
+}
+
+.wwu-hero-card {
+  box-sizing: border-box;
+  width: min(46rem, 100%);
+  padding: clamp(1.5rem, 3vw, 2.25rem);
+  border-radius: 1.5rem;
+  background: color-mix(in srgb, #12291f 58%, transparent);
+  -webkit-backdrop-filter: blur(18px) saturate(1.15);
+  backdrop-filter: blur(18px) saturate(1.15);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  box-shadow: 0 18px 48px -28px rgba(0, 0, 0, 0.7);
+}
+
+.wwu-hero-card .lead {
+  max-width: none;
 }
 
 .wwu-hero-bleed .eyebrow {

@@ -47,16 +47,44 @@
 
 .ridgeline {
   display: block;
-  width: 100%;
+  position: relative;
+  z-index: 0;
+  width: 124%;
+  max-width: none;
   height: auto;
+  margin-left: 4%;
   overflow: visible;
+  transform: scale(1.08);
+  transform-origin: 100% 55%;
+}
+
+@keyframes ridgeline-scan {
+  0% {
+    stroke-dashoffset: 1;
+  }
+  38% {
+    stroke-dashoffset: 0;
+  }
+  62% {
+    stroke-dashoffset: 0;
+  }
+  100% {
+    stroke-dashoffset: -1;
+  }
+}
+
+.ridgeline-trace {
+  stroke-dasharray: 1;
+  animation: ridgeline-scan 8s cubic-bezier(0.45, 0, 0.25, 1) infinite;
 }
 
 .apps-hero-tag {
   position: absolute;
-  top: 0.5rem;
-  right: 0;
+  z-index: 1;
+  top: 0.35rem;
+  left: calc(-6% + 1.35rem);
   margin: 0;
+  text-align: left;
   font-family: var(--font-mono);
   font-size: 0.7rem;
   line-height: 1.8;
@@ -104,10 +132,16 @@
   background: var(--color-neutral);
 }
 
-/* The stock ribbon is grayscale. A green grade gives it color without
-   redrawing the client render or its arrows. */
+.omics-card--grey .omics-card-media .photo-frame {
+  background: #000;
+}
+
+.omics-card--grey .omics-card-media .photo-frame::after {
+  display: none;
+}
+
 .omics-card--grey .omics-card-media img {
-  filter: sepia(0.45) saturate(2.6) hue-rotate(72deg) contrast(1.05) brightness(1.02);
+  filter: none;
 }
 
 .omics-card-copy {
@@ -128,9 +162,17 @@
   margin-bottom: 1.25rem;
 }
 
-.omics-card-badge svg {
+.omics-card-badge svg,
+.omics-card-badge .peptide-icon {
   width: 72%;
   height: 72%;
+}
+
+.omics-card-badge .peptide-icon {
+  display: block;
+  background: currentColor;
+  -webkit-mask: url("/images/icons/protein-line.png") center / contain no-repeat;
+  mask: url("/images/icons/protein-line.png") center / contain no-repeat;
 }
 
 .omics-card-title {

@@ -113,7 +113,7 @@ export const stock = {
     alt: "Grey ribbon render of a protein with alpha helices and beta sheets",
     width: 1024,
     height: 1024,
-    objectFit: "contain",
+    objectFit: "cover",
   },
 } as const satisfies Record<string, StockShot>;
 
