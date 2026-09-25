@@ -4,8 +4,7 @@
  * stale in the other.
  *
  * Dates: the Danforth Center launch piece and AgFunderNews carry a dateline
- * in the article; the two St. Louis Inno dates are taken from their URLs. The
- * Big Ideas article has no dateline, so it carries the year of the event.
+ * in the article; the two St. Louis Inno dates are taken from their URLs.
  *
  * Order is newest first. The ribbon rotates through these in this order.
  */
@@ -19,8 +18,12 @@ export type NewsItem = {
   body: string;
   /** External article. Null until the client supplies the link. */
   href: string | null;
-  /** Art brief for the card thumbnail. */
+  /** Art brief for the card thumbnail, used until a photo is available. */
   image: string;
+  /** Thumbnail taken from the linked article. Omit while the slot is still open. */
+  photo?: { src: string; width: number; height: number; alt: string };
+  /** Wordmark for the media slot when the article has no usable photo. */
+  logo?: { src: string; width: number; height: number; alt: string };
   /** Who published it, shown beside the date. */
   source: string;
 };
@@ -34,6 +37,12 @@ export const newsItems: NewsItem[] = [
     body: "Metablify was named a St. Louis INNO Startup to Watch as the company began working with potential partners on external validation projects, moving from proving the technology internally to demonstrating what the platform could do with collaborators and real-world applications.",
     href: "https://www.bizjournals.com/stlouis/inno/stories/awards/2025/01/30/startups-to-watch-2025-metablify.html",
     image: "St. Louis Inno Startups to Watch 2025 — article image or Metablify team photo",
+    photo: {
+      src: "/images/team-whiteboard.jpg",
+      width: 1800,
+      height: 1202,
+      alt: "Ivan Baxter, Allen Hubbard, and Louis Connelly working through a chromatogram at a whiteboard",
+    },
     source: "St. Louis Inno",
   },
   {
@@ -44,6 +53,12 @@ export const newsItems: NewsItem[] = [
     body: "Metablify was selected as a 2024 Arch Grants company and received the standard $75,000 award in equity-free, non-dilutive funding, along with access to the St. Louis entrepreneurial ecosystem as it began validating the technology outside the Danforth Center.",
     href: "https://www.bizjournals.com/stlouis/inno/stories/fundings/2024/11/21/arch-grants-20-companies-2024-group.html",
     image: "Arch Grants 2024 cohort announcement — event or award photo",
+    logo: {
+      src: "/images/partners/arch-grants.png",
+      width: 196,
+      height: 24,
+      alt: "Arch Grants",
+    },
     source: "St. Louis Inno",
   },
   {
@@ -54,6 +69,12 @@ export const newsItems: NewsItem[] = [
     body: "The Danforth Technology Company announced the launch of Metablify, a startup built on LC/MS data-processing technology developed in the Baxter lab at the Donald Danforth Plant Science Center.",
     href: "https://www.danforthcenter.org/news/danforth-technology-company-launches-new-startup/",
     image: "Danforth Technology Company launch announcement — Danforth Center exterior or the founding team",
+    photo: {
+      src: "/images/team-whiteboard.jpg",
+      width: 1800,
+      height: 1202,
+      alt: "Ivan Baxter, Allen Hubbard, and Louis Connelly working through a chromatogram at a whiteboard",
+    },
     source: "Donald Danforth Plant Science Center",
   },
   {
@@ -64,16 +85,12 @@ export const newsItems: NewsItem[] = [
     body: "AgFunderNews reported on the Danforth Technology Company's launch of Metablify, a startup using LC/MS data-processing algorithms to help researchers find real signal in large biological datasets.",
     href: "https://agfundernews.com/danforth-technology-center-launches-startup-to-open-new-research-pathways-through-metabolite-analysis",
     image: "AgFunderNews launch coverage — Danforth Center campus photo",
+    photo: {
+      src: "/images/news/danforth-center.jpg",
+      width: 1000,
+      height: 750,
+      alt: "The Donald Danforth Plant Science Center",
+    },
     source: "AgFunderNews",
-  },
-  {
-    slug: "big-ideas-3-2023",
-    year: "2023",
-    date: null,
-    title: "Team Metablify wins Big Ideas 3.0",
-    body: "Team Metablify from the Baxter lab won the Donald Danforth Plant Science Center's Big Ideas 3.0 competition, taking the audience vote and a $10,000 grant to advance the idea in front of more than 600 people on August 31, 2023.",
-    href: "https://www.danforthcenter.org/news/big-ideas-3-0/",
-    image: "Big Ideas 3.0 — Team Metablify on stage at the Danforth Center",
-    source: "Donald Danforth Plant Science Center",
   },
 ];

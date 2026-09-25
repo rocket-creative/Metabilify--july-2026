@@ -33,15 +33,41 @@
   }
 }
 
-.news-card-media .image-placeholder {
+.news-card-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  aspect-ratio: 3 / 2;
+  background: var(--color-grey-soft);
+  padding: clamp(1.75rem, 4vw, 2.75rem);
+}
+
+.news-card-logo img {
+  width: min(22rem, 84%);
+  height: auto;
+  border-radius: 0 !important;
+}
+
+.news-card-media .image-placeholder,
+.news-card-media .photo-frame {
   height: 100%;
   border-radius: 0;
   border-width: 0 0 1px;
 }
 
+.news-card-media .photo-frame {
+  border-style: solid;
+  border-color: var(--color-stone);
+}
+
 @media (min-width: 810px) {
-  .news-card-media .image-placeholder {
+  .news-card-media .image-placeholder,
+  .news-card-media .photo-frame,
+  .news-card-logo {
     border-width: 0 1px 0 0;
+    aspect-ratio: auto;
+    min-height: 100%;
   }
 }
 

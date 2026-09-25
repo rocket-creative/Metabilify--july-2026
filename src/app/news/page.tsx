@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { ImagePlaceholder } from "@/components/ImagePlaceholder";
 import { BreadcrumbJsonLd } from "@/components/JsonLd";
 import { PageHero } from "@/components/PageHero";
+import { Photo } from "@/components/Photo";
 import { Reveal } from "@/components/Reveal";
 import { newsItems } from "@/content/news";
 
@@ -40,7 +42,28 @@ export default function NewsPage() {
             <Reveal key={item.slug} delay={i * 80}>
               <article className="news-card">
                 <div className="news-card-media">
-                  <ImagePlaceholder ratio="3/2" label={item.image} />
+                  {item.photo ? (
+                    <Photo
+                      shape="card"
+                      src={item.photo.src}
+                      alt={item.photo.alt}
+                      width={item.photo.width}
+                      height={item.photo.height}
+                      sizes="(min-width: 810px) 24rem, 90vw"
+                    />
+                  ) : item.logo ? (
+                    <span className="news-card-logo">
+                      <Image
+                        src={item.logo.src}
+                        alt={item.logo.alt}
+                        width={item.logo.width}
+                        height={item.logo.height}
+                        sizes="16rem"
+                      />
+                    </span>
+                  ) : (
+                    <ImagePlaceholder ratio="3/2" label={item.image} />
+                  )}
                 </div>
                 <div className="news-card-body">
                   <h2 className="news-card-title">

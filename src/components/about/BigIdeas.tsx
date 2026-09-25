@@ -1,6 +1,5 @@
 import { Reveal } from "@/components/Reveal";
 import { AboutProse, AboutSection } from "./AboutSection";
-import { BigIdeasVideo } from "./BigIdeasVideo";
 
 export function BigIdeas() {
   return (
@@ -9,7 +8,7 @@ export function BigIdeas() {
       eyebrow="From Big Idea to Company"
       title="2023 | Metablify Wins Big Ideas 3.0."
     >
-      <div className="grid gap-10 lg:grid-cols-3 lg:gap-8">
+      <div className="grid gap-10 lg:grid-cols-2 lg:gap-8">
         <Reveal>
           <AboutProse
             paragraphs={[
@@ -17,13 +16,6 @@ export function BigIdeas() {
               "More than 600 people participated in the event in person and online. Team Metablify, represented by Allen Hubbard and Louis Connelly, won the audience vote and a $10,000 grant to advance the idea.",
             ]}
           />
-        </Reveal>
-
-        <Reveal delay={60}>
-          <BigIdeasVideo />
-          <p className="about-video-caption">
-            Big Ideas 3.0 · Metablify pitch begins at 46:50
-          </p>
         </Reveal>
 
         <Reveal delay={80}>

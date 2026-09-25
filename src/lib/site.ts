@@ -201,7 +201,11 @@ export const supporters: Supporter[] = [
       height: 156,
     },
   },
-  { name: "Arch Grants", href: "https://archgrants.org/" },
+  {
+    name: "Arch Grants",
+    href: "https://archgrants.org/",
+    logo: { src: "/images/partners/arch-grants.png", width: 196, height: 24 },
+  },
   {
     name: "QRM Capital",
     href: null,

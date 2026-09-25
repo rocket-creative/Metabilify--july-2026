@@ -7,11 +7,23 @@ export function AboutHero() {
       <div className="gutter-x mx-auto max-w-[80rem]">
         <Reveal>
           <p className="eyebrow mb-4">About Metablify</p>
-          <h1 className="display display-xl max-w-4xl">
-            Built at Danforth. Created to Solve a Real LC/MS Problem.
-          </h1>
+          <h1 className="display display-lg max-w-4xl">Our Story</h1>
+          <p className="about-story-line">
+            Built to help scientists see more in LC/MS data.
+          </p>
         </Reveal>
         <Reveal delay={60}>
+          <div className="about-prose mt-8 md:mt-10">
+            <p>
+              Metablify began at the Donald Danforth Plant Science Center,
+              where the Baxter lab faced a growing challenge: large LC/MS
+              experiments were producing more data than existing analysis tools
+              could reliably handle. The team needed a better way to find
+              meaningful signals across thousands of samples.
+            </p>
+          </div>
+        </Reveal>
+        <Reveal delay={80}>
           <div className="mt-8 grid gap-4 md:mt-10 md:grid-cols-2">
             <Photo
               shape="wide"
@@ -31,22 +43,6 @@ export function AboutHero() {
               sizes="(min-width: 810px) 40rem, 90vw"
               objectPosition="center 38%"
             />
-          </div>
-        </Reveal>
-        <Reveal delay={80}>
-          <div className="about-prose mt-8 md:mt-10">
-            <p className="lead">
-              Metablify grew from years of ambitious scientific research at the
-              Donald Danforth Plant Science Center and a simple realization: as
-              LC/MS experiments became larger and more complex, the tools used
-              to analyze the data were not keeping pace.
-            </p>
-            <p>
-              What began as a challenge inside the Baxter lab became a new
-              approach to LC/MS mass-feature analysis, and ultimately a company
-              built to bring that technology to researchers and organizations
-              far beyond its place of origin.
-            </p>
           </div>
         </Reveal>
       </div>

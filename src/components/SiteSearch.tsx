@@ -34,7 +34,7 @@ const ROUTE_BLURBS: Record<string, string> = {
   "/applications": "Where the platform is applied.",
   "/work-with-us":
     "Analytical services, platform development, and collaborations.",
-  "/about": "The team and the science behind Metablify.",
+  "/about": "How Metablify began at the Danforth Center and became a company.",
   "/news": "Updates and announcements from Metablify.",
   "/discuss": "Start a conversation about your project.",
 };

@@ -1,45 +1,34 @@
+import { Photo } from "@/components/Photo";
 import { Reveal } from "@/components/Reveal";
 import { AboutProse, AboutSection } from "./AboutSection";
 
 export function ScientificInsight() {
   return (
     <AboutSection
+      tone="grey"
       eyebrow="The Scientific Insight"
-      title="What If the Dataset Could Help Reveal the Signal?"
+      title="Finding and amplifying real mass features."
     >
-      <Reveal>
-        <AboutProse
-          paragraphs={[
-            "Allen Hubbard, Louis Connelly, Ivan Baxter, and colleagues began developing a different way to approach the problem.",
-            "Instead of treating every sample as an isolated analysis, the emerging approach used information across samples to reinforce consistent signals and distinguish them from background noise.",
-          ]}
-        />
-      </Reveal>
-
-      <Reveal delay={80}>
-        <figure className="about-quote my-[clamp(2rem,4vw,3rem)]">
-          <blockquote>
-            <p>
-              Hubbard described the concept as needing something like{" "}
-              <span className="about-quote-highlight">
-                &ldquo;PCR for metabolites&rdquo;
-              </span>
-              : not physically amplifying molecules, but using information
-              across the dataset to improve the signal-to-noise relationship
-              computationally.
-            </p>
-          </blockquote>
-        </figure>
-      </Reveal>
-
-      <Reveal delay={120}>
-        <AboutProse
-          paragraphs={[
-            "That insight became the foundation for the Metablify platform.",
-          ]}
-          emphasiseLast
-        />
-      </Reveal>
+      <div className="grid gap-10 lg:grid-cols-12 lg:items-center lg:gap-14">
+        <Reveal className="lg:col-span-7">
+          <AboutProse
+            paragraphs={[
+              "Ivan Baxter, Allen Hubbard, and Louis Connelly developed a different approach to LC/MS analysis. Instead of treating each sample in isolation, they used information across the dataset and algorithms grounded in the first principles of physics to distinguish consistent mass features from background noise. That work became the foundation of Metablify’s platform.",
+            ]}
+            emphasiseLast
+          />
+        </Reveal>
+        <Reveal delay={80} className="lg:col-span-5">
+          <Photo
+            shape="card"
+            src="/images/team-whiteboard.jpg"
+            alt="Ivan Baxter, Louis Connelly, and Allen Hubbard working through a chromatogram at a whiteboard"
+            width={1800}
+            height={1202}
+            sizes="(min-width: 1024px) 32rem, 90vw"
+          />
+        </Reveal>
+      </div>
     </AboutSection>
   );
 }

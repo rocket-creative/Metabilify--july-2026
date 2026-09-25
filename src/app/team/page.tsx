@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { Photo } from "@/components/Photo";
-import { CopyPlaceholder, ImagePlaceholder } from "@/components/ImagePlaceholder";
+import { ImagePlaceholder } from "@/components/ImagePlaceholder";
 import { BreadcrumbJsonLd } from "@/components/JsonLd";
 import { PageHero } from "@/components/PageHero";
 import { Reveal } from "@/components/Reveal";
@@ -139,12 +139,6 @@ export default function TeamPage() {
             </Reveal>
           ))}
         </div>
-        <Reveal delay={supporters.length * 60}>
-          <div className="team-card team-card--pending mt-6">
-            <p className="about-slot-index">Partners — open slot</p>
-            <CopyPlaceholder label="Additional investors and economic development partners — organization name, logo, and link" />
-          </div>
-        </Reveal>
       </section>
     </>
   );
