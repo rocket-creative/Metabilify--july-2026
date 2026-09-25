@@ -81,7 +81,7 @@ export default function ApplicationsPage() {
                 range of commercial applications.
               </p>
               <div className="mt-8">
-                <Button href="/discuss">Discuss a Project</Button>
+                <Button href="/discuss" variant="on-green">Discuss a Project</Button>
               </div>
             </Reveal>
             <Reveal delay={120} className="apps-hero-art">

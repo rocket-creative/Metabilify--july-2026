@@ -1,0 +1,4 @@
+/* Content sections share the padding in layout.css (`.section` and `.band-y`).
+   An earlier pass squeezed each page by a different amount so every band
+   would fit a 14" screen. That made the sections look uneven and cramped.
+   Heroes that are already one screen stay as they are. */

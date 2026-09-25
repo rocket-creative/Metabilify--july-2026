@@ -69,8 +69,8 @@ export function RidgelineVisual() {
     >
       <defs>
         <linearGradient id="ridge-fade" x1="0" x2="1" y1="0" y2="0">
-          <stop offset="0" stopColor="var(--color-white)" stopOpacity="1" />
-          <stop offset="0.25" stopColor="var(--color-white)" stopOpacity="0" />
+          <stop offset="0" stopColor="#123227" stopOpacity="1" />
+          <stop offset="0.25" stopColor="#123227" stopOpacity="0" />
         </linearGradient>
         <filter id="ridge-glow" x="-10%" y="-10%" width="120%" height="120%">
           <feGaussianBlur stdDeviation="2.5" result="b" />
@@ -86,9 +86,9 @@ export function RidgelineVisual() {
           <path
             key={i}
             d={t.d}
-            stroke={i === TRACES.length - 1 ? LIME : "currentColor"}
-            strokeWidth={t.width}
-            opacity={t.opacity}
+            stroke={i === TRACES.length - 1 ? LIME : "#ffffff"}
+            strokeWidth={i === TRACES.length - 1 ? 3.25 : 1.1}
+            opacity={i === TRACES.length - 1 ? 1 : 0.42}
             filter={i === TRACES.length - 1 ? "url(#ridge-glow)" : undefined}
           />
         ))}

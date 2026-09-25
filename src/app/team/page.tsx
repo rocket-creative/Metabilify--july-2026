@@ -84,6 +84,13 @@ export default function TeamPage() {
         eyebrow="Team"
         title="Our Team"
         lead="Scientific discovery, computational technology, entrepreneurship, and commercialization — brought together at the Danforth Center and built into a company."
+        image={{
+          src: "/images/about/danforth-wildflowers.jpg",
+          alt: "Purple wildflowers in front of the Donald Danforth Plant Science Center",
+          width: 768,
+          height: 1024,
+          objectPosition: "center 38%",
+        }}
       />
 
       {/* Team */}
@@ -111,7 +118,7 @@ export default function TeamPage() {
             The organizations behind Metablify.
           </h2>
         </Reveal>
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="partner-row">
           {supporters.map((s, i) => (
             <Reveal key={s.name} delay={i * 60} className="h-full">
               {s.href ? (
@@ -133,7 +140,6 @@ export default function TeamPage() {
                 <div className="team-partner">
                   <PartnerLogo supporter={s} />
                   <p className="team-partner-name">{s.name}</p>
-                  <p className="team-partner-cue">Link to be confirmed</p>
                 </div>
               )}
             </Reveal>

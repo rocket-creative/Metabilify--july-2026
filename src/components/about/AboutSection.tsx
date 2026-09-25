@@ -37,7 +37,7 @@ export function AboutSection({
           {eyebrow ? <p className="eyebrow mb-4">{eyebrow}</p> : null}
           <h2 className="display display-lg max-w-4xl">{title}</h2>
         </Reveal>
-        {children ? <div className="mt-8 md:mt-12">{children}</div> : null}
+        {children ? <div className="section-follow">{children}</div> : null}
       </div>
     </section>
   );

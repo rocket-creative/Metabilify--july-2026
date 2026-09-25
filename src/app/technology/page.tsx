@@ -35,7 +35,7 @@ export default function TechnologyPage() {
 
       <PlatformPipeline />
 
-      <section className="section-wide band-y wash-white">
+      <section className="tech-compare section-wide band-y wash-white">
         <div className="gutter-x mx-auto max-w-[80rem]">
           <Reveal>
             <SectionHeading

@@ -74,9 +74,9 @@ const P = {
 } as const;
 
 const CAPTIONS: { range: [number, number]; text: string }[] = [
-  { range: [0, 0.133], text: "Plant tissue is prepared for analysis. Soil and blood can take the same path." },
+  { range: [0, 0.133], text: "Plant tissue, soil, blood, or any other sample you want." },
   { range: [0.12, 0.31], text: "The plant extract is loaded into a 96-well plate." },
-  { range: [0.3, 0.45], text: "That plate is one of hundreds — the scale of the dataset." },
+  { range: [0.3, 0.45], text: "That plate is one of thousands — the scale of the dataset." },
   { range: [0.447, 0.619], text: "Each well runs through LC/MS, producing millions of data points per file." },
   { range: [0.61, 0.713], text: "Raw data: every file reports the same mass feature at a slightly different mass." },
   { range: [0.704, 0.91], text: "Metablify aligns them into one feature and quantifies it per file." },
@@ -93,7 +93,9 @@ const CARDS = [
 const CARD = { w: 200, h: 250, cy: 300 };
 
 const PLATE = { cx: 455, cy: 320, w: 480, h: 320, pitch: 36, r: 13 };
-const INST = { cx: 880, cy: 320, w: 200 };
+const INST = { cx: 500, cy: 320, w: 400 };
+/** Horizontal positions from the original 200-wide drawing, scaled to INST.w. */
+const ix = (dx: number) => INST.cx + dx * (INST.w / 200);
 /** Simplified plates. The detailed plate shrinks into HERO_CELL. */
 const FIELD = { cols: 12, rows: 10, gw: 68, gh: 46, gapX: 10, gapY: 8, heroC: 5, heroR: 5 };
 const FIELD_STEP_X = FIELD.gw + FIELD.gapX;
@@ -106,25 +108,40 @@ const FIELD_CELL = {
   y: FIELD_ORIGIN_Y + FIELD.heroR * FIELD_STEP_Y + FIELD.gh / 2,
 };
 
-type PlateGlyph = { key: string; x: number; y: number; dots: { cx: number; cy: number }[] };
+type PlateGlyph = { key: string; x: number; y: number };
 
 function buildPlateGlyphs(): PlateGlyph[] {
-  const rand = mulberry32(120);
   const glyphs: PlateGlyph[] = [];
   for (let r = 0; r < FIELD.rows; r++) {
     for (let c = 0; c < FIELD.cols; c++) {
       if (c === FIELD.heroC && r === FIELD.heroR) continue;
-      const x = FIELD_ORIGIN_X + c * FIELD_STEP_X;
-      const y = FIELD_ORIGIN_Y + r * FIELD_STEP_Y;
-      const dots = Array.from({ length: 4 }, () => ({
-        cx: x + 12 + rand() * (FIELD.gw - 24),
-        cy: y + 10 + rand() * (FIELD.gh - 20),
-      }));
-      glyphs.push({ key: `${c}-${r}`, x, y, dots });
+      glyphs.push({
+        key: `${c}-${r}`,
+        x: FIELD_ORIGIN_X + c * FIELD_STEP_X,
+        y: FIELD_ORIGIN_Y + r * FIELD_STEP_Y,
+      });
     }
   }
   return glyphs;
 }
+
+/** Same 8×12 well grid in every field cell, so the plates read as identical. */
+const MINI_WELLS = Array.from({ length: 96 }, (_, k) => {
+  const cols = 12;
+  const rows = 8;
+  const insetX = 5;
+  const insetY = 4;
+  const pitchX = (FIELD.gw - insetX * 2) / cols;
+  const pitchY = (FIELD.gh - insetY * 2) / rows;
+  const col = k % cols;
+  const row = Math.floor(k / cols);
+  return {
+    cx: insetX + pitchX * (col + 0.5),
+    cy: insetY + pitchY * (row + 0.5),
+    r: Math.min(pitchX, pitchY) * 0.36,
+    fill: C.plant[k % C.plant.length],
+  };
+});
 
 // Card frame is x0/y0/w/h. The axes (left/right/top/bottom) sit inside it
 // so the larger labels have a gutter and still stay on the card.
@@ -657,15 +674,18 @@ export default function MetablifyHero({ images, className }: Props) {
             );
           })}
 
-          {/* Scene 2b: a field of plates. The detailed plate occupies the empty cell. */}
+          {/* Scene 2b: a field of identical 96-well plates. The detailed plate occupies the empty cell. */}
+          <defs>
+            <symbol id={`${uid}-miniplate`} viewBox={`0 0 ${FIELD.gw} ${FIELD.gh}`}>
+              <rect width={FIELD.gw} height={FIELD.gh} rx={4} fill="#e9efe9" fillOpacity={0.14} stroke={C.muted} strokeWidth={1} />
+              {MINI_WELLS.map((w, i) => (
+                <circle key={i} cx={w.cx} cy={w.cy} r={w.r} fill={w.fill} />
+              ))}
+            </symbol>
+          </defs>
           <motion.g ref={fieldRef} className="mh-later" style={{ opacity: fieldOpacity }}>
             {plateGlyphs.map((g) => (
-              <g key={g.key}>
-                <rect x={g.x} y={g.y} width={FIELD.gw} height={FIELD.gh} rx={4} fill="#e9efe9" opacity={0.14} stroke={C.muted} strokeWidth={1} />
-                {g.dots.map((d, i) => (
-                  <circle key={i} cx={d.cx} cy={d.cy} r={2.2} fill={C.plant[i % C.plant.length]} opacity={0.9} />
-                ))}
-              </g>
+              <use key={g.key} href={`#${uid}-miniplate`} x={g.x} y={g.y} width={FIELD.gw} height={FIELD.gh} />
             ))}
           </motion.g>
 
@@ -698,16 +718,16 @@ export default function MetablifyHero({ images, className }: Props) {
 
           {/* Scene 3: LC/MS instrument */}
           <motion.g ref={instRef} className="mh-later" style={{ opacity: instOpacity }}>
-            <rect x={INST.cx - 100} y={INST.cy - 150} width={200} height={300} rx={16} fill={C.card} stroke="#3d6b56" />
-            <rect x={INST.cx - 80} y={INST.cy - 125} width={160} height={95} rx={8} fill="#0b1a13" />
+            <rect x={ix(-100)} y={INST.cy - 150} width={INST.w} height={300} rx={16} fill={C.card} stroke="#3d6b56" />
+            <rect x={ix(-80)} y={INST.cy - 125} width={INST.w * 0.8} height={95} rx={8} fill="#0b1a13" />
             <motion.path
-              d={`M${INST.cx - 70},${INST.cy - 45} L${INST.cx - 45},${INST.cy - 47} Q${INST.cx - 35},${INST.cy - 90} ${INST.cx - 25},${INST.cy - 47} L${INST.cx - 5},${INST.cy - 48} Q${INST.cx + 5},${INST.cy - 115} ${INST.cx + 15},${INST.cy - 48} L${INST.cx + 35},${INST.cy - 47} Q${INST.cx + 43},${INST.cy - 75} ${INST.cx + 51},${INST.cy - 47} L${INST.cx + 70},${INST.cy - 46}`}
+              d={`M${ix(-70)},${INST.cy - 45} L${ix(-45)},${INST.cy - 47} Q${ix(-35)},${INST.cy - 90} ${ix(-25)},${INST.cy - 47} L${ix(-5)},${INST.cy - 48} Q${ix(5)},${INST.cy - 115} ${ix(15)},${INST.cy - 48} L${ix(35)},${INST.cy - 47} Q${ix(43)},${INST.cy - 75} ${ix(51)},${INST.cy - 47} L${ix(70)},${INST.cy - 46}`}
               fill="none"
               stroke={C.accent}
               strokeWidth={2}
               style={{ pathLength: instTrace }}
             />
-            <rect x={INST.cx - 62} y={INST.cy + 70} width={124} height={12} rx={3} fill="#0b1a13" />
+            <rect x={ix(-62)} y={INST.cy + 70} width={INST.w * 0.62} height={12} rx={3} fill="#0b1a13" />
             <text x={INST.cx} y={INST.cy + 125} textAnchor="middle" fontSize={16} fill={C.muted} letterSpacing={3}>
               LC/MS
             </text>

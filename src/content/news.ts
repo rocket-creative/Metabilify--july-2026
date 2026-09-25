@@ -21,7 +21,13 @@ export type NewsItem = {
   /** Art brief for the card thumbnail, used until a photo is available. */
   image: string;
   /** Thumbnail taken from the linked article. Omit while the slot is still open. */
-  photo?: { src: string; width: number; height: number; alt: string };
+  photo?: {
+    src: string;
+    width: number;
+    height: number;
+    alt: string;
+    objectPosition?: string;
+  };
   /** Wordmark for the media slot when the article has no usable photo. */
   logo?: { src: string; width: number; height: number; alt: string };
   /** Who published it, shown beside the date. */
@@ -38,10 +44,11 @@ export const newsItems: NewsItem[] = [
     href: "https://www.bizjournals.com/stlouis/inno/stories/awards/2025/01/30/startups-to-watch-2025-metablify.html",
     image: "St. Louis Inno Startups to Watch 2025 — article image or Metablify team photo",
     photo: {
-      src: "/images/team-whiteboard.jpg",
-      width: 1800,
-      height: 1202,
-      alt: "Ivan Baxter, Allen Hubbard, and Louis Connelly working through a chromatogram at a whiteboard",
+      src: "/images/news/danforth-flowers.jpg",
+      width: 768,
+      height: 1024,
+      alt: "Yellow wildflowers in front of the Donald Danforth Plant Science Center",
+      objectPosition: "center 36%",
     },
     source: "St. Louis Inno",
   },
@@ -70,10 +77,10 @@ export const newsItems: NewsItem[] = [
     href: "https://www.danforthcenter.org/news/danforth-technology-company-launches-new-startup/",
     image: "Danforth Technology Company launch announcement — Danforth Center exterior or the founding team",
     photo: {
-      src: "/images/team-whiteboard.jpg",
-      width: 1800,
-      height: 1202,
-      alt: "Ivan Baxter, Allen Hubbard, and Louis Connelly working through a chromatogram at a whiteboard",
+      src: "/images/press/lab-group.jpg",
+      width: 1024,
+      height: 682,
+      alt: "Researchers at the Donald Danforth Plant Science Center examining a plant sample",
     },
     source: "Donald Danforth Plant Science Center",
   },

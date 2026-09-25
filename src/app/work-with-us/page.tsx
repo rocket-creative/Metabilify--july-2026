@@ -12,6 +12,7 @@ import {
   ReviewIcon,
 } from "@/components/visuals/ProcessIcons";
 import type { ReactNode } from "react";
+import { press } from "@/lib/press";
 import { stock, type StockShot, photoSizes } from "@/lib/stock";
 import { Photo } from "@/components/Photo";
 import {
@@ -72,7 +73,7 @@ const paths: {
     detail: "Best when the opportunity calls for a deeper partnership and shared path to commercialization.",
     icon: <PartnershipIcon />,
     image: "Two researchers reviewing results on a laptop at a lab bench",
-    photo: stock.laptopBench,
+    photo: press.labSamples,
   },
 ];
 
@@ -119,39 +120,32 @@ export default function WorkWithUsPage() {
         ]}
       />
 
-      {/* Hero */}
-      <section className="wwu-hero section-wide border-b border-stone">
-        <div className="gutter-x mx-auto max-w-[80rem]">
-          <div className="wwu-hero-grid">
-            <Reveal>
-              <p className="eyebrow mb-4">Work with us</p>
-              <h1 className="display display-lg">Engage with Metablify</h1>
-              <p className="lead mt-6 max-w-[34rem]">
-                Engage with Metablify through analytical services, platform
-                development, or strategic collaboration.
-              </p>
-              <div className="mt-8">
-                <Button href="/discuss">Discuss Your Project</Button>
-              </div>
-            </Reveal>
-            <Reveal delay={120} className="wwu-hero-art">
-              <Photo
-                shape="card"
-                src={stock.riverside.src}
-                alt={stock.riverside.alt}
-                width={stock.riverside.width}
-                height={stock.riverside.height}
-                objectPosition={stock.riverside.objectPosition}
-                sizes="(min-width: 1024px) 36rem, 90vw"
-              />
-              <p className="apps-hero-tag wwu-hero-tag">
-                Deeper insight.
-                <br />
-                Broader possibility.
-                <span className="apps-hero-rule" aria-hidden="true" />
-              </p>
-            </Reveal>
-          </div>
+      {/* Hero: the riverside photo is the whole frame. */}
+      <section className="wwu-hero-bleed">
+        <Photo
+          shape="wide"
+          className="wwu-hero-bleed-photo"
+          src={stock.riverside.src}
+          alt={stock.riverside.alt}
+          width={stock.riverside.width}
+          height={stock.riverside.height}
+          objectPosition="32% center"
+          sizes="100vw"
+        />
+        <div className="gutter-x wwu-hero-bleed-copy">
+          <Reveal>
+            <p className="eyebrow mb-4">Work with us</p>
+            <h1 className="display display-lg max-w-[16ch]">Engage with Metablify</h1>
+            <p className="lead mt-6 max-w-[34rem]">
+              Engage with Metablify through analytical services, platform
+              development, or strategic collaboration.
+            </p>
+            <div className="mt-8">
+              <Button href="/discuss" variant="on-green">
+                Discuss Your Project
+              </Button>
+            </div>
+          </Reveal>
         </div>
       </section>
 

@@ -1,9 +1,24 @@
 /* /applications, built to the CEO's 9/7 mockup. */
 
 .apps-hero {
-  background: var(--color-white);
+  background-color: #12291f;
+  background-image: var(--forest-field);
+  color: var(--color-white);
   padding-block: clamp(3rem, 7vw, 6.5rem);
   overflow: hidden;
+}
+
+.apps-hero .eyebrow {
+  color: var(--color-lime);
+}
+
+.apps-hero .display,
+.apps-hero .lead {
+  color: var(--color-white);
+}
+
+.apps-hero .lead {
+  color: rgba(255, 255, 255, 0.82);
 }
 
 .apps-hero-grid {
@@ -19,7 +34,7 @@
 }
 
 .apps-hero-title {
-  color: var(--color-ink);
+  color: var(--color-white);
   /* Sized so the longest line, "Many Applications.", stays one line in the
      half-width hero column without wrapping or overflowing the gutter. */
   font-size: clamp(1.85rem, 4.2vw, 3.5rem);
@@ -27,7 +42,7 @@
 
 .apps-hero-art {
   position: relative;
-  color: var(--color-forest);
+  color: var(--color-white);
 }
 
 .ridgeline {
@@ -50,12 +65,16 @@
   color: var(--color-muted);
 }
 
+.apps-hero .apps-hero-tag {
+  color: rgba(255, 255, 255, 0.78);
+}
+
 .apps-hero-rule {
   display: block;
   width: 3rem;
   height: 2px;
   margin-top: 0.75rem;
-  background: var(--color-forest);
+  background: var(--color-lime);
 }
 
 /* Omics cards: copy left, image right, one wash per omics. */
@@ -83,6 +102,12 @@
 
 .omics-card--grey {
   background: var(--color-neutral);
+}
+
+/* The stock ribbon is grayscale. A green grade gives it color without
+   redrawing the client render or its arrows. */
+.omics-card--grey .omics-card-media img {
+  filter: sepia(0.45) saturate(2.6) hue-rotate(72deg) contrast(1.05) brightness(1.02);
 }
 
 .omics-card-copy {

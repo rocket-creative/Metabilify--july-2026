@@ -34,6 +34,12 @@ export default function NewsPage() {
         eyebrow="Company updates"
         title="News & Insights"
         lead="Milestones, recognition, and announcements from Metablify."
+        image={{
+          src: "/images/about/danforth-building.jpg",
+          alt: "The Donald Danforth Plant Science Center",
+          width: 1024,
+          height: 768,
+        }}
       />
 
       <section className="section">
@@ -49,6 +55,7 @@ export default function NewsPage() {
                       alt={item.photo.alt}
                       width={item.photo.width}
                       height={item.photo.height}
+                      objectPosition={item.photo.objectPosition}
                       sizes="(min-width: 810px) 24rem, 90vw"
                     />
                   ) : item.logo ? (

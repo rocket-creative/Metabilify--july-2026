@@ -36,3 +36,7 @@
 @import "./styles/motion.css";
 
 @import "./styles/ribbon.css";
+
+/* Loads last so a short laptop can tighten every section without each
+   domain stylesheet winning the cascade. */
+@import "./styles/laptop-fit.css";

@@ -1,6 +1,47 @@
 /* About page domain. Fifteen sections of narrative, so the work here is mostly
    holding one measure and one vertical rhythm across all of them. */
 
+.about-hero {
+  background: var(--color-white);
+}
+
+.about-hero-photo {
+  display: block;
+  width: 100%;
+  max-height: min(58vh, 36rem);
+  aspect-ratio: 16 / 7;
+  border: 0;
+  border-radius: 0;
+}
+
+.about-hero-copy {
+  position: relative;
+  z-index: 1;
+  width: min(80rem, 100%);
+  margin: -4.5rem auto 0;
+  padding: clamp(1.5rem, 3vw, 2.5rem);
+  background: var(--color-white);
+  border-radius: 1.5rem;
+  max-width: 46rem;
+  margin-left: clamp(1.25rem, 5vw, 4rem);
+}
+
+.about-hero-copy .about-story-line {
+  color: var(--color-ink);
+}
+
+.about-hero-prose {
+  box-sizing: border-box;
+  width: min(46rem, 100%);
+  margin: 0;
+  margin-left: clamp(1.25rem, 5vw, 4rem);
+  padding: 0 clamp(1.5rem, 3vw, 2.5rem) clamp(2.5rem, 6vw, 4.5rem);
+}
+
+.about-hero-prose .about-prose {
+  max-width: none;
+}
+
 .about-story-line {
   margin: 1.25rem 0 0;
   max-width: 36rem;

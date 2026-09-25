@@ -1,5 +1,4 @@
 import Image from "next/image";
-import { CopyPlaceholder } from "@/components/ImagePlaceholder";
 import { Reveal } from "@/components/Reveal";
 import { supporters } from "@/lib/site";
 import { AboutSection } from "./AboutSection";
@@ -61,12 +60,6 @@ export function SupportersSection() {
         ))}
       </div>
 
-      <Reveal delay={supporters.length * 60}>
-        <div className="about-slot mt-6">
-          <p className="about-slot-index">Supporters — open slot</p>
-          <CopyPlaceholder label="Additional approved investors or supporters — organization name and link" />
-        </div>
-      </Reveal>
     </AboutSection>
   );
 }

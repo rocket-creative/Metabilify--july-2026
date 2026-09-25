@@ -16,8 +16,63 @@
   padding-block: clamp(3rem, 7vw, 7.5rem);
 }
 
+/* One space under a section title. Pages were mixing mb-4 through mb-14.
+   About's title has no margin utility; the block under it uses this same gap. */
+:root {
+  --section-gap: clamp(1.75rem, 2.5vw, 2.5rem);
+}
+
+.section .display.mb-4,
+.section .display.mb-5,
+.section .display.mb-6,
+.section .display.mb-8,
+.section .display.mb-10,
+.band-y .display.mb-4,
+.band-y .display.mb-5,
+.band-y .display.mb-6,
+.band-y .display.mb-8,
+.band-y .display.mb-10,
+.section .display.md\:mb-12,
+.section .display.md\:mb-14,
+.band-y .display.md\:mb-12,
+.band-y .display.md\:mb-14,
+.section-head {
+  margin-bottom: var(--section-gap);
+}
+
+.section-follow {
+  margin-top: var(--section-gap);
+}
+
+.section .lead.mb-10,
+.band-y .lead.mb-10,
+.section .lead.md\:mb-14,
+.band-y .lead.md\:mb-14 {
+  margin-bottom: var(--section-gap);
+}
+
 .gutter-x {
   padding-inline: clamp(1.25rem, 5vw, 2.5rem);
+}
+
+.page-hero-photo {
+  background: var(--color-white);
+  border-bottom: 1px solid var(--color-stone);
+}
+
+.page-hero-photo-media {
+  display: block;
+  width: 100%;
+  max-height: min(46vh, 28rem);
+  aspect-ratio: 16 / 7;
+  border: 0;
+  border-radius: 0;
+}
+
+.page-hero-photo-copy {
+  width: min(80rem, 100%);
+  margin: 0 auto;
+  padding-block: clamp(2rem, 4vw, 3.25rem);
 }
 
 .section-green,

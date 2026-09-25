@@ -142,11 +142,11 @@ export default function AmplificationGraphic({ className }: { className?: string
               d={tr.d}
               fill="none"
               stroke={COLORS.trace}
-              strokeWidth={2}
+              strokeWidth={1.35}
               strokeLinecap="round"
               strokeLinejoin="round"
               initial={{ pathLength: 0, opacity: 0 }}
-              animate={on ? { pathLength: 1, opacity: 1 } : {}}
+              animate={on ? { pathLength: 1, opacity: 0.38 } : {}}
               transition={t(1.1, i * 0.25)}
             />
             {tr.dots.map((d, j) => (
@@ -221,22 +221,26 @@ export default function AmplificationGraphic({ className }: { className?: string
           animate={on ? { pathLength: 1, opacity: 1 } : {}}
           transition={t(0.6, 3.1)}
         />
-        {peaks.map((p, i) => (
-          <motion.path
-            key={p.mu}
-            d={p.d}
-            fill="none"
-            stroke={COLORS.peak}
-            strokeWidth={2.5}
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            filter={`url(#${glowId})`}
-            style={{ transformBox: "fill-box", originY: 1 }}
-            initial={{ scaleY: 0, opacity: 0 }}
-            animate={on ? { scaleY: 1, opacity: 1 } : {}}
-            transition={reduce ? { duration: 0 } : { duration: 0.8, delay: 3.5 + i * 0.3, ease: [0.2, 0.9, 0.3, 1.2] }}
-          />
-        ))}
+        {[...peaks.slice(1), peaks[0]].map((p) => {
+          const lead = p === peaks[0];
+          const i = peaks.indexOf(p);
+          return (
+            <motion.path
+              key={p.mu}
+              d={p.d}
+              fill="none"
+              stroke={COLORS.peak}
+              strokeWidth={lead ? 6 : 1.6}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              filter={lead ? `url(#${glowId})` : undefined}
+              style={{ transformBox: "fill-box", originY: 1 }}
+              initial={{ scaleY: 0, opacity: 0 }}
+              animate={on ? { scaleY: 1, opacity: lead ? 1 : 0.35 } : {}}
+              transition={reduce ? { duration: 0 } : { duration: 0.8, delay: 3.5 + i * 0.3, ease: [0.2, 0.9, 0.3, 1.2] }}
+            />
+          );
+        })}
       </svg>
     </div>
   );

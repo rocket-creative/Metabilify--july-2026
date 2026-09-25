@@ -42,7 +42,7 @@ export function DanforthTechnology() {
         />
       </Reveal>
 
-      <div className="mt-10 grid gap-4 sm:grid-cols-3">
+      <div className="partner-row mt-10">
         {logos.map((logo, i) => (
           <Reveal key={logo.name} delay={i * 60}>
             {logo.href ? (

@@ -18,7 +18,7 @@ const CAPABILITIES = [
 
 export function CapabilitiesBand() {
   return (
-    <section className="section-forest section-wide band-y">
+    <section className="section-forest section-wide band-y home-fit">
       <div className="gutter-x mx-auto max-w-[80rem]">
         <Reveal>
           <div className="capabilities-eyebrow mb-4">

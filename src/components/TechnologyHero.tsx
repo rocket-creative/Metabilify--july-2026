@@ -182,10 +182,8 @@ export function TechnologyHero() {
         </>
       ) : null}
 
-      <div className="tech-hero-scrim" aria-hidden="true" />
-
       <div className="tech-hero-copy">
-        <Reveal>
+        <Reveal className="tech-hero-card">
           <p className="eyebrow mb-4">The Metablify Technology</p>
           <h1 className="display display-lg tech-hero-title">
             First Principles and AI Find and Amplify Real Mass Features

@@ -109,18 +109,16 @@ export function MoleculeIcon() {
 }
 
 /**
- * Three interlocking loops around a small core: the folded-protein mark from
- * the CEO's brochure, for the proteomics card.
+ * A small tertiary fold: helix, beta hairpin, helix. Stands in for the
+ * proteomics ribbon render.
  */
 export function PeptideIcon() {
   return (
     <Icon>
-      <g strokeWidth="2.5">
-        <ellipse cx="32" cy="32" rx="8" ry="24" />
-        <ellipse cx="32" cy="32" rx="8" ry="24" transform="rotate(60 32 32)" />
-        <ellipse cx="32" cy="32" rx="8" ry="24" transform="rotate(-60 32 32)" />
-      </g>
-      <path d="M32 26l5.2 3v6l-5.2 3-5.2-3v-6z" fill="var(--color-white)" strokeWidth="1.5" />
+      <path d="M16 12c7 3 7 8 0 11s-7 8 0 11 7 8 0 12" />
+      <path d="M30 22l7 5v9l-7 5-7-5v-9z" />
+      <path d="M30 27v10" />
+      <path d="M48 14c-7 4-7 9 0 13s7 9 0 13 7 8 0 12" />
     </Icon>
   );
 }

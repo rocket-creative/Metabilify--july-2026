@@ -1,5 +1,21 @@
 /* /technology. Video hero, then the existing pipeline / compare / scale rhythm. */
 
+/* The comparison drawing is 960×470. Left at full content width it is taller
+   than the screen. Cap it and let the width follow. */
+@media (min-width: 1024px) {
+  .tech-compare svg {
+    display: block;
+    width: auto;
+    max-width: 100%;
+    max-height: min(36vh, 22rem);
+    margin-inline: auto;
+  }
+
+  .tech-compare .md\:mb-14 {
+    margin-bottom: 1rem;
+  }
+}
+
 .tech-hero {
   position: relative;
   isolation: isolate;
@@ -8,6 +24,7 @@
   min-height: calc(100svh - var(--header-offset));
   overflow: hidden;
   background-color: var(--color-forest);
+  background-image: none;
 }
 
 .tech-hero-poster,
@@ -36,26 +53,28 @@
   opacity: 1;
 }
 
-.tech-hero-scrim {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  pointer-events: none;
-  background: linear-gradient(
-    to top,
-    var(--color-forest) 0%,
-    color-mix(in srgb, var(--color-forest) 82%, transparent) 36%,
-    color-mix(in srgb, var(--color-forest) 14%, transparent) 64%,
-    color-mix(in srgb, var(--color-forest) 46%, transparent) 100%
-  );
-}
-
 .tech-hero-copy {
   position: relative;
   z-index: 3;
   width: min(80rem, 100%);
   margin-inline: auto;
   padding: clamp(5rem, 14vh, 8rem) clamp(1.25rem, 5vw, 4rem) clamp(2.5rem, 7vh, 4.5rem);
+}
+
+.tech-hero-card {
+  box-sizing: border-box;
+  width: min(46rem, 100%);
+  padding: clamp(1.5rem, 3vw, 2.25rem);
+  border-radius: 1.5rem;
+  background: color-mix(in srgb, #12291f 58%, transparent);
+  -webkit-backdrop-filter: blur(18px) saturate(1.15);
+  backdrop-filter: blur(18px) saturate(1.15);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  box-shadow: 0 18px 48px -28px rgba(0, 0, 0, 0.7);
+}
+
+.tech-hero-card .lead {
+  max-width: none;
 }
 
 .tech-hero-title {

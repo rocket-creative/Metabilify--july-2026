@@ -48,12 +48,6 @@ export function PeopleSection() {
               <PersonCard person={person} />
             </Reveal>
           ))}
-          <Reveal delay={managementTeam.length * 70}>
-            <div className="about-slot">
-              <p className="about-slot-index">Management — open slot</p>
-              <CopyPlaceholder label="Additional management team member — name, title and short bio" />
-            </div>
-          </Reveal>
         </div>
       </div>
 

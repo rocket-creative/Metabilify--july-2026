@@ -14,6 +14,7 @@ import {
 } from "@/components/visuals/ServiceIcons";
 import Link from "next/link";
 import type { ReactNode } from "react";
+import { press } from "@/lib/press";
 import { stock, type StockShot, photoSizes } from "@/lib/stock";
 import { Photo } from "@/components/Photo";
 
@@ -63,7 +64,7 @@ export default function HomePage() {
       <MetablifyHero />
 
       {/* Legacy workflows versus the broader set Metablify recovers. */}
-      <section className="section">
+      <section className="section home-fit">
         <Reveal>
           <p className="eyebrow mb-4">Why Metablify</p>
           <h2 className="display display-lg mb-6 max-w-3xl">
@@ -78,7 +79,7 @@ export default function HomePage() {
       <ApplicationsCarousel />
 
       {/* Applications — the six fields, per the 9/7 call. */}
-      <section className="section-wide band-y section-grey">
+      <section className="section-wide band-y section-grey home-fit">
         <div className="gutter-x mx-auto max-w-[80rem]">
           <Reveal>
             <p className="eyebrow mb-4">Applications</p>
@@ -103,7 +104,7 @@ export default function HomePage() {
       </section>
 
       {/* Work with us: split band, then the three engagement routes. */}
-      <section className="section-wide band-y">
+      <section className="section-wide band-y home-fit">
         <div className="gutter-x mx-auto max-w-[80rem]">
           <Reveal className="mb-10 md:mb-14">
             <div className="work-band">
@@ -173,11 +174,11 @@ export default function HomePage() {
             <Photo
               shape="wide"
               className="work-routes-photo"
-              src={stock.labSession.src}
-              alt={stock.labSession.alt}
-              width={stock.labSession.width}
-              height={stock.labSession.height}
-              objectPosition={stock.labSession.objectPosition}
+              src={press.labSamples.src}
+              alt={press.labSamples.alt}
+              width={press.labSamples.width}
+              height={press.labSamples.height}
+              objectPosition={press.labSamples.objectPosition}
               sizes={photoSizes.wide}
             />
           </div>
@@ -185,14 +186,15 @@ export default function HomePage() {
       </section>
 
       {/* Origin */}
-      <section className="section">
+      <section className="section home-fit">
         <Reveal className="mx-auto mb-10 w-full md:mb-14 md:w-4/5">
           <Photo
             shape="wide"
-            src={stock.greenhouse.src}
-            alt={stock.greenhouse.alt}
-            width={stock.greenhouse.width}
-            height={stock.greenhouse.height}
+            src={press.labGroup.src}
+            alt={press.labGroup.alt}
+            width={press.labGroup.width}
+            height={press.labGroup.height}
+            objectPosition={press.labGroup.objectPosition}
             sizes="(min-width: 1024px) 64rem, 90vw"
           />
         </Reveal>
@@ -216,7 +218,7 @@ export default function HomePage() {
       <ProcessFlow />
 
       {/* Closing CTA */}
-      <section className="section-forest section-wide band-y text-center">
+      <section className="section-forest section-wide band-y text-center home-fit">
         <Reveal>
           <h2 className="display display-md mx-auto mb-6 max-w-2xl">
             Ready to See More in Your LC/MS Data?

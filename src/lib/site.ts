@@ -108,7 +108,10 @@ export const founders: Person[] = [
     expertise:
       "Computational science, bioinformatics and platform development",
     credentials:
-      "PhD, University of Delaware · Bioinformatics and Systems Biology",
+      "B.S. Biology, summa cum laude, St. Michael's College · Minors in Chemistry and Journalism · PhD, University of Delaware · Bioinformatics and Systems Biology",
+    bio: [
+      "Before co-founding Metablify, Allen was a research scientist in the Baxter Lab at the Danforth Plant Science Center. He has a bachelor's degree in Biology and minors in chemistry and journalism, summa cum laude, from St. Michael's College. He completed his doctoral studies in bioinformatics and systems biology at the University of Delaware. He is interested in bridging the divide between the digital and physical, combining cutting edge computation with analytical chemistry to tackle important challenges in the health and agricultural sciences. In his free time, he enjoys spending time with his family and friends, the outdoors and participating in triathlons and cycling events.",
+    ],
   },
   {
     slug: "louis-connelly",
