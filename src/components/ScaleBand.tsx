@@ -79,7 +79,7 @@ export function ScaleBand() {
             <Reveal delay={80}>
               <div className="about-stats">
                 <div>
-                  <p className="about-stat-figure">~3,800</p>
+                  <p className="about-stat-figure">Thousands</p>
                   <p className="about-stat-label">
                     Samples in one untargeted metabolomics experiment
                   </p>
@@ -87,7 +87,7 @@ export function ScaleBand() {
                 <p className="about-stat-divider">versus</p>
                 <div>
                   <p className="about-stat-figure about-stat-figure--muted">
-                    ~400
+                    Hundreds
                   </p>
                   <p className="about-stat-label">
                     Reported ceiling of existing software

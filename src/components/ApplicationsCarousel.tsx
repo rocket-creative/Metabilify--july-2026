@@ -48,7 +48,7 @@ export function ApplicationsCarousel() {
             </h2>
             <p className="lead">
               Metablify analyzes the mass-feature layer shared across LC/MS
-              workflows, with leading applications in metabolomics and
+              workflows, with demonstrated applications in metabolomics and
               proteomics.
             </p>
           </div>

@@ -78,6 +78,12 @@ export default function ProteomicsPage() {
                 Consistent signal is amplified and random noise is suppressed, so
                 complex peptide datasets stay clean, aligned, and quantifiable.
               </p>
+              <ul className="mt-4 list-disc space-y-3 pl-5 text-muted">
+                <li>
+                  Database free: you aren’t limited by existing databases to
+                  get reliable peaks
+                </li>
+              </ul>
             </Reveal>
           </div>
           <div className="lg:col-span-6">

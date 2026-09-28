@@ -76,11 +76,11 @@ const P = {
 const CAPTIONS: { range: [number, number]; text: string }[] = [
   { range: [0, 0.133], text: "Plant tissue, soil, blood, or any other sample you want." },
   { range: [0.12, 0.31], text: "The plant extract is loaded into a 96-well plate." },
-  { range: [0.3, 0.45], text: "That plate is one of thousands — the scale of the dataset." },
+  { range: [0.3, 0.45], text: "The plate is one of dozens — experiments scale to thousands of samples." },
   { range: [0.447, 0.619], text: "Each well runs through LC/MS, producing millions of data points per file." },
   { range: [0.61, 0.713], text: "Raw data: every file reports the same mass feature at a slightly different mass." },
-  { range: [0.704, 0.91], text: "Metablify aligns them into one feature and quantifies it per file." },
-  { range: [0.901, 1], text: "Every feature lands in a table, graded by confidence." },
+  { range: [0.704, 0.91], text: "Metablify aligns them into one feature and quantifies it in every file." },
+  { range: [0.901, 1], text: "Every feature lands in a table, graded by confidence and quality." },
 ];
 
 // ---------- geometry ----------

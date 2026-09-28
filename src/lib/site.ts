@@ -99,6 +99,10 @@ export const founders: Person[] = [
       "Scientific leadership, large-scale biology, LC/MS and metabolomics",
     credentials:
       "PhD, Scripps Research Institute · USDA-ARS · Danforth Center PI",
+    bio: [
+      "Dr. Ivan Baxter is the Chief Scientific Officer and co-founder of Metablify. He is also a Principal Investigator and Member at the Donald Danforth Plant Sciences Center in St. Louis, Missouri. Dr. Baxter studies how plants adapt to their abiotic environment using elemental profiling, image-based phenotyping, metabolomics, quantitative genetics and bioinformatics. As part of a Department of Energy grant focused on improving water use efficiency in C4 grasses, Dr. Baxter designed a large phenomics-enabled untargeted metabolomics and transcriptomics experiment. What he didn’t realize was that this experiment was too large for the available LC-MS processing software to handle. This created a big problem that Allen Hubbard, with the help of Louis Connelly, needed to solve. The solution was the software that became Metablify.",
+      "Dr. Baxter received a BA in Chemistry from Goucher College and a Ph.D. in Molecular and Cellular Structure and Chemistry from The Scripps Research Institute before moving on to a postdoc at Purdue University. In 2009, he established his lab at the Danforth Center as a USDA-Agricultural Research Service Computational Biologist and Assistant Member of the Danforth Center. In 2018, he left the USDA and moved to a full-time Danforth Center member.",
+    ],
   },
   {
     slug: "allen-hubbard",
