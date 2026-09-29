@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
-import { Resend } from "resend";
+import { sendNotification } from "@/lib/notify";
 import { getSupabaseAdmin } from "@/lib/supabase";
-import { siteConfig } from "@/lib/site";
 import { leadSchema } from "@/lib/validations";
 
 export const runtime = "nodejs";
@@ -63,6 +62,25 @@ export async function POST(request: Request) {
     ["Timeline", data.timeline],
   ];
 
+  const sent = await sendNotification({
+    replyTo: data.email,
+    subject: `Metablify dataset assessment request: ${data.organization}`,
+    text: [
+      `Name: ${data.name}`,
+      `Email: ${data.email}`,
+      `Organization: ${data.organization}`,
+      ...qualifiers
+        .filter(([, v]) => v && v.length > 0)
+        .map(([label, v]) => `${label}: ${v}`),
+      "",
+      data.message,
+    ].join("\n"),
+  });
+
+  if (!sent.ok) {
+    return NextResponse.json({ error: sent.error }, { status: 500 });
+  }
+
   const supabase = getSupabaseAdmin();
   if (supabase) {
     const { error } = await supabase.from("lead_assessments").insert({
@@ -83,43 +101,6 @@ export async function POST(request: Request) {
 
     if (error) {
       console.error("Supabase lead insert error:", error.message);
-    }
-  } else {
-    console.warn("Supabase not configured. Lead logged only:", data.email);
-  }
-
-  const resendKey = process.env.RESEND_API_KEY;
-  if (resendKey) {
-    const resend = new Resend(resendKey);
-    const from =
-      process.env.RESEND_FROM_EMAIL ?? "Metablify <onboarding@resend.dev>";
-    const to = process.env.NOTIFY_EMAIL ?? siteConfig.notifyEmail;
-
-    try {
-      await resend.emails.send({
-        from,
-        to: [to],
-        replyTo: data.email,
-        subject: `Metablify dataset assessment request: ${data.organization}`,
-        text: [
-          `Name: ${data.name}`,
-          `Email: ${data.email}`,
-          `Organization: ${data.organization}`,
-          ...qualifiers
-            .filter(([, v]) => v && v.length > 0)
-            .map(([label, v]) => `${label}: ${v}`),
-          "",
-          data.message,
-        ].join("\n"),
-      });
-    } catch (err) {
-      console.error("Resend error:", err);
-      if (!supabase) {
-        return NextResponse.json(
-          { error: "Unable to send your request right now." },
-          { status: 500 },
-        );
-      }
     }
   }
 

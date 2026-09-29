@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 import { PageHero, SectionHeading } from "@/components/PageHero";
 import { Reveal } from "@/components/Reveal";
+import { ContactByEmail } from "@/components/ContactByEmail";
 import { DataAssessmentForm } from "@/components/cta/DataAssessmentForm";
 import { JsonLd, breadcrumbSchema } from "@/lib/seo/jsonld";
 import { buildBasicMetadata } from "@/lib/seo/metadata";
-import { siteConfig } from "@/lib/site";
+import { formsEnabled, siteConfig } from "@/lib/site";
 
 export const metadata: Metadata = buildBasicMetadata({
   title: "Send Us a Dataset | Metablify",
@@ -185,7 +186,11 @@ export default function DataAssessmentPage() {
           </div>
           <div className="lg:col-span-7">
             <Reveal delay={80}>
-              <DataAssessmentForm />
+              {formsEnabled ? (
+                <DataAssessmentForm />
+              ) : (
+                <ContactByEmail note="Email us to start an assessment. We will confirm timing and terms when we reply, before you commit anything." />
+              )}
             </Reveal>
           </div>
         </div>

@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
+import { ContactByEmail } from "@/components/ContactByEmail";
 import { DiscussForm } from "@/components/DiscussForm";
 import { BreadcrumbJsonLd } from "@/components/JsonLd";
 import { PageHero } from "@/components/PageHero";
 import { Reveal } from "@/components/Reveal";
-import { siteConfig } from "@/lib/site";
+import { formsEnabled, siteConfig } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Discuss a Project",
@@ -55,24 +56,30 @@ export default function DiscussPage() {
                 ))}
               </ul>
 
-              <div className="border-t border-stone pt-8">
-                <p className="eyebrow mb-3">Prefer email?</p>
-                <a
-                  href={`mailto:${siteConfig.email}`}
-                  className="arrow-link text-base"
-                >
-                  {siteConfig.email} <span className="arrow-ne">↗</span>
-                </a>
-                <p className="mt-6 text-sm leading-relaxed text-muted">
-                  Every message reaches the Metablify team directly. We read each
-                  one and reply with the right path forward.
-                </p>
-              </div>
+              {formsEnabled ? (
+                <div className="border-t border-stone pt-8">
+                  <p className="eyebrow mb-3">Prefer email?</p>
+                  <a
+                    href={`mailto:${siteConfig.email}`}
+                    className="arrow-link text-base"
+                  >
+                    {siteConfig.email} <span className="arrow-ne">↗</span>
+                  </a>
+                  <p className="mt-6 text-sm leading-relaxed text-muted">
+                    Every message reaches the Metablify team directly. We read each
+                    one and reply with the right path forward.
+                  </p>
+                </div>
+              ) : null}
             </Reveal>
           </div>
           <div className="relative lg:col-span-7">
             <Reveal delay={80}>
-              <DiscussForm />
+              {formsEnabled ? (
+                <DiscussForm />
+              ) : (
+                <ContactByEmail note="Every message reaches the Metablify team directly. We read each one and reply with the right path forward." />
+              )}
             </Reveal>
           </div>
         </div>

@@ -14,6 +14,9 @@ export const siteConfig = {
   },
 } as const;
 
+/** Public forms stay hidden until the Resend sender is verified. */
+export const formsEnabled = false;
+
 // No "Home" entry: the logo is the home link, which is where people look for it.
 // Team is its own page, per the 9/1 review: board members, investors, and
 // partners look for it first, and it was buried at the bottom of About.

@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
-import { Resend } from "resend";
+import { sendNotification } from "@/lib/notify";
 import { getSupabaseAdmin } from "@/lib/supabase";
-import { siteConfig } from "@/lib/site";
 import { discussSchema, interestLabels } from "@/lib/validations";
 
 export const runtime = "nodejs";
@@ -52,6 +51,23 @@ export async function POST(request: Request) {
     return NextResponse.json({ ok: true });
   }
 
+  const sent = await sendNotification({
+    replyTo: data.email,
+    subject: `Metablify project inquiry: ${interestLabels[data.interest]}`,
+    text: [
+      `Name: ${data.name}`,
+      `Email: ${data.email}`,
+      `Organization: ${data.organization}`,
+      `Interest: ${interestLabels[data.interest]}`,
+      "",
+      data.message,
+    ].join("\n"),
+  });
+
+  if (!sent.ok) {
+    return NextResponse.json({ error: sent.error }, { status: 500 });
+  }
+
   const supabase = getSupabaseAdmin();
   if (supabase) {
     const { error } = await supabase.from("project_inquiries").insert({
@@ -65,49 +81,6 @@ export async function POST(request: Request) {
 
     if (error) {
       console.error("Supabase insert error:", error.message);
-      return NextResponse.json(
-        { error: "Unable to save your inquiry right now." },
-        { status: 500 },
-      );
-    }
-  } else {
-    console.warn(
-      "Supabase not configured. Inquiry logged only:",
-      data.email,
-      data.interest,
-    );
-  }
-
-  const resendKey = process.env.RESEND_API_KEY;
-  if (resendKey) {
-    const resend = new Resend(resendKey);
-    const from =
-      process.env.RESEND_FROM_EMAIL ?? "Metablify <onboarding@resend.dev>";
-    const to = process.env.NOTIFY_EMAIL ?? siteConfig.notifyEmail;
-
-    try {
-      await resend.emails.send({
-        from,
-        to: [to],
-        replyTo: data.email,
-        subject: `Metablify project inquiry: ${interestLabels[data.interest]}`,
-        text: [
-          `Name: ${data.name}`,
-          `Email: ${data.email}`,
-          `Organization: ${data.organization}`,
-          `Interest: ${interestLabels[data.interest]}`,
-          "",
-          data.message,
-        ].join("\n"),
-      });
-    } catch (err) {
-      console.error("Resend error:", err);
-      if (!supabase) {
-        return NextResponse.json(
-          { error: "Unable to send your inquiry right now." },
-          { status: 500 },
-        );
-      }
     }
   }
 
