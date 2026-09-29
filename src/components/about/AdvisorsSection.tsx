@@ -11,7 +11,7 @@ export function AdvisorsSection() {
       eyebrow="Advisors"
       title="Guided by Leaders in Science and Industry."
     >
-      <div className="grid gap-6 md:grid-cols-3">
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {slots.map((slot, i) => (
           <Reveal key={slot} delay={i * 70}>
             <div className="about-slot">

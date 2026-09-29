@@ -103,7 +103,7 @@ export function ProcessFlow() {
       // animation would keep a rAF alive while the section is off-screen, and it
       // reads as restless next to the rest of the page, which reveals once and
       // then holds still.
-      if (spark && window.matchMedia("(min-width: 810px)").matches) {
+      if (spark && window.matchMedia("(min-width: 1024px)").matches) {
         tl.to(
           spark,
           {

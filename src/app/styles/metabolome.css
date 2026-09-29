@@ -242,6 +242,12 @@
 
 @media (min-width: 810px) {
   .process-rail {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .process-rail {
     grid-template-columns: repeat(4, 1fr);
   }
 }
@@ -253,7 +259,21 @@
 
 @media (min-width: 810px) {
   .process-step {
+    border-right: 1px solid var(--color-stone);
+  }
+
+  .process-step:nth-child(2n) {
+    border-right: none;
+  }
+}
+
+@media (min-width: 1024px) {
+  .process-step {
     border-bottom: none;
+    border-right: 1px solid var(--color-stone);
+  }
+
+  .process-step:nth-child(2n) {
     border-right: 1px solid var(--color-stone);
   }
 

@@ -48,7 +48,7 @@ function ValueBlocks({ page }: { page: ContentPage }) {
       <Reveal>
         <SectionHeading eyebrow="What matters" title="Where this makes a difference" />
       </Reveal>
-      <div className="grid gap-6 md:grid-cols-3">
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {page.uniqueValueBlocks.map((block, i) => (
           <Reveal key={block.heading} delay={i * 70}>
             <div className="card flex h-full flex-col">

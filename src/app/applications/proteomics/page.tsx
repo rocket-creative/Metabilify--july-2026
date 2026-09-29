@@ -107,7 +107,7 @@ export default function ProteomicsPage() {
               ready for comparison.
             </p>
           </Reveal>
-          <div className="grid gap-8 md:grid-cols-3">
+          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
             {workflow.map((step, i) => (
               <Reveal key={step.n} delay={i * 90}>
                 <div className="capability">
@@ -139,7 +139,7 @@ export default function ProteomicsPage() {
             lead="Metablify helps proteomics teams recover more real peptide features while spending less time curating peaks, so effort shifts from cleanup to discovery."
           />
         </Reveal>
-        <div className="grid gap-6 md:grid-cols-3">
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {[
             "Scale across complex peptide datasets",
             "Align features for comparative analysis",
@@ -159,7 +159,7 @@ export default function ProteomicsPage() {
         <Reveal>
           <SectionHeading eyebrow="Where it fits" title="Built for real studies" />
         </Reveal>
-        <div className="grid gap-6 md:grid-cols-3">
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {useCases.map((item, i) => (
             <Reveal key={item.title} delay={i * 70}>
               <div className="card flex h-full flex-col">

@@ -72,7 +72,7 @@ export default function ServicesPage() {
             lead="Tell us about your scientific objective, samples, existing data, and desired outputs. We define an analytical services project matched to your workflow challenge."
           />
         </Reveal>
-        <ol className="grid gap-6 md:grid-cols-3">
+        <ol className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {steps.map((step, i) => (
             <Reveal key={step.n} delay={i * 80}>
               <li>
@@ -98,7 +98,7 @@ export default function ServicesPage() {
             title="Results you can build on"
           />
         </Reveal>
-        <div className="grid gap-6 md:grid-cols-3">
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {deliverables.map((item, i) => (
             <Reveal key={item.title} delay={i * 70}>
               <div className="card flex h-full flex-col">

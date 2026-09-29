@@ -14,7 +14,7 @@ export function SupportersSection() {
       eyebrow="Investors & Supporters"
       title="The Organizations That Helped Move Metablify Forward."
     >
-      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
         {supporters.map((supporter, i) => (
           <Reveal key={supporter.name} delay={i * 60}>
             {supporter.href ? (

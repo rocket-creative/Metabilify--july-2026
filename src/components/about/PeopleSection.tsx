@@ -42,7 +42,7 @@ export function PeopleSection() {
         <Reveal>
           <p className="about-group-label">Management Team</p>
         </Reveal>
-        <div className="grid gap-6 md:grid-cols-3">
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {managementTeam.map((person, i) => (
             <Reveal key={person.slug} delay={i * 70}>
               <PersonCard person={person} />
@@ -55,7 +55,7 @@ export function PeopleSection() {
         <Reveal>
           <p className="about-group-label">Scientific &amp; Technical Founders</p>
         </Reveal>
-        <div className="grid gap-6 md:grid-cols-3">
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {scientificFounders.map((person, i) => (
             <Reveal key={person.slug} delay={i * 70}>
               <PersonCard person={person} />

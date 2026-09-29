@@ -82,7 +82,7 @@ export default function PlatformDevelopmentPage() {
             title="Where development work concentrates"
           />
         </Reveal>
-        <div className="grid gap-6 md:grid-cols-3">
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {focus.map((item, i) => (
             <Reveal key={item.title} delay={i * 70}>
               <div className="card flex h-full flex-col">
@@ -112,7 +112,7 @@ export default function PlatformDevelopmentPage() {
               so new workflows inherit the same signal clarity.
             </p>
           </Reveal>
-          <div className="grid gap-8 md:grid-cols-3">
+          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
             {[
               {
                 n: "01",

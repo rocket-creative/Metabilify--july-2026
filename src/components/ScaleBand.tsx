@@ -104,7 +104,7 @@ export function ScaleBand() {
             Big Data Creates Bigger Analytical Challenges
           </h3>
         </Reveal>
-        <div className="grid gap-6 md:grid-cols-3">
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {PILLARS.map((p, i) => (
             <Reveal key={p.title} delay={i * 80} className="h-full">
               <div className="card flex h-full flex-col">

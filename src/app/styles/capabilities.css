@@ -60,24 +60,57 @@
   max-width: 34ch;
 }
 
-@media (min-width: 810px) {
+@media (min-width: 810px) and (max-width: 1023.98px) {
+  .capabilities-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .capabilities-grid > .capability {
+    padding-inline: clamp(1.5rem, 3vw, 2.75rem);
+  }
+
+  .capabilities-grid > .capability:nth-child(odd) {
+    padding-inline-start: 0;
+  }
+
+  .capabilities-grid > .capability:nth-child(even) {
+    padding-inline-end: 0;
+    border-inline-start: 1px solid rgba(255, 255, 255, 0.12);
+  }
+
+  .capabilities-grid > .capability + .capability {
+    margin-top: 0;
+    padding-top: 0;
+    border-top: none;
+  }
+
+  .capabilities-grid > .capability:nth-child(n + 3) {
+    margin-top: 2.5rem;
+    padding-top: 2.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    border-inline-start: none;
+    padding-inline-start: 0;
+  }
+}
+
+@media (min-width: 1024px) {
   .capabilities-grid {
     grid-template-columns: repeat(3, 1fr);
   }
 
-  .capability {
+  .capabilities-grid > .capability {
     padding-inline: clamp(1.5rem, 3vw, 2.75rem);
   }
 
-  .capability:first-child {
+  .capabilities-grid > .capability:first-child {
     padding-inline-start: 0;
   }
 
-  .capability:last-child {
+  .capabilities-grid > .capability:last-child {
     padding-inline-end: 0;
   }
 
-  .capability + .capability {
+  .capabilities-grid > .capability + .capability {
     margin-top: 0;
     padding-top: 0;
     border-top: none;

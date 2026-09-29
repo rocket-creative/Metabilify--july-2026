@@ -3,8 +3,8 @@ export const siteConfig = {
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://metablify.com",
   description:
     "Metablify is an LC/MS platform built on the first principles of physics. See more in your LC/MS data.",
-  email: "hello@metablify.com",
-  notifyEmail: process.env.NOTIFY_EMAIL ?? "hello@metablify.com",
+  email: "mbielski@devtechpartners.com",
+  notifyEmail: process.env.NOTIFY_EMAIL ?? "mbielski@devtechpartners.com",
   origin: "Donald Danforth Plant Science Center",
   // Served copy of LOGO FILES/metab-logo-final.svg. Intrinsic size from the SVG viewBox.
   logo: {

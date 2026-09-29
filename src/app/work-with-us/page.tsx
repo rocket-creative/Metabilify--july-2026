@@ -156,7 +156,7 @@ export default function WorkWithUsPage() {
             Choose the path that fits your work
           </h2>
         </Reveal>
-        <div className="grid gap-6 md:grid-cols-3">
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {paths.map((p, i) => (
             <Reveal key={p.href} delay={i * 80} className="h-full">
               <Link href={p.href} className="field-card group">

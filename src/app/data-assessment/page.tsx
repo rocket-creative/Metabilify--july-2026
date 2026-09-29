@@ -83,7 +83,7 @@ export default function DataAssessmentPage() {
         <Reveal>
           <SectionHeading eyebrow="What to send" title="Three things, nothing heavy" />
         </Reveal>
-        <div className="grid gap-6 md:grid-cols-3">
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {whatToSend.map((item, i) => (
             <Reveal key={item.title} delay={i * 70}>
               <div className="card flex h-full flex-col">
@@ -145,7 +145,7 @@ export default function DataAssessmentPage() {
             title="A comparison on your data, not a claim"
           />
         </Reveal>
-        <div className="grid gap-6 md:grid-cols-3">
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {getBack.map((item, i) => (
             <Reveal key={item.title} delay={i * 70}>
               <div className="card flex h-full flex-col">

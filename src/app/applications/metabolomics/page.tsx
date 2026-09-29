@@ -101,7 +101,7 @@ export default function MetabolomicsPage() {
               results ready for analysis.
             </p>
           </Reveal>
-          <div className="grid gap-8 md:grid-cols-3">
+          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
             {workflow.map((step, i) => (
               <Reveal key={step.n} delay={i * 90}>
                 <div className="capability">
@@ -133,7 +133,7 @@ export default function MetabolomicsPage() {
             lead="Cleaner, higher confidence mass feature data reduces manual review and provides a stronger foundation for metabolomics workflows that depend on accurate detection, alignment, and quantification."
           />
         </Reveal>
-        <div className="grid gap-6 md:grid-cols-3">
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {[
             "Detect real mass features buried in background signal",
             "Align features across large, noisy sample cohorts",
@@ -153,7 +153,7 @@ export default function MetabolomicsPage() {
         <Reveal>
           <SectionHeading eyebrow="Where it fits" title="Built for real studies" />
         </Reveal>
-        <div className="grid gap-6 md:grid-cols-3">
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {useCases.map((item, i) => (
             <Reveal key={item.title} delay={i * 70}>
               <div className="card flex h-full flex-col">

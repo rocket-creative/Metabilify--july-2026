@@ -118,6 +118,18 @@
   }
 }
 
+@media (min-width: 1024px) {
+  .card-scroller {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1440px) {
+  .card-scroller {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
 .applications-grid {
   display: grid;
   gap: 1.5rem;

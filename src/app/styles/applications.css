@@ -203,7 +203,7 @@
   aspect-ratio: auto;
 }
 
-@media (max-width: 639px) {
+@media (max-width: 1023px) {
   .omics-card {
     grid-template-columns: 1fr;
   }
